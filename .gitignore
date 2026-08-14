@@ -1,0 +1,30 @@
+# Logs & Environment
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node modules & build outputs
+node_modules/
+dist/
+build/
+.vite/
+
+# Local Agent & Workspace Files
+.agents/
+.agent/
+_agents/
+_agent/
+project_onboarding.md
+walkthrough.md
+best_practices_audit.md
+task.md
+qa_walkthrough.md
+
+# IDE & OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
