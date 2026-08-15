@@ -134,12 +134,6 @@ export const App: React.FC = () => {
     setSyncStatus('offline');
   };
 
-  // Navigation
-  const handleStartTest = (domainName: string) => {
-    setSelectedSubdomainFilter(domainName);
-    setActiveTab('subject_a');
-  };
-
   const dueCount = subjectAQuestions.filter((q) => isQuestionDueToday(leitnerStates[q.id])).length;
 
   return (
@@ -169,7 +163,7 @@ export const App: React.FC = () => {
 
       <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-8 lg:px-12 py-8">
         {activeTab === 'study' && (
-          <StudyHub onStartTest={handleStartTest} />
+          <StudyHub />
         )}
         {activeTab === 'subject_a' && (
           <SubjectAExam

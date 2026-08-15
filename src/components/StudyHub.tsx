@@ -10,15 +10,13 @@ import { PertCpmVisualizer } from './visuals/PertCpmVisualizer';
 import { SqlJoinVisualizer } from './visuals/SqlJoinVisualizer';
 import { CryptoSignatureSimulator } from './visuals/CryptoSignatureSimulator';
 import { AlgorithmWalkthrough } from './AlgorithmWalkthrough';
-import { BookOpen, Award, ArrowRight, BookMarked, Code, List } from 'lucide-react';
+import { BookOpen, Award, Code, List } from 'lucide-react';
 import { parseTopicSections, parseMarkdownToHtml } from '../utils/markdown';
 import { AiChatAssistant } from './AiChatAssistant';
 
-interface StudyHubProps {
-  onStartTest: (category: string) => void;
-}
+interface StudyHubProps {}
 
-export const StudyHub: React.FC<StudyHubProps> = ({ onStartTest }) => {
+export const StudyHub: React.FC<StudyHubProps> = () => {
   const [selectedTopicId, setSelectedTopicId] = useState<string>(SEED_STUDY_TOPICS[0].id);
   const [activeSectionIdx, setActiveSectionIdx] = useState<number>(0);
 
@@ -202,15 +200,7 @@ export const StudyHub: React.FC<StudyHubProps> = ({ onStartTest }) => {
             </div>
           )}
 
-          {/* CTA: Test Myself on This Topic */}
-          <div className="border-t border-[var(--border-color)] pt-6 flex justify-end">
-            <button
-              onClick={() => onStartTest(activeTopic.domainName)}
-              className="btn-primary flex items-center gap-2 text-sm shadow-md"
-            >
-              <BookMarked className="w-4 h-4" /> Test Myself on This Topic <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
+
 
         </div>
       </div>
