@@ -4,9 +4,9 @@ import { SubjectBScenario, MasteryState } from '../types/exam';
 import { TraceTableGrid } from './TraceTableGrid';
 import { FileText, Code, CheckCircle, XCircle, ChevronRight, ChevronLeft, Lightbulb, Sparkles, Trophy, Trash2 } from 'lucide-react';
 import { AiChatAssistant } from './AiChatAssistant';
-import confetti from 'canvas-confetti';
 import { PhilnitsApiService } from '../services/api';
-import { isMastered, saveMasteryStates } from '../utils/masteryEngine';
+import { isMastered, saveMasteryStates, saveQuestionIndex, getQuestionIndex } from '../utils/masteryEngine';
+import { registerKeyboardHandlers, clearKeyboardHandlers } from '../utils/globalKeyboardShortcuts';
 import { ConfirmationModal } from './ConfirmationModal';
 
 interface SubjectBWorkbenchProps {
@@ -22,7 +22,7 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
   onAnswerLogged,
   onAddDynamicScenario
 }) => {
-  const [activeScenarioIdx, setActiveScenarioIdx] = useState<number>(0);
+  const [activeScenarioIdx, setActiveScenarioIdx] = useState<number>(() => getQuestionIndex('subject_b'));
   const [activeSubQIdx, setActiveSubQIdx] = useState<number>(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [startTime] = useState<number>(Date.now());
@@ -45,6 +45,38 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
     setActiveSubQIdx(0);
     setSelectedAnswers({});
   };
+
+  // Persist question index
+  React.useEffect(() => {
+    saveQuestionIndex('subject_b', activeScenarioIdx);
+  }, [activeScenarioIdx]);
+
+  // Persist question index
+  React.useEffect(() => {
+    saveQuestionIndex('subject_b', activeScenarioIdx);
+  }, [activeScenarioIdx]);
+
+  React.useEffect(() => {
+    // Register keyboard handlers for Subject B
+    const cleanup = registerKeyboardHandlers({
+      answerSelection: (optionIndex: number) => {
+        handleSelectOption(optionIndex);
+      },
+      nextCard: () => {
+        setActiveSubQIdx(prev => prev + 1);
+      },
+      prevCard: () => {
+        if (activeSubQIdx > 0) {
+          setActiveSubQIdx(prev => prev - 1);
+        }
+      }
+    });
+
+    return () => {
+      cleanup();
+      clearKeyboardHandlers();
+    };
+  }, []);
 
   const handleGenerateAiScenario = async () => {
     setIsGenerating(true);
@@ -85,10 +117,6 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
     setSelectedAnswers((prev) => ({ ...prev, [currentSubQ.questionId]: idx }));
     const correct = idx === currentSubQ.correctIndex;
     onAnswerLogged(currentSubQ.questionId, correct, timeSpent);
-
-    if (correct) {
-      confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } });
-    }
   };
 
   if (!currentScenario) {

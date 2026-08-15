@@ -106,7 +106,7 @@ export function parseLineDecorations(text: string): string {
   output = output.replace(/!\[\[(.*?)\]\]/g, '<img src="/Files/$1" alt="$1" class="max-w-full h-auto rounded-lg shadow-sm border border-[var(--border-color)] my-4 mx-auto" onerror="this.style.display=\'none\'" />');
 
   // Standard Markdown Images: ![alt](url)
-  output = output.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="/$2" alt="$1" class="max-w-full h-auto rounded-lg shadow-sm border border-[var(--border-color)] my-4 mx-auto" />');
+  output = output.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="/$2" alt="$1" class="max-w-full h-auto rounded-lg shadow-sm border border-[var(--border-color)] my-4 mx-auto" onerror="this.style.display=\'none\'" />');
 
   // Bold: **text**
   output = output.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-[var(--text-primary)]">$1</strong>');

@@ -12,22 +12,40 @@ dist/
 build/
 .vite/
 
-# Local Agent & Workspace Files
+# Kiro Agent & Workspace Files
 .agents/
 .agent/
 _agents/
 _agent/
+.kiro/
+.kiro/specs/
+.kiro/skills/
+.kiro/steering/
+.kiro/settings/
 project_onboarding.md
 walkthrough.md
 best_practices_audit.md
 task.md
 qa_walkthrough.md
+LEITNER_FEATURES.md
+KEYBOARD_SHORTCUTS.md
+IMPLEMENTATION_COMPLETE.md
+FEATURES_SUMMARY.txt
+PERSISTENCE_AND_KEYBOARD_FIX.md
+WHAT_NOW_WORKS.txt
+IMPLEMENTATION_SUMMARY_FINAL.md
+FINAL_FIXES_README.md
+*.spec.ts
+*.test.ts
 
 # IDE & OS
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
 .vercel
 .env*

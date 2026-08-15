@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { SubjectAQuestion, DomainCategory, MasteryState } from '../types/exam';
 import { CheckCircle2, XCircle, HelpCircle, Bookmark, ArrowRight, ArrowLeft, RotateCcw, Sparkles, Trophy, Trash2 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { PhilnitsApiService } from '../services/api';
 import { parseMarkdownToHtml } from '../utils/markdown';
-import { isMastered, saveMasteryStates } from '../utils/masteryEngine';
+import { isMastered, saveMasteryStates, saveQuestionIndex, getQuestionIndex } from '../utils/masteryEngine';
+import { registerKeyboardHandlers, clearKeyboardHandlers } from '../utils/globalKeyboardShortcuts';
 import { ConfirmationModal } from './ConfirmationModal';
 
 interface SubjectAExamProps {
@@ -24,7 +24,7 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
   onClearFilter,
   onAddDynamicQuestion
 }) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentIndex, setCurrentIndex] = useState<number>(() => getQuestionIndex('subject_a'));
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedOptions, setSelectedOptions] = useState<Record<string, number>>({});
 
@@ -32,7 +32,7 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
   const activeQuestions = questions.filter(q => !isMastered(masteryStates[q.id]));
   const [showExplanations, setShowExplanations] = useState<Record<string, boolean>>({});
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set());
-  const [startTime] = useState<number>(Date.now());
+  const [startTime, setStartTime] = useState<number>(Date.now());
 
   // AI dynamic question states
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
@@ -49,6 +49,17 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
     setSelectedOptions({});
     setShowExplanations({});
   };
+
+  // Persist question index and register keyboard shortcuts
+  React.useEffect(() => {
+    // Save current index to localStorage whenever it changes
+    saveQuestionIndex('subject_a', currentIndex);
+  }, [currentIndex]);
+
+  React.useEffect(() => {
+    // Reset startTime when question changes
+    setStartTime(Date.now());
+  }, [currentIndex]);
 
   const handleGenerateAiQuestion = async () => {
     setIsGenerating(true);
@@ -103,10 +114,6 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
 
     const correct = idx === currentQ.correctIndex;
     onAnswerLogged(currentQ.id, correct, timeSpent);
-
-    if (correct) {
-      confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
-    }
   };
 
   const toggleBookmark = (id: string) => {
@@ -129,6 +136,29 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
       setCurrentIndex((prev) => prev - 1);
     }
   };
+
+  // Register keyboard handlers - defined after all handler functions
+  React.useEffect(() => {
+    const cleanup = registerKeyboardHandlers({
+      answerSelection: (optionIndex: number) => {
+        handleSelectOption(optionIndex);
+      },
+      nextCard: () => {
+        handleNext();
+      },
+      prevCard: () => {
+        handlePrev();
+      },
+      bookmark: () => {
+        if (currentQ) toggleBookmark(currentQ.id);
+      }
+    });
+
+    return () => {
+      cleanup();
+      clearKeyboardHandlers();
+    };
+  }, [currentIndex]); // Re-register when question changes
 
   if (!currentQ) {
     return (

@@ -7,6 +7,7 @@ import { MasteryState } from '../types/exam';
 
 const MASTERY_THRESHOLD = 3;
 const STORAGE_KEY = 'philnits_mastery_states';
+const QUESTION_INDEX_KEY = 'philnits_question_indices'; // For persisting current question index across tabs
 
 export function updateMasteryState(
   existingState: MasteryState | undefined,
@@ -62,4 +63,37 @@ export function getMasteryProgress(states: Record<string, MasteryState>): {
   const percentMastered = total > 0 ? Math.round((mastered / total) * 100) : 0;
 
   return { total, mastered, inProgress, percentMastered };
+}
+
+
+// ============================================================================
+// Question Index Persistence - Maintains question position across tab switches
+// ============================================================================
+
+interface QuestionIndices {
+  subject_a?: number;
+  subject_b?: number;
+  leitner?: number;
+  flashcards?: number;
+}
+
+export function getStoredQuestionIndices(): QuestionIndices {
+  const raw = localStorage.getItem(QUESTION_INDEX_KEY);
+  if (!raw) return {};
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return {};
+  }
+}
+
+export function saveQuestionIndex(tab: 'subject_a' | 'subject_b' | 'leitner' | 'flashcards', index: number): void {
+  const current = getStoredQuestionIndices();
+  current[tab] = index;
+  localStorage.setItem(QUESTION_INDEX_KEY, JSON.stringify(current));
+}
+
+export function getQuestionIndex(tab: 'subject_a' | 'subject_b' | 'leitner' | 'flashcards'): number {
+  const indices = getStoredQuestionIndices();
+  return indices[tab] ?? 0;
 }
