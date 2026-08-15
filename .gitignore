@@ -28,3 +28,6 @@ qa_walkthrough.md
 Thumbs.db
 .vscode/
 .idea/
+
+.vercel
+.env*
