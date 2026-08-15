@@ -48,7 +48,7 @@ export const ErdVisualizer: React.FC = () => {
           <div className="border border-[var(--border-color)] rounded-lg overflow-hidden text-[11px] font-mono">
             <div className="p-2 bg-[var(--bg-card-hover)] font-bold text-amber-500 border-b border-[var(--border-color)] flex justify-between">
               <span>Orders (Composite PK: OrderID, ProductID)</span>
-              <span>⚠️ Partial Dependency Present</span>
+              <span>Partial Dependency Present</span>
             </div>
             <table className="w-full text-left">
               <thead>
@@ -124,7 +124,7 @@ export const ErdVisualizer: React.FC = () => {
             3NF eliminates transitive dependencies (e.g. EmployeeID $\rightarrow$ DeptID $\rightarrow$ DeptName). Splitting Employee and Department schemas resolves redundancy.
           </p>
           <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
-            <span>✅ Schema fully normalized to 3NF. Insert/Update Anomalies Eliminated!</span>
+            <span>Schema fully normalized to 3NF. Insert/Update Anomalies Eliminated!</span>
           </div>
         </div>
       )}

@@ -159,7 +159,7 @@ export const SubnetCalculator: React.FC = () => {
 
         </div>
       ) : (
-        <p className="text-xs text-rose-500 font-mono">⚠️ Invalid IP Address Format. Enter 4 octets separated by dots (0-255).</p>
+        <p className="text-xs text-rose-500 font-mono">Invalid IP Address Format. Enter 4 octets separated by dots (0-255).</p>
       )}
     </div>
   );

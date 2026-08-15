@@ -1,17 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 :root {
-  /* Modern Slate Dark Theme (Default) */
+  /* Eye-Friendly Slate Dark Theme (Default) */
   --bg-main: #0b0f19;
-  --bg-card: #111827;
-  --bg-card-hover: #1f2937;
-  --bg-nav: #0f172a;
-  --bg-sidebar: #090d16;
+  --bg-card: rgba(15, 23, 42, 0.65);
+  --bg-card-hover: rgba(30, 41, 59, 0.75);
+  --bg-nav: rgba(10, 15, 30, 0.8);
+  --bg-sidebar: rgba(8, 12, 24, 0.75);
   
-  --border-color: #1e293b;
-  --border-hover: #334155;
+  --border-color: rgba(51, 65, 85, 0.25);
+  --border-hover: rgba(100, 116, 139, 0.45);
   
-  --text-primary: #f8fafc;
+  --text-primary: #e2e8f0;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
   
@@ -20,25 +21,29 @@
   --accent-amber: #f59e0b;
   --accent-rose: #f43f5e;
   
-  --code-bg: #030712;
+  --code-bg: rgba(3, 7, 18, 0.85);
   --code-text: #38bdf8;
 
-  --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
-  --shadow-glow: 0 0 15px rgba(16, 185, 129, 0.15);
+  --shadow-subtle: 0 4px 30px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 20px rgba(6, 182, 212, 0.15);
+  
+  --bg-input: rgba(3, 7, 18, 0.65);
+  --bg-input-focus: rgba(3, 7, 18, 0.85);
+  --input-placeholder: #475569;
 }
 
 [data-theme="light"] {
-  /* Academic Paper Light Theme */
-  --bg-main: #faf9f6;
-  --bg-card: #ffffff;
-  --bg-card-hover: #f1f5f9;
-  --bg-nav: #ffffff;
-  --bg-sidebar: #f8fafc;
+  /* Warm Ivory Academic Paper Theme */
+  --bg-main: #fdfbf7;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(248, 250, 252, 0.95);
+  --bg-nav: rgba(255, 255, 255, 0.85);
+  --bg-sidebar: rgba(248, 250, 252, 0.8);
   
-  --border-color: #e2e8f0;
-  --border-hover: #cbd5e1;
+  --border-color: rgba(226, 232, 240, 0.8);
+  --border-hover: rgba(203, 213, 225, 0.95);
   
-  --text-primary: #0f172a;
+  --text-primary: #1e293b;
   --text-secondary: #475569;
   --text-muted: #94a3b8;
   
@@ -47,11 +52,15 @@
   --accent-amber: #d97706;
   --accent-rose: #e11d48;
   
-  --code-bg: #1e293b;
+  --code-bg: rgba(30, 41, 59, 0.95);
   --code-text: #e0f2fe;
 
-  --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-  --shadow-glow: 0 0 15px rgba(5, 150, 105, 0.1);
+  --shadow-subtle: 0 4px 30px rgba(15, 23, 42, 0.02);
+  --shadow-glow: 0 0 20px rgba(5, 150, 105, 0.1);
+  
+  --bg-input: #ffffff;
+  --bg-input-focus: #ffffff;
+  --input-placeholder: #94a3b8;
 }
 
 * {
@@ -59,12 +68,13 @@
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-main);
   color: var(--text-primary);
-  line-height: 1.6;
+  line-height: 1.68;
+  letter-spacing: -0.011em;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.4s ease, color 0.4s ease;
   overflow-x: hidden;
 }
 
@@ -72,53 +82,60 @@ code, pre, .font-mono {
   font-family: 'JetBrains Mono', monospace;
 }
 
+/* Repeating decimal overline style */
+.overline {
+  text-decoration: overline;
+}
+
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-sidebar);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-hover);
-  border-radius: 4px;
+  background: var(--border-color);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: var(--border-hover);
 }
 
 /* Utilities & Animations */
 .glass-panel {
   background-color: var(--bg-card);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   box-shadow: var(--shadow-subtle);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .glass-panel:hover {
   border-color: var(--border-hover);
+  background-color: var(--bg-card-hover);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent-emerald), var(--accent-cyan));
+  background: var(--accent-emerald);
   color: #ffffff;
   font-weight: 600;
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1.25rem;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .btn-primary:hover {
-  opacity: 0.95;
+  opacity: 0.9;
   transform: translateY(-1px);
-  box-shadow: var(--shadow-glow);
 }
 
 .btn-primary:active {
@@ -127,21 +144,49 @@ code, pre, .font-mono {
 
 .btn-secondary {
   background: var(--bg-card-hover);
+  backdrop-filter: blur(8px);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
   font-weight: 500;
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1.25rem;
   border-radius: 8px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .btn-secondary:hover {
   border-color: var(--border-hover);
-  background: var(--border-color);
+  background-color: var(--border-color);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: #ffffff;
+  border: 1px solid #991b1b;
+  font-weight: 500;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-danger:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-danger:active {
+  transform: translateY(0);
 }
 
 /* Badge tags */
@@ -151,32 +196,37 @@ code, pre, .font-mono {
   gap: 0.25rem;
   padding: 0.2rem 0.6rem;
   border-radius: 9999px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
+  transition: background-color 0.2s ease;
+}
+
+.badge:hover {
+  opacity: 0.9;
 }
 
 .badge-emerald {
-  background: rgba(16, 185, 129, 0.12);
+  background: rgba(16, 185, 129, 0.1);
   color: var(--accent-emerald);
   border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
 .badge-cyan {
-  background: rgba(6, 182, 212, 0.12);
+  background: rgba(6, 182, 212, 0.1);
   color: var(--accent-cyan);
   border: 1px solid rgba(6, 182, 212, 0.25);
 }
 
 .badge-amber {
-  background: rgba(245, 158, 11, 0.12);
+  background: rgba(245, 158, 11, 0.1);
   color: var(--accent-amber);
   border: 1px solid rgba(245, 158, 11, 0.25);
 }
 
 .badge-rose {
-  background: rgba(244, 63, 94, 0.12);
+  background: rgba(244, 63, 94, 0.1);
   color: var(--accent-rose);
   border: 1px solid rgba(244, 63, 94, 0.25);
 }
@@ -188,7 +238,7 @@ code, pre, .font-mono {
   border-radius: 8px;
   padding: 1.25rem;
   color: var(--code-text);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   line-height: 1.7;
   overflow-x: auto;
   white-space: pre;
@@ -196,21 +246,27 @@ code, pre, .font-mono {
 
 /* Trace Table Grid Input */
 .trace-input {
-  background: var(--bg-card);
+  background-color: var(--bg-input);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
   padding: 0.4rem 0.6rem;
-  border-radius: 4px;
+  border-radius: 6px;
   width: 100%;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
-  transition: border-color 0.15s ease;
+  font-size: 0.82rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .trace-input:focus {
   outline: none;
   border-color: var(--accent-cyan);
-  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+  background-color: var(--bg-input-focus);
+}
+
+.trace-input::placeholder {
+  color: var(--input-placeholder);
+  opacity: 1;
 }
 
 .trace-input.correct {
