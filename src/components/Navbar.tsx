@@ -9,10 +9,18 @@ import {
   Sun, 
   Moon, 
   Calendar, 
-  Server
+  Server,
+  LogIn,
+  LogOut,
+  Cloud,
+  CloudOff,
+  Loader2
 } from 'lucide-react';
 import { ExamTab, ThemeMode } from '../types/exam';
 import { getDaysToExam } from '../utils/leitnerEngine';
+import { LocalUser } from '../services/supabase';
+
+export type SyncStatus = 'idle' | 'syncing' | 'synced' | 'error' | 'offline';
 
 interface NavbarProps {
   activeTab: ExamTab;
@@ -20,6 +28,10 @@ interface NavbarProps {
   theme: ThemeMode;
   setTheme: (theme: ThemeMode) => void;
   dueCount: number;
+  currentUser: LocalUser | null;
+  syncStatus: SyncStatus;
+  onLoginClick: () => void;
+  onLogoutClick: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -27,7 +39,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   setActiveTab,
   theme,
   setTheme,
-  dueCount
+  dueCount,
+  currentUser,
+  syncStatus,
+  onLoginClick,
+  onLogoutClick
 }) => {
   const [daysRemaining, setDaysRemaining] = useState<number>(getDaysToExam());
 
@@ -36,17 +52,17 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const navItems: { id: ExamTab; label: string; icon: React.ReactNode; badge?: number }[] = [
-    { id: 'study', label: 'Study & Review', icon: <BookOpen className="w-4 h-4" /> },
-    { id: 'subject_a', label: 'Subject A (MCQs)', icon: <HelpCircle className="w-4 h-4" /> },
-    { id: 'subject_b', label: 'Subject B (Workbench)', icon: <Code2 className="w-4 h-4" /> },
-    { id: 'leitner', label: 'Leitner Review', icon: <Repeat className="w-4 h-4" />, badge: dueCount },
-    { id: 'flashcards', label: 'Anki Flashcards', icon: <Layers className="w-4 h-4" /> },
+    { id: 'study', label: 'Study Hub', icon: <BookOpen className="w-4 h-4" /> },
+    { id: 'subject_a', label: 'Subject A', icon: <HelpCircle className="w-4 h-4" /> },
+    { id: 'subject_b', label: 'Subject B', icon: <Code2 className="w-4 h-4" /> },
+    { id: 'leitner', label: 'Leitner', icon: <Repeat className="w-4 h-4" />, badge: dueCount },
+    { id: 'flashcards', label: 'Flashcards', icon: <Layers className="w-4 h-4" /> },
     { id: 'analytics', label: 'Analytics', icon: <BarChart3 className="w-4 h-4" /> }
   ];
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border-color)] bg-[var(--bg-nav)] backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
         
         {/* Brand / Title */}
         <div className="flex items-center gap-3">
@@ -54,33 +70,33 @@ export const Navbar: React.FC<NavbarProps> = ({
             FE
           </div>
           <div>
-            <h1 className="text-base font-bold tracking-tight text-[var(--text-primary)]">
+            <h1 className="text-sm font-bold tracking-tight text-[var(--text-primary)]">
               PhilNITS Reviewer
             </h1>
-            <p className="text-xs text-[var(--text-muted)] flex items-center gap-1">
-              <Server className="w-3 h-3 text-[var(--accent-emerald)]" /> Windmill Automated Engine
+            <p className="text-[10px] text-[var(--text-muted)] flex items-center gap-1 font-mono">
+              <Server className="w-3 h-3 text-[var(--accent-emerald)]" /> Windmill Telemetry
             </p>
           </div>
         </div>
 
         {/* Navigation Tabs */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-1 h-full">
           {navItems.map((item) => {
             const isActive = activeTab === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all ${
+                className={`relative flex items-center gap-1.5 px-3.5 h-full text-xs font-semibold transition-all border-b-2 -mb-[1px] ${
                   isActive
-                    ? 'bg-[var(--bg-card-hover)] text-[var(--text-primary)] border border-[var(--border-hover)] shadow-sm'
-                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]'
+                    ? 'border-[var(--accent-cyan)] text-[var(--text-primary)] bg-[var(--bg-card-hover)]/30'
+                    : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]/10'
                 }`}
               >
                 {item.icon}
                 <span>{item.label}</span>
                 {item.badge !== undefined && item.badge > 0 && (
-                  <span className="badge badge-amber text-[10px] px-1.5 py-0.5">
+                  <span className="badge badge-amber text-[9px] px-1.5 py-0.5 rounded-full">
                     {item.badge}
                   </span>
                 )}
@@ -89,19 +105,73 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
 
-        {/* Right Section: Countdown + Theme Switcher */}
+        {/* Right Section: Countdown + Sync Status + Auth + Theme Switcher */}
         <div className="flex items-center gap-3">
           {/* Days Remaining Pill */}
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-semibold">
+          <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-semibold">
             <Calendar className="w-3.5 h-3.5" />
             <span>Oct 25 Exam: {daysRemaining} days</span>
           </div>
+
+          {/* Cloud Sync Status (only when logged in) */}
+          {currentUser && (
+            <div
+              title={
+                syncStatus === 'syncing' ? 'Syncing to cloud…' :
+                syncStatus === 'synced'  ? 'Progress saved to cloud' :
+                syncStatus === 'error'   ? 'Sync failed' :
+                syncStatus === 'offline' ? 'Offline – changes saved locally' :
+                'Cloud sync ready'
+              }
+              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-semibold transition-colors ${
+                syncStatus === 'syncing' ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-500' :
+                syncStatus === 'synced'  ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500' :
+                syncStatus === 'error'   ? 'bg-rose-500/10 border-rose-500/20 text-rose-500' :
+                syncStatus === 'offline' ? 'bg-slate-500/10 border-slate-500/20 text-slate-400' :
+                'bg-[var(--bg-card-hover)] border-[var(--border-color)] text-[var(--text-muted)]'
+              }`}
+            >
+              {syncStatus === 'syncing'
+                ? <Loader2 className="w-3 h-3 animate-spin" />
+                : syncStatus === 'offline'
+                ? <CloudOff className="w-3 h-3" />
+                : <Cloud className="w-3 h-3" />
+              }
+              <span className="hidden md:inline">
+                {syncStatus === 'syncing' ? 'Syncing' :
+                 syncStatus === 'synced'  ? 'Synced' :
+                 syncStatus === 'error'   ? 'Sync Error' :
+                 syncStatus === 'offline' ? 'Offline' :
+                 'Cloud'}
+              </span>
+            </div>
+          )}
+
+          {/* Auth Button */}
+          {currentUser ? (
+            <button
+              onClick={onLogoutClick}
+              title={`Logged in as ${currentUser.username}`}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-rose-500 border border-[var(--border-color)] text-xs font-semibold transition-colors"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Log Out</span>
+            </button>
+          ) : (
+            <button
+              onClick={onLoginClick}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-emerald)]/10 hover:bg-[var(--accent-emerald)]/20 text-[var(--accent-emerald)] border border-[var(--accent-emerald)]/30 text-xs font-semibold transition-colors"
+            >
+              <LogIn className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Log In</span>
+            </button>
+          )}
 
           {/* Theme Switcher Toggle */}
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             className="p-2 rounded-lg bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-color)] transition-colors"
-            title={`Switch to ${theme === 'dark' ? 'Academic Paper Light' : 'Modern Slate Dark'} Mode`}
+            title={`Switch to ${theme === 'dark' ? 'Academic Light' : 'Modern Dark'} Mode`}
           >
             {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
           </button>
@@ -109,7 +179,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Mobile Nav Drawer Bar */}
-      <div className="flex md:hidden overflow-x-auto px-4 py-2 border-t border-[var(--border-color)] gap-2">
+      <div className="flex md:hidden overflow-x-auto px-4 py-2 border-t border-[var(--border-color)] gap-2 bg-[var(--bg-sidebar)]">
         {navItems.map((item) => (
           <button
             key={item.id}
@@ -128,3 +198,4 @@ export const Navbar: React.FC<NavbarProps> = ({
     </header>
   );
 };
+export default Navbar;

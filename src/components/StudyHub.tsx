@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { SEED_STUDY_TOPICS, StudyTopic } from '../data/seed/study_topics';
+import React, { useState, useEffect } from 'react';
+import { SEED_STUDY_TOPICS } from '../data/seed/study_topics';
 import { CpuPipelineVisualizer } from './visuals/CpuPipelineVisualizer';
 import { ErdVisualizer } from './visuals/ErdVisualizer';
 import { RadixSandbox } from './visuals/RadixSandbox';
@@ -9,142 +9,77 @@ import { LogicGatePanel } from './visuals/LogicGatePanel';
 import { PertCpmVisualizer } from './visuals/PertCpmVisualizer';
 import { SqlJoinVisualizer } from './visuals/SqlJoinVisualizer';
 import { CryptoSignatureSimulator } from './visuals/CryptoSignatureSimulator';
-import { BookOpen, Award, ArrowRight, BookMarked, Code } from 'lucide-react';
+import { AlgorithmWalkthrough } from './AlgorithmWalkthrough';
+import { BookOpen, Award, ArrowRight, BookMarked, Code, List } from 'lucide-react';
+import { parseTopicSections, parseMarkdownToHtml } from '../utils/markdown';
+import { AiChatAssistant } from './AiChatAssistant';
 
 interface StudyHubProps {
   onStartTest: (category: string) => void;
 }
 
-// Converts standard LaTeX macros and subscripts/superscripts to readable Unicode / HTML elements
-function formatMathToUnicode(math: string): string {
-  let output = math;
-  
-  // Replace standard LaTeX macros
-  output = output.replace(/\\dots/g, '…');
-  output = output.replace(/\\sum/g, '∑');
-  output = output.replace(/\\cdot/g, '·');
-  output = output.replace(/\\rightarrow/g, ' ➔ ');
-  output = output.replace(/\\sim/g, '~');
-  output = output.replace(/\\geq/g, '≥');
-  output = output.replace(/\\leq/g, '≤');
-  output = output.replace(/\\max/g, 'max');
-  output = output.replace(/\\min/g, 'min');
-  output = output.replace(/\\text\{(.*?)\}/g, '$1');
-  
-  // Subscripts: _{...} or _x
-  output = output.replace(/_\{(.*?)\}/g, '<sub>$1</sub>');
-  output = output.replace(/_([a-zA-Z0-9\-+])/g, '<sub>$1</sub>');
-  
-  // Superscripts: ^{...} or ^x
-  output = output.replace(/\^\{(.*?)\}/g, '<sup>$1</sup>');
-  output = output.replace(/\^([a-zA-Z0-9\-+])/g, '<sup>$1</sup>');
-  
-  return output;
-}
-
-// Custom Markdown parser helper to return beautifully styled HTML structures (including LaTeX math blocks)
-function parseMarkdownToHtml(markdown: string): string {
-  if (!markdown) return '';
-  
-  const lines = markdown.split('\n');
-  let inList = false;
-  let inOrderedList = false;
-  
-  const processedLines = lines.map((line) => {
-    const cleanLine = line.trim();
-
-    // Check list closures
-    if (!cleanLine.startsWith('-') && !cleanLine.startsWith('*') && inList) {
-      inList = false;
-      return '</ul>' + parseLineDecorations(cleanLine);
-    }
-    if (!/^\d+\./.test(cleanLine) && inOrderedList) {
-      inOrderedList = false;
-      return '</ol>' + parseLineDecorations(cleanLine);
-    }
-
-    // Display Math Block ($$ ... $$)
-    if (cleanLine.startsWith('$$') && cleanLine.endsWith('$$')) {
-      const math = cleanLine.substring(2, cleanLine.length - 2);
-      return `<div class="font-mono text-sm text-center text-[var(--accent-cyan)] my-4 bg-[var(--bg-sidebar)] p-3 border border-[var(--border-color)] rounded-lg">${formatMathToUnicode(math)}</div>`;
-    }
-
-    // Heading 3
-    if (cleanLine.startsWith('### ')) {
-      return `<h3 class="text-sm font-bold text-[var(--text-primary)] mt-6 mb-3 border-b border-[var(--border-color)] pb-2 uppercase tracking-wider">${parseLineDecorations(cleanLine.substring(4))}</h3>`;
-    }
-    // Heading 4
-    if (cleanLine.startsWith('#### ')) {
-      return `<h4 class="text-xs font-semibold text-[var(--accent-cyan)] mt-5 mb-2 font-mono tracking-wide">${parseLineDecorations(cleanLine.substring(5))}</h4>`;
-    }
-
-    // Unordered list item
-    if (cleanLine.startsWith('- ') || cleanLine.startsWith('* ')) {
-      let output = '';
-      if (!inList) {
-        inList = true;
-        output += '<ul class="space-y-2 my-4">';
-      }
-      output += `<li class="ml-5 list-disc text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">${parseLineDecorations(cleanLine.substring(2))}</li>`;
-      return output;
-    }
-
-    // Ordered list item
-    if (/^\d+\.\s+/.test(cleanLine)) {
-      let output = '';
-      if (!inOrderedList) {
-        inOrderedList = true;
-        output += '<ol class="space-y-2 my-4">';
-      }
-      const match = cleanLine.match(/^(\d+)\.\s+(.*)/);
-      const content = match ? match[2] : cleanLine;
-      output += `<li class="ml-5 list-decimal text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">${parseLineDecorations(content)}</li>`;
-      return output;
-    }
-
-    // Empty lines
-    if (cleanLine === '') {
-      return '';
-    }
-
-    // Standard paragraph
-    return `<p class="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed my-3 font-sans">${parseLineDecorations(cleanLine)}</p>`;
-  });
-
-  let result = processedLines.filter(line => line !== '').join('\n');
-  if (inList) result += '</ul>';
-  if (inOrderedList) result += '</ol>';
-  
-  return result;
-}
-
-function parseLineDecorations(text: string): string {
-  let output = text;
-  // Bold: **text**
-  output = output.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-[var(--text-primary)]">$1</strong>');
-  // Inline code: `code`
-  output = output.replace(/`(.*?)`/g, '<code class="bg-[var(--code-bg)] text-[var(--code-text)] px-1.5 py-0.5 rounded font-mono text-[11px] border border-[var(--border-color)]">$1</code>');
-  // Inline Math: $math$
-  output = output.replace(/\$(.*?)\$/g, (match, mathExpr) => {
-    return `<span class="font-mono italic text-[var(--accent-cyan)] font-semibold">${formatMathToUnicode(mathExpr)}</span>`;
-  });
-  return output;
-}
-
 export const StudyHub: React.FC<StudyHubProps> = ({ onStartTest }) => {
   const [selectedTopicId, setSelectedTopicId] = useState<string>(SEED_STUDY_TOPICS[0].id);
+  const [activeSectionIdx, setActiveSectionIdx] = useState<number>(0);
 
   const activeTopic = SEED_STUDY_TOPICS.find((t) => t.id === selectedTopicId) || SEED_STUDY_TOPICS[0];
+  const sections = parseTopicSections(activeTopic.markdownContent);
+  const activeSection = sections[activeSectionIdx] || sections[0];
+
+  // Reset section index when topic changes
+  useEffect(() => {
+    setActiveSectionIdx(0);
+  }, [selectedTopicId]);
+
+  // Helper to split markdown and inject visualizers / walkthroughs inline
+  const renderContentWithComponents = (content: string) => {
+    const parts = content.split(/(\[\[VISUALIZER: \w+\]\]|\[\[WALKTHROUGH: \w+\]\])/g);
+    
+    return parts.map((part, index) => {
+      const visMatch = part.match(/^\[\[VISUALIZER: (\w+)\]\]$/);
+      if (visMatch) {
+        const name = visMatch[1];
+        switch (name) {
+          case 'RadixSandbox': return <RadixSandbox key={index} />;
+          case 'LogicGatePanel': return <LogicGatePanel key={index} />;
+          case 'CpuPipelineVisualizer': return <CpuPipelineVisualizer key={index} />;
+          case 'PagingSimulator': return <PagingSimulator key={index} />;
+          case 'SubnetCalculator': return <SubnetCalculator key={index} />;
+          case 'ErdVisualizer': return <ErdVisualizer key={index} />;
+          case 'SqlJoinVisualizer': return <SqlJoinVisualizer key={index} />;
+          case 'CryptoSignatureSimulator': return <CryptoSignatureSimulator key={index} />;
+          case 'PertCpmVisualizer': return <PertCpmVisualizer key={index} />;
+          default: return null;
+        }
+      }
+      
+      const walkMatch = part.match(/^\[\[WALKTHROUGH: (\w+)\]\]$/);
+      if (walkMatch) {
+        const name = walkMatch[1];
+        return <AlgorithmWalkthrough key={index} algorithmId={name} />;
+      }
+      
+      return (
+        <div 
+          key={index}
+          className="font-sans"
+          dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(part) }}
+        />
+      );
+    });
+  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
       
-      {/* Left Sidebar: Syllabus Domains List (Col 4) */}
-      <div className="lg:col-span-4 space-y-3">
+      {/* Left Sidebar: Syllabus Taxonomy AND Section Selector Modules (Col 3) */}
+      <div className="lg:col-span-3 space-y-4 lg:sticky lg:top-6">
+        
+        {/* Syllabus Taxonomy List */}
         <div className="glass-panel p-4 space-y-3 bg-[var(--bg-sidebar)]">
           <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5 border-b border-[var(--border-color)] pb-2">
             <BookOpen className="w-4 h-4 text-[var(--accent-cyan)]" />
-            <span>FE Syllabus Outline</span>
+            <span>Syllabus Taxonomy</span>
           </h3>
 
           <div className="space-y-1">
@@ -154,22 +89,51 @@ export const StudyHub: React.FC<StudyHubProps> = ({ onStartTest }) => {
                 onClick={() => setSelectedTopicId(topic.id)}
                 className={`w-full text-left p-3 rounded-lg text-xs font-semibold border transition-all ${
                   selectedTopicId === topic.id
-                    ? 'bg-[var(--bg-card)] border-[var(--accent-emerald)] text-[var(--text-primary)] shadow-sm'
+                    ? 'bg-[var(--bg-card)] border-[var(--accent-emerald)] text-[var(--text-primary)] shadow-sm font-bold'
                     : 'bg-transparent border-transparent text-[var(--text-secondary)] hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)]'
                 }`}
               >
-                <div className="text-[10px] text-[var(--text-muted)] uppercase mb-0.5">
+                <div className="text-[9px] text-[var(--text-muted)] uppercase mb-0.5 font-mono">
                   {topic.domainName}
                 </div>
-                <div>{topic.title}</div>
+                <div className="truncate">{topic.title}</div>
               </button>
             ))}
           </div>
         </div>
+
+        {/* Section Modules selector menu */}
+        <div className="glass-panel p-4 space-y-2.5 bg-[var(--bg-sidebar)]">
+          <h4 className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--text-muted)] border-b border-[var(--border-color)] pb-1.5 flex items-center gap-1">
+            <List className="w-3.5 h-3.5 text-[var(--accent-cyan)]" /> Topic Modules
+          </h4>
+          {sections.length > 0 ? (
+            <nav className="space-y-1 font-sans text-xs">
+              {sections.map((item, idx) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActiveSectionIdx(idx);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className={`w-full text-left py-2 px-2.5 rounded-md border text-xs transition-all ${
+                    activeSectionIdx === idx
+                      ? 'bg-[var(--accent-emerald)]/10 border-[var(--accent-emerald)] text-[var(--accent-emerald)] font-bold shadow-sm'
+                      : 'bg-transparent border-transparent text-[var(--text-secondary)] hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)] font-medium'
+                  }`}
+                >
+                  {idx + 1}. {item.title}
+                </button>
+              ))}
+            </nav>
+          ) : (
+            <div className="text-[10px] text-[var(--text-muted)] italic">No sections found.</div>
+          )}
+        </div>
       </div>
 
-      {/* Right Content Panel: Topic Study Material (Col 8) */}
-      <div className="lg:col-span-8 space-y-6">
+      {/* Right Content Panel: Full Width for Reading Material & Simulators (Col 9) */}
+      <div className="lg:col-span-9 space-y-6">
         <div className="glass-panel p-6 space-y-6">
           
           {/* Header */}
@@ -186,7 +150,7 @@ export const StudyHub: React.FC<StudyHubProps> = ({ onStartTest }) => {
           {/* Key takeaways cards */}
           <div className="space-y-2.5">
             <h4 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider flex items-center gap-1">
-              <Award className="w-4 h-4 text-amber-500" /> Key Exam Takeaways
+              <Award className="w-4 h-4 text-amber-500" /> Syllabus Core Takeaways
             </h4>
             <div className="grid grid-cols-1 gap-2">
               {activeTopic.takeaways.map((takeaway, idx) => (
@@ -197,45 +161,20 @@ export const StudyHub: React.FC<StudyHubProps> = ({ onStartTest }) => {
             </div>
           </div>
 
-          {/* Styled Parsed Markdown Content */}
-          <div 
-            className="border-t border-[var(--border-color)] pt-4 font-sans"
-            dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(activeTopic.markdownContent) }}
-          />
-
-          {/* Dynamic Visual Simulator Injection */}
-          {activeTopic.id === 'discrete-math' && (
-            <div className="border-t border-[var(--border-color)] pt-4 space-y-4">
-              <RadixSandbox />
-              <SubnetCalculator />
+          {/* Active module content */}
+          {activeSection ? (
+            <div className="space-y-4 border-t border-[var(--border-color)] pt-6">
+              <h3 className="text-base font-extrabold text-[var(--text-primary)] border-b border-[var(--border-color)] pb-2 uppercase tracking-wider font-mono">
+                {activeSectionIdx + 1}. {activeSection.title}
+              </h3>
+              
+              {/* Parsed long-form body content of the active section with inline components */}
+              <div className="space-y-4 pt-2">
+                {renderContentWithComponents(activeSection.content)}
+              </div>
             </div>
-          )}
-
-          {activeTopic.id === 'cpu-pipeline' && (
-            <div className="border-t border-[var(--border-color)] pt-4">
-              <CpuPipelineVisualizer />
-            </div>
-          )}
-
-          {activeTopic.id === 'db-normalization' && (
-            <div className="border-t border-[var(--border-color)] pt-4 space-y-4">
-              <ErdVisualizer />
-              <SqlJoinVisualizer />
-              <PagingSimulator />
-            </div>
-          )}
-
-          {activeTopic.id === 'network-security' && (
-            <div className="border-t border-[var(--border-color)] pt-4 space-y-4">
-              <LogicGatePanel />
-              <CryptoSignatureSimulator />
-            </div>
-          )}
-
-          {activeTopic.id === 'project-management' && (
-            <div className="border-t border-[var(--border-color)] pt-4">
-              <PertCpmVisualizer />
-            </div>
+          ) : (
+            <div className="text-sm text-[var(--text-secondary)] italic border-t border-[var(--border-color)] pt-6">Select a module to begin reading.</div>
           )}
 
           {/* Formula Display if configured */}
@@ -276,6 +215,7 @@ export const StudyHub: React.FC<StudyHubProps> = ({ onStartTest }) => {
         </div>
       </div>
 
+      <AiChatAssistant activeContext={`${activeTopic.title} - ${activeSection ? activeSection.title : ''}`} hide={false} />
     </div>
   );
 };

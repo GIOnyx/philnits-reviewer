@@ -3,6 +3,7 @@ import { SubjectAQuestion, LeitnerState } from '../types/exam';
 import { getDaysToExam, isQuestionDueToday } from '../utils/leitnerEngine';
 import { Repeat, Calendar, CheckCircle2, XCircle, Award, Clock } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { parseMarkdownToHtml } from '../utils/markdown';
 
 interface LeitnerDeckProps {
   questions: SubjectAQuestion[];
@@ -18,11 +19,13 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [selectedOpt, setSelectedOpt] = useState<number | null>(null);
   const [startTime] = useState<number>(Date.now());
+  const [answeredIds, setAnsweredIds] = useState<Set<string>>(new Set());
 
   const daysToExam = getDaysToExam();
 
-  // Filter questions that are due today according to Leitner engine
-  const dueQuestions = questions.filter((q) => isQuestionDueToday(leitnerStates[q.id]));
+  // Filter questions that are due today according to Leitner engine, OR have been answered in this session
+  // This prevents the array from shrinking out from under the user and instantly changing the question!
+  const dueQuestions = questions.filter((q) => isQuestionDueToday(leitnerStates[q.id]) || answeredIds.has(q.id));
   const currentQ = dueQuestions[currentIdx] || dueQuestions[0];
 
   // Calculate Leitner Box Distribution count (Box 1 - 5)
@@ -33,6 +36,7 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
   const handleSelectOption = (idx: number) => {
     if (!currentQ || selectedOpt !== null) return;
     setSelectedOpt(idx);
+    setAnsweredIds(prev => new Set(prev).add(currentQ.id));
 
     const isCorrect = idx === currentQ.correctIndex;
     const timeSpent = Math.max(1, Math.round((Date.now() - startTime) / 1000));
@@ -109,9 +113,10 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
             <span className="badge badge-cyan">{currentQ.subdomain}</span>
           </div>
 
-          <div className="text-base font-semibold text-[var(--text-primary)] leading-relaxed">
-            {currentQ.questionText}
-          </div>
+          <div 
+            className="text-base font-semibold text-[var(--text-primary)] text-left w-full space-y-3 font-sans"
+            dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(currentQ.questionText) }}
+          />
 
           {/* Options */}
           <div className="space-y-3">
