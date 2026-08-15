@@ -78,6 +78,14 @@ export interface LeitnerState {
   lastReviewedAt: string;
 }
 
+export interface MasteryState {
+  questionId: string;
+  consecutiveCorrect: number; // 0-3, resets to 0 on wrong answer
+  isMastered: boolean; // true when consecutiveCorrect reaches 3
+  totalAttempts: number;
+  lastAttemptedAt: string;
+}
+
 export interface DiagnosticMetrics {
   totalAttempted: number;
   totalCorrect: number;
