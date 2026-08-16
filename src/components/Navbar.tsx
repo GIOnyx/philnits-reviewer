@@ -56,8 +56,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'subject_a', label: 'Subject A', icon: <HelpCircle className="w-4 h-4" /> },
     { id: 'subject_b', label: 'Subject B', icon: <Code2 className="w-4 h-4" /> },
     { id: 'leitner', label: 'Leitner', icon: <Repeat className="w-4 h-4" />, badge: dueCount },
-    { id: 'flashcards', label: 'Flashcards', icon: <Layers className="w-4 h-4" /> },
-    { id: 'analytics', label: 'Analytics', icon: <BarChart3 className="w-4 h-4" /> }
+    { id: 'flashcards', label: 'Flashcards', icon: <Layers className="w-4 h-4" /> }
   ];
 
   return (
@@ -170,10 +169,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Theme Switcher Toggle */}
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-lg bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:bg-slate-600 hover:text-white border border-[var(--border-color)] transition-colors"
-            title={`Switch to ${theme === 'dark' ? 'Academic Light' : 'Modern Dark'} Mode`}
+            className="p-2 rounded-lg bg-amber-600 text-white border border-amber-700 hover:bg-amber-700 transition-colors"
+            title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
           >
-            {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-slate-200" />}
+            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
         </div>
       </div>

@@ -6,7 +6,6 @@ import { SubjectAExam } from './components/SubjectAExam';
 import { SubjectBWorkbench } from './components/SubjectBWorkbench';
 import { LeitnerDeck } from './components/LeitnerDeck';
 import { FlashcardDeck } from './components/FlashcardDeck';
-import { AnalyticsDashboard } from './components/AnalyticsDashboard';
 import { PhilnitsApiService } from './services/api';
 import {
   LocalUser,
@@ -205,13 +204,6 @@ export const App: React.FC = () => {
             flashcards={flashcards}
             masteryStates={masteryStates}
             onAnswerLogged={handleAnswerLogged}
-          />
-        )}
-        {activeTab === 'analytics' && (
-          <AnalyticsDashboard
-            logs={answerLogs}
-            leitnerStates={leitnerStates}
-            questions={subjectAQuestions}
           />
         )}
       </main>
