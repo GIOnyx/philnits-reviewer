@@ -179,3 +179,282 @@ export async function pushLeitnerState(
 
   return true;
 }
+
+export async function logUserAnswer(
+  username: string,
+  questionId: string,
+  isCorrect: boolean,
+  timeTakenSeconds: number,
+  examType: 'subject_a' | 'subject_b' | 'flashcard' | 'leitner'
+): Promise<boolean> {
+  const client = tryGetClient();
+  if (!client) return false;
+
+  const { error } = await client
+    .from('user_answer_history')
+    .insert({
+      username,
+      question_id: questionId,
+      is_correct: isCorrect,
+      time_taken_seconds: timeTakenSeconds,
+      exam_type: examType
+    });
+
+  if (error) {
+    console.error('[Supabase] logUserAnswer error:', error.message);
+    return false;
+  }
+
+  return true;
+}
+
+export async function getUserAnswerStats(
+  username: string,
+  examType?: string
+): Promise<any> {
+  const client = tryGetClient();
+  if (!client) return null;
+
+  let query = client
+    .from('user_answer_history')
+    .select('*')
+    .eq('username', username);
+
+  if (examType) {
+    query = query.eq('exam_type', examType);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error('[Supabase] getUserAnswerStats error:', error.message);
+    return null;
+  }
+
+  if (!data || data.length === 0) return null;
+
+  const totalAnswers = data.length;
+  const correctAnswers = data.filter(a => a.is_correct).length;
+  const accuracy = ((correctAnswers / totalAnswers) * 100).toFixed(2);
+  const avgTimeSeconds = (data.reduce((sum, a) => sum + (a.time_taken_seconds || 0), 0) / totalAnswers).toFixed(2);
+
+  return {
+    totalAnswers,
+    correctAnswers,
+    accuracy,
+    avgTimeSeconds,
+    data
+  };
+}
+
+export async function addBookmark(
+  username: string,
+  questionId: string
+): Promise<boolean> {
+  const client = tryGetClient();
+  if (!client) return false;
+
+  const { error } = await client
+    .from('user_bookmarks')
+    .insert({
+      username,
+      question_id: questionId
+    });
+
+  if (error && !error.message.includes('duplicate')) {
+    console.error('[Supabase] addBookmark error:', error.message);
+    return false;
+  }
+
+  return true;
+}
+
+export async function removeBookmark(
+  username: string,
+  questionId: string
+): Promise<boolean> {
+  const client = tryGetClient();
+  if (!client) return false;
+
+  const { error } = await client
+    .from('user_bookmarks')
+    .delete()
+    .eq('username', username)
+    .eq('question_id', questionId);
+
+  if (error) {
+    console.error('[Supabase] removeBookmark error:', error.message);
+    return false;
+  }
+
+  return true;
+}
+
+export async function getUserBookmarks(username: string): Promise<string[]> {
+  const client = tryGetClient();
+  if (!client) return [];
+
+  const { data, error } = await client
+    .from('user_bookmarks')
+    .select('question_id')
+    .eq('username', username);
+
+  if (error) {
+    console.error('[Supabase] getUserBookmarks error:', error.message);
+    return [];
+  }
+
+  return data?.map(b => b.question_id) || [];
+}
+
+export async function saveUserPreferences(
+  username: string,
+  preferences: {
+    theme?: string;
+    leitner_mode?: string;
+    leitner_browse_box?: number;
+    weak_area_spotlight?: boolean;
+  }
+): Promise<boolean> {
+  const client = tryGetClient();
+  if (!client) return false;
+
+  const { error } = await client
+    .from('user_preferences')
+    .upsert(
+      { username, ...preferences, updated_at: new Date().toISOString() },
+      { onConflict: 'username' }
+    );
+
+  if (error) {
+    console.error('[Supabase] saveUserPreferences error:', error.message);
+    return false;
+  }
+
+  return true;
+}
+
+export async function getUserPreferences(username: string): Promise<any> {
+  const client = tryGetClient();
+  if (!client) return null;
+
+  const { data, error } = await client
+    .from('user_preferences')
+    .select('*')
+    .eq('username', username)
+    .maybeSingle();
+
+  if (error) {
+    console.error('[Supabase] getUserPreferences error:', error.message);
+    return null;
+  }
+
+  return data;
+}
+
+export async function trackQuestionAttempt(
+  username: string,
+  questionId: string,
+  isAiGenerated: boolean = false
+): Promise<boolean> {
+  const client = tryGetClient();
+  if (!client) return false;
+
+  const { error } = await client
+    .from('question_attempt_tracking')
+    .upsert(
+      {
+        username,
+        question_id: questionId,
+        is_ai_generated: isAiGenerated,
+        attempt_count: client.rpc('increment_attempt_count', { username, question_id: questionId }),
+        last_attempted: new Date().toISOString()
+      },
+      { onConflict: 'username,question_id' }
+    );
+
+  if (error) {
+    console.error('[Supabase] trackQuestionAttempt error:', error.message);
+    return false;
+  }
+
+  return true;
+}
+
+export async function getBaseQuestionProgress(
+  username: string
+): Promise<{ baseAttempted: number; allBaseQuestionsAttempted: boolean }> {
+  const client = tryGetClient();
+  if (!client) return { baseAttempted: 0, allBaseQuestionsAttempted: false };
+
+  const { data, error } = await client
+    .from('question_attempt_tracking')
+    .select('question_id, is_ai_generated')
+    .eq('username', username)
+    .eq('is_ai_generated', false);
+
+  if (error) {
+    console.error('[Supabase] getBaseQuestionProgress error:', error.message);
+    return { baseAttempted: 0, allBaseQuestionsAttempted: false };
+  }
+
+  const baseAttempted = data?.length || 0;
+  // Assuming there are ~600 base questions total - adjust as needed
+  const totalBaseQuestions = 600;
+  const allBaseQuestionsAttempted = baseAttempted >= totalBaseQuestions;
+
+  return { baseAttempted, allBaseQuestionsAttempted };
+}
+
+export async function saveAiGeneratedQuestion(
+  username: string,
+  questionType: 'subject_a' | 'subject_b',
+  topic: string,
+  questionData: any
+): Promise<boolean> {
+  const client = tryGetClient();
+  if (!client) return false;
+
+  const { error } = await client
+    .from('ai_generated_questions')
+    .insert({
+      username,
+      question_type: questionType,
+      topic,
+      question_data: questionData
+    });
+
+  if (error) {
+    console.error('[Supabase] saveAiGeneratedQuestion error:', error.message);
+    return false;
+  }
+
+  return true;
+}
+
+export async function getUserAiQuestions(
+  username: string,
+  questionType?: string
+): Promise<any[]> {
+  const client = tryGetClient();
+  if (!client) return [];
+
+  let query = client
+    .from('ai_generated_questions')
+    .select('*')
+    .eq('username', username)
+    .order('created_at', { ascending: false });
+
+  if (questionType) {
+    query = query.eq('question_type', questionType);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error('[Supabase] getUserAiQuestions error:', error.message);
+    return [];
+  }
+
+  return data || [];
+}

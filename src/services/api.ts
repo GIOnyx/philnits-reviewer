@@ -93,7 +93,9 @@ export class PhilnitsApiService {
     isCorrect: boolean,
     timeTakenSeconds: number,
     existingLeitnerStates: Record<string, LeitnerState>,
-    existingMasteryStates: Record<string, MasteryState>
+    existingMasteryStates: Record<string, MasteryState>,
+    username?: string,
+    examType: 'subject_a' | 'subject_b' | 'flashcard' | 'leitner' = 'subject_a'
   ): Promise<{ leitner: Record<string, LeitnerState>; mastery: Record<string, MasteryState> }> {
     // Update Leitner (time-based spacing for Leitner tab)
     const updatedLeitnerState = updateLeitnerState(existingLeitnerStates[questionId], questionId, isCorrect);
@@ -209,7 +211,8 @@ Please verify your internet connection and verify that CORS is allowed by your n
   // Generate a dynamic practice question using Google Gemini API directly
   public static async generateDynamicQuestion(
     contextText: string,
-    isSubjectB: boolean
+    isSubjectB: boolean,
+    username?: string
   ): Promise<any> {
     if (!this.isGeminiConfigured()) {
       throw new Error('Gemini API key is not configured in .env');

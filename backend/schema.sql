@@ -79,3 +79,67 @@ CREATE TABLE IF NOT EXISTS flashcards (
 );
 
 CREATE INDEX IF NOT EXISTS idx_flashcards_topic ON flashcards(topic);
+
+-- 7. User Answer History & Analytics
+CREATE TABLE IF NOT EXISTS user_answer_history (
+    history_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username VARCHAR(100) NOT NULL,
+    question_id UUID NOT NULL,
+    is_correct BOOLEAN NOT NULL,
+    time_taken_seconds INT DEFAULT 0,
+    answered_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    exam_type VARCHAR(20) NOT NULL CHECK (exam_type IN ('subject_a', 'subject_b', 'flashcard', 'leitner'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_user_answer_history_username ON user_answer_history(username);
+CREATE INDEX IF NOT EXISTS idx_user_answer_history_question ON user_answer_history(question_id);
+CREATE INDEX IF NOT EXISTS idx_user_answer_history_type ON user_answer_history(exam_type);
+
+-- 8. User Bookmarks
+CREATE TABLE IF NOT EXISTS user_bookmarks (
+    bookmark_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username VARCHAR(100) NOT NULL,
+    question_id UUID NOT NULL,
+    bookmarked_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(username, question_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_user_bookmarks_username ON user_bookmarks(username);
+
+-- 9. User Preferences & Settings
+CREATE TABLE IF NOT EXISTS user_preferences (
+    username VARCHAR(100) PRIMARY KEY,
+    theme VARCHAR(20) DEFAULT 'dark',
+    leitner_mode VARCHAR(50) DEFAULT 'study',
+    leitner_browse_box INT DEFAULT 1,
+    weak_area_spotlight BOOLEAN DEFAULT TRUE,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 10. AI Generated Questions (Low Priority)
+CREATE TABLE IF NOT EXISTS ai_generated_questions (
+    question_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username VARCHAR(100) NOT NULL,
+    question_type VARCHAR(20) NOT NULL CHECK (question_type IN ('subject_a', 'subject_b')),
+    topic VARCHAR(255) NOT NULL,
+    question_data JSONB NOT NULL,
+    user_feedback INT DEFAULT 0 CHECK (user_feedback BETWEEN -1 AND 1),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    used_count INT DEFAULT 0
+);
+
+CREATE INDEX IF NOT EXISTS idx_ai_generated_questions_username ON ai_generated_questions(username);
+CREATE INDEX IF NOT EXISTS idx_ai_generated_questions_type ON ai_generated_questions(question_type);
+
+-- 11. Question Attempt Tracking (to enable "only AI when base questions done")
+CREATE TABLE IF NOT EXISTS question_attempt_tracking (
+    tracking_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username VARCHAR(100) NOT NULL,
+    question_id UUID NOT NULL,
+    is_ai_generated BOOLEAN DEFAULT FALSE,
+    attempt_count INT DEFAULT 0,
+    last_attempted TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(username, question_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_question_attempt_tracking_username ON question_attempt_tracking(username);

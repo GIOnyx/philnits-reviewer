@@ -50,7 +50,17 @@ export const App: React.FC = () => {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('philnits_theme', theme);
-  }, [theme]);
+    
+    // Sync theme to database if user logged in
+    if (currentUser && isSupabaseConfigured()) {
+      try {
+        const { saveUserPreferences } = require('./services/supabase');
+        saveUserPreferences(currentUser.username, { theme }).catch(() => {});
+      } catch (e) {
+        // silent
+      }
+    }
+  }, [theme, currentUser]);
 
   // Cloud sync helpers
   const syncFromCloud = useCallback(async (username: string) => {
@@ -105,9 +115,9 @@ export const App: React.FC = () => {
   }, [syncFromCloud]);
 
   // Answer handler
-  const handleAnswerLogged = async (questionId: string, isCorrect: boolean, timeSeconds: number) => {
+  const handleAnswerLogged = async (questionId: string, isCorrect: boolean, timeSeconds: number, examType: 'subject_a' | 'subject_b' | 'flashcard' | 'leitner' = 'subject_a') => {
     const updated = await PhilnitsApiService.logTelemetry(
-      questionId, isCorrect, timeSeconds, leitnerStates, masteryStates
+      questionId, isCorrect, timeSeconds, leitnerStates, masteryStates, currentUser?.username, examType
     );
     setLeitnerStates(updated.leitner);
     setMasteryStates(updated.mastery);
