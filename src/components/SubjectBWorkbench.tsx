@@ -126,16 +126,16 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
   return (
     <div className="space-y-6">
       {genError && (
-        <div className="p-3.5 rounded-lg border border-red-500/20 bg-red-500/10 text-rose-500 text-xs font-semibold flex items-center justify-between shadow-sm animate-pulse">
+        <div className="p-3.5 rounded-lg border border-rose-600 bg-rose-500 text-white text-xs font-semibold flex items-center justify-between shadow-sm animate-pulse">
           <span>{genError}</span>
-          <button onClick={() => setGenError(null)} className="text-[10px] underline hover:text-rose-400 cursor-pointer">Dismiss</button>
+          <button onClick={() => setGenError(null)} className="text-[10px] underline hover:opacity-80 cursor-pointer">Dismiss</button>
         </div>
       )}
       
       {/* Scenario Selector Header */}
       <div className="glass-panel p-4 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-2 overflow-x-auto">
-          <span className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider whitespace-nowrap">
+          <span className="text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wider whitespace-nowrap">
             Scenario Selector:
           </span>
           {scenarios.map((scen, idx) => (
@@ -148,7 +148,7 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
                 activeScenarioIdx === idx
                   ? 'bg-[var(--accent-cyan)] text-white shadow-sm'
-                  : 'bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                  : 'bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:text-[var(--text-primary)]'
               }`}
             >
               Scenario {idx + 1}: {scen.domain}
@@ -166,7 +166,7 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
           </button>
         </div>
 
-        <div className="text-xs text-[var(--text-muted)] font-mono">
+        <div className="text-xs text-[var(--text-primary)] font-mono">
           Year: {currentScenario.examYear} | Sub-questions: {currentScenario.subQuestions.length}
         </div>
       </div>
@@ -186,7 +186,7 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
 
             {/* Markdown Context Body */}
             <div 
-              className="prose dark:prose-invert max-w-none text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans"
+              className="prose dark:prose-invert max-w-none text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed font-sans"
               dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(currentScenario.contextMarkdown) }}
             />
           </div>
@@ -210,7 +210,7 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
                     className={`w-6 h-6 rounded-full text-xs font-bold font-mono transition-colors ${
                       activeSubQIdx === qIdx
                         ? 'bg-[var(--accent-emerald)] text-white'
-                        : 'bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:bg-[var(--border-color)]'
+                        : 'bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:bg-[var(--border-color)]'
                     }`}
                   >
                     {qIdx + 1}
@@ -253,9 +253,9 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
                     let optStyle = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
                     if (isAnswered) {
                       if (isTargetCorrect) {
-                        optStyle = 'border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold';
+                        optStyle = 'border-emerald-500 bg-emerald-500 text-white font-semibold';
                       } else if (isSelected) {
-                        optStyle = 'border-rose-500 bg-rose-500/10 text-rose-600 dark:text-rose-400';
+                        optStyle = 'border-rose-500 bg-rose-500 text-white';
                       } else {
                         optStyle = 'border-[var(--border-color)] opacity-50';
                       }
@@ -283,12 +283,12 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
 
                 {/* Explanation Box */}
                 {isAnswered && (
-                  <div className="p-3.5 rounded-lg bg-white border border-emerald-300 text-xs space-y-1.5 shadow-sm">
-                    <div className="flex items-center gap-1.5 font-bold text-emerald-600 uppercase tracking-wider text-[10px]">
+                  <div className="p-3.5 rounded-lg bg-emerald-500 border border-emerald-600 text-xs space-y-1.5 shadow-sm">
+                    <div className="flex items-center gap-1.5 font-bold text-white uppercase tracking-wider text-[10px]">
                       <Lightbulb className="w-3.5 h-3.5" /> Solution Rationale
                     </div>
                     <div 
-                      className="text-gray-900 leading-relaxed prose prose-sm max-w-none"
+                      className="text-white leading-relaxed prose prose-sm max-w-none"
                       dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(currentSubQ.explanation) }}
                     />
                   </div>

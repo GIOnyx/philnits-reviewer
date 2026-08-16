@@ -109,16 +109,16 @@ export function parseLineDecorations(text: string): string {
   output = output.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="/$2" alt="$1" class="max-w-full h-auto rounded-lg shadow-sm border border-[var(--border-color)] my-4 mx-auto" onerror="this.style.display=\'none\'" />');
 
   // Bold: **text**
-  output = output.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-[var(--text-primary)]">$1</strong>');
+  output = output.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-[var(--text-primary)] tracking-wide">$1</strong>');
   // Inline code: `code`
-  output = output.replace(/`(.*?)`/g, '<code class="bg-[var(--code-bg)] text-[var(--code-text)] px-1.5 py-0.5 rounded font-mono text-[11px] border border-[var(--border-color)]">$1</code>');
+  output = output.replace(/`(.*?)`/g, '<code class="bg-[var(--code-bg)] text-[var(--code-text)] px-2 py-1 rounded font-mono text-sm border border-[var(--border-color)] tracking-wider">$1</code>');
   // Display Math (if inline inside a paragraph): $$math$$
   output = output.replace(/\$\$(.*?)\$\$/g, (_, mathExpr) => {
-    return `<span class="block font-mono text-center italic text-[var(--accent-cyan)] font-semibold my-2">${formatMathToUnicode(mathExpr)}</span>`;
+    return `<span class="block font-mono text-center italic text-[var(--accent-cyan)] font-semibold my-3 tracking-wide">${formatMathToUnicode(mathExpr)}</span>`;
   });
   // Inline Math: $math$
   output = output.replace(/\$([^$]+?)\$/g, (_, mathExpr) => {
-    return `<span class="font-mono italic text-[var(--accent-cyan)] font-semibold mx-1">${formatMathToUnicode(mathExpr)}</span>`;
+    return `<span class="font-mono italic text-[var(--accent-cyan)] font-semibold mx-2 tracking-wide">${formatMathToUnicode(mathExpr)}</span>`;
   });
   return output;
 }
@@ -148,7 +148,7 @@ export function parseMarkdownToHtml(markdown: string): string {
           .replace(/^\$\$/, '')
           .replace(/\$\$$/, '')
           .trim();
-        return `<div class="font-mono text-sm text-left text-[var(--accent-cyan)] my-4 bg-[var(--bg-sidebar)] p-4 border border-[var(--border-color)] rounded-lg overflow-x-auto whitespace-pre-wrap">${formatMathToUnicode(mathContent)}</div>`;
+        return `<div class="font-mono text-base text-left text-[var(--accent-cyan)] my-4 bg-[var(--bg-sidebar)] p-4 border border-[var(--border-color)] rounded-lg overflow-x-auto whitespace-pre-wrap tracking-wider">${formatMathToUnicode(mathContent)}</div>`;
       } else {
         mathBlockContent += '\n' + line;
         return '';
@@ -172,7 +172,7 @@ export function parseMarkdownToHtml(markdown: string): string {
         if (inList) { inList = false; prefix += '</ul>'; }
         if (inOrderedList) { inOrderedList = false; prefix += '</ol>'; }
         inCodeBlock = true;
-        return `${prefix}<pre class="pseudocode-container my-3"><code class="font-mono text-[11px] sm:text-xs text-[var(--code-text)]">`;
+        return `${prefix}<pre class="pseudocode-container my-3"><code class="font-mono text-sm text-[var(--code-text)] tracking-wider">`;
       }
     }
 
@@ -199,11 +199,11 @@ export function parseMarkdownToHtml(markdown: string): string {
       inDeepDive = true;
       const title = cleanLine.substring(13).trim();
       return `${prefix}<details class="my-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-sidebar)] overflow-hidden transition-all duration-300">
-        <summary class="flex items-center justify-between p-4 font-bold text-xs uppercase tracking-wider text-[var(--accent-cyan)] cursor-pointer hover:bg-[var(--bg-card-hover)] select-none">
+        <summary class="flex items-center justify-between p-4 font-bold text-sm uppercase tracking-widest text-[var(--accent-cyan)] cursor-pointer hover:bg-[var(--bg-card-hover)] select-none">
           <span>📖 Deep Dive: ${title}</span>
-          <span class="text-[10px] text-[var(--text-muted)] font-mono border border-[var(--border-color)] px-1.5 py-0.5 rounded">Click to expand</span>
+          <span class="text-xs text-[var(--text-muted)] font-mono border border-[var(--border-color)] px-2 py-1 rounded tracking-wide">Click to expand</span>
         </summary>
-        <div class="p-4 border-t border-[var(--border-color)] text-xs sm:text-sm text-[var(--text-secondary)] space-y-3 bg-[var(--bg-card)]">`;
+        <div class="p-4 border-t border-[var(--border-color)] text-sm text-[var(--text-secondary)] space-y-3 bg-[var(--bg-card)] tracking-wide">`;
     }
 
     // Display Math Block ($$ ... $$)
@@ -212,7 +212,7 @@ export function parseMarkdownToHtml(markdown: string): string {
       if (inList) { inList = false; prefix += '</ul>'; }
       if (inOrderedList) { inOrderedList = false; prefix += '</ol>'; }
       const math = cleanLine.substring(2, cleanLine.length - 2);
-      return `${prefix}<div class="font-mono text-sm text-center text-[var(--accent-cyan)] my-4 bg-[var(--bg-sidebar)] p-3 border border-[var(--border-color)] rounded-lg">${formatMathToUnicode(math)}</div>`;
+      return `${prefix}<div class="font-mono text-center text-[var(--accent-cyan)] my-4 bg-[var(--bg-sidebar)] p-3 border border-[var(--border-color)] rounded-lg tracking-wide">${formatMathToUnicode(math)}</div>`;
     }
 
     // Heading 1
@@ -221,7 +221,7 @@ export function parseMarkdownToHtml(markdown: string): string {
       if (inList) { inList = false; prefix += '</ul>'; }
       if (inOrderedList) { inOrderedList = false; prefix += '</ol>'; }
       const title = cleanLine.substring(2).trim();
-      return `${prefix}<h1 class="text-lg font-extrabold text-[var(--accent-cyan)] mt-6 mb-4 border-b-2 border-[var(--border-color)] pb-2">${parseLineDecorations(title)}</h1>`;
+      return `${prefix}<h1 class="text-2xl font-extrabold text-[var(--accent-cyan)] mt-6 mb-4 border-b-2 border-[var(--border-color)] pb-2 tracking-wider">${parseLineDecorations(title)}</h1>`;
     }
 
     // Heading 2
@@ -230,7 +230,7 @@ export function parseMarkdownToHtml(markdown: string): string {
       if (inList) { inList = false; prefix += '</ul>'; }
       if (inOrderedList) { inOrderedList = false; prefix += '</ol>'; }
       const title = cleanLine.substring(3).trim();
-      return `${prefix}<h2 class="text-base font-bold text-[var(--text-primary)] mt-5 mb-3 border-b border-[var(--border-color)] pb-1">${parseLineDecorations(title)}</h2>`;
+      return `${prefix}<h2 class="text-lg font-bold text-[var(--text-primary)] mt-5 mb-3 border-b border-[var(--border-color)] pb-1 tracking-wider">${parseLineDecorations(title)}</h2>`;
     }
 
     // Heading 3
@@ -240,7 +240,7 @@ export function parseMarkdownToHtml(markdown: string): string {
       if (inOrderedList) { inOrderedList = false; prefix += '</ol>'; }
       const title = cleanLine.substring(4).trim();
       const id = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      return `${prefix}<h3 id="${id}" class="text-sm font-bold text-[var(--text-primary)] mt-6 mb-3 border-b border-[var(--border-color)] pb-2 uppercase tracking-wider scroll-mt-6">${parseLineDecorations(title)}</h3>`;
+      return `${prefix}<h3 id="${id}" class="text-base font-bold text-[var(--text-primary)] mt-6 mb-3 border-b border-[var(--border-color)] pb-2 uppercase tracking-widest scroll-mt-6">${parseLineDecorations(title)}</h3>`;
     }
     
     // Heading 4
@@ -250,7 +250,7 @@ export function parseMarkdownToHtml(markdown: string): string {
       if (inOrderedList) { inOrderedList = false; prefix += '</ol>'; }
       const title = cleanLine.substring(5).trim();
       const id = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      return `${prefix}<h4 id="${id}" class="text-xs font-semibold text-[var(--accent-cyan)] mt-5 mb-2 font-mono tracking-wide scroll-mt-6">${parseLineDecorations(title)}</h4>`;
+      return `${prefix}<h4 id="${id}" class="text-sm font-semibold text-[var(--accent-cyan)] mt-5 mb-2 font-mono tracking-widest scroll-mt-6">${parseLineDecorations(title)}</h4>`;
     }
 
     // Unordered list item
@@ -264,7 +264,7 @@ export function parseMarkdownToHtml(markdown: string): string {
         inList = true;
         output += '<ul class="space-y-2 my-4">';
       }
-      output += `<li class="ml-5 list-disc text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">${parseLineDecorations(cleanLine.substring(2))}</li>`;
+      output += `<li class="ml-6 list-disc text-sm text-[var(--text-secondary)] leading-relaxed tracking-wide">${parseLineDecorations(cleanLine.substring(2))}</li>`;
       return output;
     }
 
@@ -281,7 +281,7 @@ export function parseMarkdownToHtml(markdown: string): string {
       }
       const match = cleanLine.match(/^(\d+)\.\s+(.*)/);
       const content = match ? match[2] : cleanLine;
-      output += `<li class="ml-5 list-decimal text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">${parseLineDecorations(content)}</li>`;
+      output += `<li class="ml-6 list-decimal text-sm text-[var(--text-secondary)] leading-relaxed tracking-wide">${parseLineDecorations(content)}</li>`;
       return output;
     }
 
@@ -300,7 +300,7 @@ export function parseMarkdownToHtml(markdown: string): string {
       inOrderedList = false;
       prefix = '</ol>';
     }
-    return `${prefix}<p class="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed my-3 font-sans">${parseLineDecorations(cleanLine)}</p>`;
+    return `${prefix}<p class="text-sm text-[var(--text-secondary)] leading-relaxed my-3 font-sans tracking-wide">${parseLineDecorations(cleanLine)}</p>`;
   });
 
   let result = processedLines.filter(line => line !== '').join('\n');

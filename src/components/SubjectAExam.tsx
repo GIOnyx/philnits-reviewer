@@ -183,9 +183,9 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {genError && (
-        <div className="p-3.5 rounded-lg border border-red-500/20 bg-red-500/10 text-rose-500 text-xs font-semibold flex items-center justify-between shadow-sm animate-pulse">
+        <div className="p-3.5 rounded-lg border border-rose-600 bg-rose-500 text-white text-xs font-semibold flex items-center justify-between shadow-sm animate-pulse">
           <span>{genError}</span>
-          <button onClick={() => setGenError(null)} className="text-[10px] underline hover:text-rose-400 cursor-pointer">Dismiss</button>
+          <button onClick={() => setGenError(null)} className="text-[10px] underline hover:opacity-80 cursor-pointer">Dismiss</button>
         </div>
       )}
       
@@ -194,7 +194,7 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
         <div className="flex items-center gap-2 flex-wrap">
           {filterSubdomain ? (
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-amber-500 bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded-md">
+              <span className="text-xs font-semibold text-white bg-amber-500 border border-amber-600 px-2.5 py-1 rounded-md">
                 Active Topic Filter: {filterSubdomain}
               </span>
               {onClearFilter && (
@@ -205,7 +205,7 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
             </div>
           ) : (
             <>
-              <span className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
+              <span className="text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wider">
                 Category Filter:
               </span>
               {['All', ...availableCategories].map((cat) => (
@@ -218,7 +218,7 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
                   className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
                     selectedCategory === cat
                       ? 'bg-[var(--accent-emerald)] text-white'
-                      : 'bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                      : 'bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:text-[var(--text-primary)]'
                   }`}
                 >
                   {cat}
@@ -238,14 +238,14 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
           </button>
         </div>
 
-        <div className="flex items-center gap-3 text-xs font-medium text-[var(--text-secondary)]">
+        <div className="flex items-center gap-3 text-xs font-medium text-[var(--text-primary)]">
           <span>Question {currentIndex + 1} of {filteredQuestions.length}</span>
           <button
             onClick={() => toggleBookmark(currentQ.id)}
             className={`p-1.5 rounded-md border border-[var(--border-color)] transition-colors ${
               bookmarkedIds.has(currentQ.id)
-                ? 'text-amber-500 bg-amber-500/10 border-amber-500/30'
-                : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                ? 'text-white bg-amber-500 border-amber-600'
+                : 'text-[var(--text-primary)] hover:text-[var(--text-primary)]'
             }`}
             title="Bookmark for review"
           >
@@ -262,7 +262,7 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
           <div className="flex items-center gap-2">
             <span className="badge badge-emerald">{currentQ.category}</span>
             <span className="badge badge-cyan">{currentQ.subdomain}</span>
-            <span className="text-xs text-[var(--text-muted)]">Exam Year: {currentQ.examYear}</span>
+            <span className="text-xs text-[var(--text-primary)] font-medium">Exam Year: {currentQ.examYear}</span>
           </div>
           {isAnswered && (
             <span className={`badge ${isCorrect ? 'badge-emerald' : 'badge-rose'}`}>
@@ -287,9 +287,9 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
             let optionStyle = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
             if (isAnswered) {
               if (isTargetCorrect) {
-                optionStyle = 'border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold';
+                optionStyle = 'border-emerald-500 bg-emerald-500 text-white font-semibold';
               } else if (isSelected) {
-                optionStyle = 'border-rose-500 bg-rose-500/10 text-rose-600 dark:text-rose-400';
+                optionStyle = 'border-rose-500 bg-rose-500 text-white';
               } else {
                 optionStyle = 'border-[var(--border-color)] opacity-50';
               }
@@ -317,12 +317,12 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
 
         {/* Rationale Explanation Box */}
         {showExplanations[currentQ.id] && (
-          <div className="p-4 rounded-xl bg-white border border-emerald-300 space-y-2 shadow-sm">
-            <div className="flex items-center gap-2 text-xs font-bold text-emerald-600 uppercase tracking-wider">
+          <div className="p-4 rounded-xl bg-emerald-500 border border-emerald-600 space-y-2 shadow-sm">
+            <div className="flex items-center gap-2 text-xs font-bold text-white uppercase tracking-wider">
               <HelpCircle className="w-4 h-4" /> Explanation & Solution Rationale
             </div>
             <div 
-              className="text-sm text-gray-900 leading-relaxed prose prose-sm max-w-none"
+              className="text-sm text-white leading-relaxed prose prose-sm max-w-none"
               dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(currentQ.explanation) }}
             />
           </div>

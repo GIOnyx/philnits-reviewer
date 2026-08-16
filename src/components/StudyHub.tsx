@@ -75,7 +75,7 @@ export const StudyHub: React.FC<StudyHubProps> = () => {
         
         {/* Syllabus Taxonomy List */}
         <div className="glass-panel p-4 space-y-3 bg-[var(--bg-sidebar)]">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5 border-b border-[var(--border-color)] pb-2">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] flex items-center gap-1.5 border-b border-[var(--border-color)] pb-2">
             <BookOpen className="w-4 h-4 text-[var(--accent-cyan)]" />
             <span>Syllabus Taxonomy</span>
           </h3>
@@ -102,7 +102,7 @@ export const StudyHub: React.FC<StudyHubProps> = () => {
 
         {/* Section Modules selector menu */}
         <div className="glass-panel p-4 space-y-2.5 bg-[var(--bg-sidebar)]">
-          <h4 className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--text-muted)] border-b border-[var(--border-color)] pb-1.5 flex items-center gap-1">
+          <h4 className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--text-primary)] border-b border-[var(--border-color)] pb-1.5 flex items-center gap-1">
             <List className="w-3.5 h-3.5 text-[var(--accent-cyan)]" /> Topic Modules
           </h4>
           {sections.length > 0 ? (
@@ -117,7 +117,7 @@ export const StudyHub: React.FC<StudyHubProps> = () => {
                   className={`w-full text-left py-2 px-2.5 rounded-md border text-xs transition-all ${
                     activeSectionIdx === idx
                       ? 'bg-[var(--accent-emerald)]/10 border-[var(--accent-emerald)] text-[var(--accent-emerald)] font-bold shadow-sm'
-                      : 'bg-transparent border-transparent text-[var(--text-secondary)] hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)] font-medium'
+                      : 'bg-transparent border-transparent text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)] font-medium'
                   }`}
                 >
                   {idx + 1}. {item.title}

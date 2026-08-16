@@ -146,8 +146,8 @@ export const TraceTableGrid: React.FC<TraceTableGridProps> = ({ spec, onVerified
       {evaluated && (
         <div className={`mt-3 p-3 rounded-md flex items-center justify-between text-xs font-medium ${
           correctCount === totalFields
-            ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
-            : 'bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400'
+            ? 'bg-emerald-500 border border-emerald-600 text-white'
+            : 'bg-rose-500 border border-rose-600 text-white'
         }`}>
           <div className="flex items-center gap-2">
             {correctCount === totalFields ? (

@@ -305,7 +305,7 @@ export const AlgorithmWalkthrough: React.FC<AlgorithmWalkthroughProps> = ({ algo
 
   if (!algo) {
     return (
-      <div className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-500 rounded-lg flex items-center gap-2 text-xs font-semibold">
+      <div className="p-4 bg-rose-500 border border-rose-600 text-white rounded-lg flex items-center gap-2 text-xs font-semibold">
         <HelpCircle className="w-4 h-4" />
         <span>Algorithm Walkthrough "{algorithmId}" not found in register.</span>
       </div>

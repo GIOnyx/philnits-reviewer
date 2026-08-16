@@ -146,11 +146,11 @@ export const CryptoSignatureSimulator: React.FC = () => {
             </div>
 
             {verified ? (
-              <div className="p-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 font-bold rounded flex items-center gap-1.5 mt-2 text-xs">
+              <div className="p-2 bg-emerald-500 border border-emerald-600 text-white font-bold rounded flex items-center gap-1.5 mt-2 text-xs">
                 <CheckCircle2 className="w-4 h-4" /> Signature Valid! Message integrity and authenticity verified (Non-Repudiation).
               </div>
             ) : (
-              <div className="p-2 bg-rose-500/10 border border-rose-500/20 text-rose-500 font-bold rounded flex items-center gap-1.5 mt-2 text-xs">
+              <div className="p-2 bg-rose-500 border border-rose-600 text-white font-bold rounded flex items-center gap-1.5 mt-2 text-xs">
                 <ShieldAlert className="w-4 h-4" /> Signature Invalid! Message tampered or wrong keys.
               </div>
             )}

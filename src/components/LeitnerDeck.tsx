@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { SubjectAQuestion, LeitnerState } from '../types/exam';
+import { SubjectAQuestion, LeitnerState, MasteryState } from '../types/exam';
 import { getDaysToExam, isQuestionDueToday } from '../utils/leitnerEngine';
 import { Repeat, Calendar, CheckCircle2, XCircle, Award, Clock, Grid3x3, Play, Star, TrendingDown } from 'lucide-react';
 import { registerKeyboardHandlers, clearKeyboardHandlers } from '../utils/globalKeyboardShortcuts';
-import { saveQuestionIndex, getQuestionIndex } from '../utils/masteryEngine';
+import { saveQuestionIndex, getQuestionIndex, getStoredMasteryStates } from '../utils/masteryEngine';
 import { parseMarkdownToHtml } from '../utils/markdown';
 
 type StudyMode = 'study' | 'browse';
@@ -11,6 +11,7 @@ type StudyMode = 'study' | 'browse';
 interface LeitnerDeckProps {
   questions: SubjectAQuestion[];
   leitnerStates: Record<string, LeitnerState>;
+  masteryStates?: Record<string, MasteryState>;
   onAnswerLogged: (questionId: string, isCorrect: boolean, timeSeconds: number) => void;
 }
 
@@ -19,8 +20,11 @@ const BOX_INTERVALS = ['1 Day', '3 Days', '7 Days', '14 Days', '30 Days'];
 export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
   questions,
   leitnerStates,
+  masteryStates: incomingMasteryStates,
   onAnswerLogged
 }) => {
+  // Use incoming mastery states or load from localStorage
+  const masteryStates = incomingMasteryStates || getStoredMasteryStates();
   // Mode and box selection state
   const [mode, setMode] = useState<StudyMode>(() => {
     if (typeof window !== 'undefined') {
@@ -42,7 +46,20 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
   const [answeredIds, setAnsweredIds] = useState<Set<string>>(new Set());
 
   // Browse mode state
-  const [selectedCard, setSelectedCard] = useState<SubjectAQuestion | null>(null);
+  const [selectedCard, setSelectedCard] = useState<SubjectAQuestion | null>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('leitner-browse-selected-card');
+      if (stored) {
+        try {
+          const cardId = JSON.parse(stored);
+          return questions.find(q => q.id === cardId) || null;
+        } catch {
+          return null;
+        }
+      }
+    }
+    return null;
+  });
   const [browseSelectedOpt, setBrowseSelectedOpt] = useState<number | null>(null);
 
   // Bookmarks state
@@ -64,7 +81,13 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
   });
 
   // Weak area spotlight
-  const [showWeakAreaSpotlight, setShowWeakAreaSpotlight] = useState<boolean>(true);
+  const [showWeakAreaSpotlight, setShowWeakAreaSpotlight] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('leitner-weak-area-spotlight');
+      return stored ? JSON.parse(stored) : true;
+    }
+    return true;
+  });
 
   // Persist mode changes to localStorage
   useEffect(() => {
@@ -89,6 +112,20 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
   useEffect(() => {
     localStorage.setItem('leitner-exam-years', JSON.stringify(Array.from(selectedYears)));
   }, [selectedYears]);
+
+  // Persist weak area spotlight state
+  useEffect(() => {
+    localStorage.setItem('leitner-weak-area-spotlight', JSON.stringify(showWeakAreaSpotlight));
+  }, [showWeakAreaSpotlight]);
+
+  // Persist browse mode selected card
+  useEffect(() => {
+    if (selectedCard) {
+      localStorage.setItem('leitner-browse-selected-card', JSON.stringify(selectedCard.id));
+    } else {
+      localStorage.removeItem('leitner-browse-selected-card');
+    }
+  }, [selectedCard?.id]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -124,17 +161,36 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
   const daysToExam = getDaysToExam();
 
   // Study mode: Filter questions that are due today according to Leitner engine
-  let dueQuestions = questions.filter((q) => isQuestionDueToday(leitnerStates[q.id]) || answeredIds.has(q.id));
+  let dueQuestions = questions.filter((q) => {
+    // Validate exam year is reasonable
+    if (typeof q.examYear !== 'number' || q.examYear <= 0 || q.examYear > new Date().getFullYear() + 1) {
+      return false;
+    }
+    return isQuestionDueToday(leitnerStates[q.id]) || answeredIds.has(q.id);
+  });
   
   // Apply exam year filter
   if (selectedYears.size > 0) {
     dueQuestions = dueQuestions.filter((q) => selectedYears.has(q.examYear));
   }
   
+  // Reset currentIdx if it exceeds the filtered question pool
+  useEffect(() => {
+    if (currentIdx >= dueQuestions.length && dueQuestions.length > 0) {
+      setCurrentIdx(0);
+    }
+  }, [dueQuestions.length, currentIdx]);
+  
   const currentQ = dueQuestions[currentIdx] || dueQuestions[0];
 
   // Browse mode: Get all cards in the selected box
-  let browseQuestions = questions.filter((q) => leitnerStates[q.id]?.currentBox === browseBox);
+  let browseQuestions = questions.filter((q) => {
+    // Validate exam year
+    if (typeof q.examYear !== 'number' || q.examYear <= 0 || q.examYear > new Date().getFullYear() + 1) {
+      return false;
+    }
+    return leitnerStates[q.id]?.currentBox === browseBox;
+  });
   
   // Apply exam year filter to browse mode
   if (selectedYears.size > 0) {
@@ -146,10 +202,14 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
     return Object.values(leitnerStates).filter((st) => st.currentBox === boxNum).length;
   });
 
-  // Get available exam years
-  const availableYears = Array.from(new Set(questions.map(q => q.examYear))).sort((a, b) => b - a);
+  // Get available exam years (with validation)
+  const availableYears = Array.from(new Set(
+    questions
+      .map(q => q.examYear)
+      .filter(year => typeof year === 'number' && year > 0 && year <= new Date().getFullYear() + 1)
+  )).sort((a, b) => b - a);
 
-  // Calculate domain accuracy for weak area spotlight
+  // Calculate domain accuracy for weak area spotlight using mastery data
   const calculateWeakAreas = () => {
     const domainStats: Record<string, { correct: number; total: number }> = {};
     
@@ -159,9 +219,9 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
       }
       domainStats[q.subdomain].total++;
       
-      // Estimate if mastered based on leitnerState box position
-      const state = leitnerStates[q.id];
-      if (state && state.currentBox >= 4) {
+      // Use mastery state to determine if question is mastered
+      const masteryState = masteryStates[q.id];
+      if (masteryState?.isMastered) {
         domainStats[q.subdomain].correct++;
       }
     });
@@ -243,8 +303,8 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
               onClick={() => toggleBookmark(currentQ.id)}
               className={`ml-auto p-1.5 rounded-lg border transition-all ${
                 bookmarkedIds.has(currentQ.id)
-                  ? 'border-pink-500/30 bg-pink-500/10 text-pink-500'
-                  : 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-muted)] hover:text-pink-500'
+                  ? 'border-pink-600 bg-pink-500 text-white'
+                  : 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:text-pink-500'
               }`}
               title="Bookmark (B)"
             >
@@ -266,9 +326,9 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
               let style = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
               if (selectedOpt !== null) {
                 if (isTargetCorrect) {
-                  style = 'border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold';
+                  style = 'border-emerald-500 bg-emerald-500 text-white font-semibold';
                 } else if (isSelected) {
-                  style = 'border-rose-500 bg-rose-500/10 text-rose-600 dark:text-rose-400';
+                  style = 'border-rose-500 bg-rose-500 text-white';
                 } else {
                   style = 'opacity-40 border-[var(--border-color)]';
                 }
@@ -376,9 +436,9 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
               let style = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
               if (browseSelectedOpt !== null) {
                 if (isTargetCorrect) {
-                  style = 'border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold';
+                  style = 'border-emerald-500 bg-emerald-500 text-white font-semibold';
                 } else if (isSelected) {
-                  style = 'border-rose-500 bg-rose-500/10 text-rose-600 dark:text-rose-400';
+                  style = 'border-rose-500 bg-rose-500 text-white';
                 } else {
                   style = 'opacity-40 border-[var(--border-color)]';
                 }
@@ -420,8 +480,8 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
                     }}
                     className={`absolute top-3 right-3 p-1.5 rounded border transition-all ${
                       bookmarkedIds.has(q.id)
-                        ? 'border-pink-500/30 bg-pink-500/10 text-pink-500'
-                        : 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-muted)] hover:text-pink-500'
+                        ? 'border-pink-600 bg-pink-500 text-white'
+                        : 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:text-pink-500'
                     }`}
                     title="Bookmark (B)"
                   >
@@ -478,12 +538,12 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-semibold">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500 border border-amber-600 text-white text-xs font-semibold">
               <Clock className="w-4 h-4" />
               <span>Time to Exam: {daysToExam} Days</span>
             </div>
 
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-pink-500/10 border border-pink-500/20 text-pink-500 text-xs font-semibold cursor-pointer hover:bg-pink-500/20 transition-all" title={`${bookmarkedIds.size} bookmarks`}>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-pink-500 border border-pink-600 text-white text-xs font-semibold cursor-pointer hover:opacity-90 transition-all" title={`${bookmarkedIds.size} bookmarks`}>
               <Star className="w-4 h-4" />
               <span>{bookmarkedIds.size}</span>
             </div>
@@ -546,8 +606,8 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
                 }}
                 className={`px-3 py-1.5 rounded text-xs font-semibold transition-all border ${
                   selectedYears.has(year)
-                    ? 'border-[var(--accent-emerald)] bg-[var(--accent-emerald)]/10 text-[var(--accent-emerald)]'
-                    : 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:border-[var(--border-hover)]'
+                    ? 'border-[var(--accent-emerald)] bg-[var(--accent-emerald)] text-white'
+                    : 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]'
                 }`}
               >
                 {year}

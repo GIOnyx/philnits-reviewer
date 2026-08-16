@@ -145,7 +145,7 @@ export const CpuPipelineVisualizer: React.FC = () => {
 
       {/* Explanatory Message */}
       {hazardInjected && (
-        <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-lg text-xs text-rose-600 dark:text-rose-400 space-y-1">
+        <div className="p-3 bg-rose-500 border border-rose-600 rounded-lg text-xs text-white space-y-1">
           <p className="font-bold flex items-center gap-1">
             <AlertTriangle className="w-4 h-4" /> Pipeline Stall / Bubble Detected!
           </p>

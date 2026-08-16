@@ -70,10 +70,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             FE
           </div>
           <div>
-            <h1 className="text-sm font-bold tracking-tight text-[var(--text-primary)]">
+            <h1 className="text-base font-bold tracking-tight text-[var(--text-primary)]">
               PhilNITS Reviewer
             </h1>
-            <p className="text-[10px] text-[var(--text-muted)] flex items-center gap-1 font-mono">
+            <p className="text-[11px] text-[var(--text-secondary)] flex items-center gap-1 font-mono">
               <Server className="w-3 h-3 text-[var(--accent-emerald)]" /> Windmill Telemetry
             </p>
           </div>
@@ -87,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`relative flex items-center gap-1.5 px-3.5 h-full text-xs font-semibold transition-all border-b-2 -mb-[1px] ${
+                className={`relative flex items-center gap-1.5 px-3.5 h-full text-sm font-semibold transition-all border-b-2 -mb-[1px] ${
                   isActive
                     ? 'border-[var(--accent-cyan)] text-[var(--text-primary)] bg-[var(--bg-card-hover)]/30'
                     : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]/10'
@@ -96,7 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {item.icon}
                 <span>{item.label}</span>
                 {item.badge !== undefined && item.badge > 0 && (
-                  <span className="badge badge-amber text-[9px] px-1.5 py-0.5 rounded-full">
+                  <span className="badge badge-amber text-[11px] px-2 py-0.5 rounded-full">
                     {item.badge}
                   </span>
                 )}
@@ -108,7 +108,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Right Section: Countdown + Sync Status + Auth + Theme Switcher */}
         <div className="flex items-center gap-3">
           {/* Days Remaining Pill */}
-          <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-semibold">
+          <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500 border border-amber-600 text-white text-sm font-semibold">
             <Calendar className="w-3.5 h-3.5" />
             <span>Oct 25 Exam: {daysRemaining} days</span>
           </div>
@@ -123,12 +123,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                 syncStatus === 'offline' ? 'Offline – changes saved locally' :
                 'Cloud sync ready'
               }
-              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-semibold transition-colors ${
-                syncStatus === 'syncing' ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-500' :
-                syncStatus === 'synced'  ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500' :
-                syncStatus === 'error'   ? 'bg-rose-500/10 border-rose-500/20 text-rose-500' :
-                syncStatus === 'offline' ? 'bg-slate-500/10 border-slate-500/20 text-slate-400' :
-                'bg-[var(--bg-card-hover)] border-[var(--border-color)] text-[var(--text-muted)]'
+              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-sm font-semibold transition-colors ${
+                syncStatus === 'syncing' ? 'bg-cyan-500 border-cyan-600 text-white' :
+                syncStatus === 'synced'  ? 'bg-emerald-500 border-emerald-600 text-white' :
+                syncStatus === 'error'   ? 'bg-rose-500 border-rose-600 text-white' :
+                syncStatus === 'offline' ? 'bg-slate-500 border-slate-600 text-white' :
+                'bg-[var(--bg-card-hover)] border-[var(--border-color)] text-[var(--text-primary)]'
               }`}
             >
               {syncStatus === 'syncing'
@@ -152,7 +152,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={onLogoutClick}
               title={`Logged in as ${currentUser.username}`}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-rose-500 border border-[var(--border-color)] text-xs font-semibold transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:bg-rose-500 hover:text-white border border-[var(--border-color)] text-sm font-semibold transition-colors"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Log Out</span>
@@ -160,7 +160,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           ) : (
             <button
               onClick={onLoginClick}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-emerald)]/10 hover:bg-[var(--accent-emerald)]/20 text-[var(--accent-emerald)] border border-[var(--accent-emerald)]/30 text-xs font-semibold transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-emerald)] text-white border border-[var(--accent-emerald)] text-sm font-semibold transition-colors hover:opacity-90"
             >
               <LogIn className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Log In</span>
@@ -170,10 +170,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Theme Switcher Toggle */}
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-lg bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-color)] transition-colors"
+            className="p-2 rounded-lg bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:bg-slate-600 hover:text-white border border-[var(--border-color)] transition-colors"
             title={`Switch to ${theme === 'dark' ? 'Academic Light' : 'Modern Dark'} Mode`}
           >
-            {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
+            {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-slate-200" />}
           </button>
         </div>
       </div>
@@ -184,7 +184,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             key={item.id}
             onClick={() => setActiveTab(item.id)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap ${
               activeTab === item.id
                 ? 'bg-[var(--accent-emerald)] text-white'
                 : 'bg-[var(--bg-card-hover)] text-[var(--text-secondary)]'
