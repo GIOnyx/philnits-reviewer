@@ -303,7 +303,11 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
                 className={`w-full text-left p-4 rounded-xl border flex items-center justify-between transition-all ${optionStyle}`}
               >
                 <div className="flex items-center gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-[var(--bg-main)] border border-[var(--border-color)] flex items-center justify-center text-xs font-bold font-mono">
+                  <span className={`w-7 h-7 rounded-lg border flex items-center justify-center text-xs font-bold font-mono ${
+                    isAnswered && isTargetCorrect ? 'bg-white text-emerald-600 border-white' :
+                    isAnswered && isSelected ? 'bg-white text-rose-600 border-white' :
+                    'bg-[var(--bg-main)] border-[var(--border-color)] text-[var(--text-primary)]'
+                  }`}>
                     {letter}
                   </span>
                   <span className="text-sm">{opt}</span>

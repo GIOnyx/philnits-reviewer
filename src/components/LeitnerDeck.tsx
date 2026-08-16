@@ -342,7 +342,11 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
                   className={`w-full text-left p-3.5 rounded-xl border flex items-center justify-between text-xs transition-all ${style}`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded bg-[var(--bg-main)] border border-[var(--border-color)] flex items-center justify-center font-mono font-bold">
+                    <span className={`w-6 h-6 rounded flex items-center justify-center font-mono font-bold ${
+                      selectedOpt !== null && isTargetCorrect ? 'bg-white text-emerald-600' :
+                      selectedOpt !== null && isSelected ? 'bg-white text-rose-600' :
+                      'bg-[var(--bg-main)] border border-[var(--border-color)] text-[var(--text-primary)]'
+                    }`}>
                       {String.fromCharCode(65 + idx)}
                     </span>
                     <span>{opt}</span>
@@ -452,7 +456,11 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
                   className={`w-full text-left p-3.5 rounded-xl border flex items-center justify-between text-xs transition-all ${style}`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded bg-[var(--bg-main)] border border-[var(--border-color)] flex items-center justify-center font-mono font-bold">
+                    <span className={`w-6 h-6 rounded flex items-center justify-center font-mono font-bold ${
+                      browseSelectedOpt !== null && isTargetCorrect ? 'bg-white text-emerald-600' :
+                      browseSelectedOpt !== null && isSelected ? 'bg-white text-rose-600' :
+                      'bg-[var(--bg-main)] border border-[var(--border-color)] text-[var(--text-primary)]'
+                    }`}>
                       {String.fromCharCode(65 + idx)}
                     </span>
                     <span>{opt}</span>

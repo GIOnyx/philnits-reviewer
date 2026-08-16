@@ -269,7 +269,11 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
                         className={`w-full text-left p-3 rounded-lg border flex items-center justify-between text-xs transition-all ${optStyle}`}
                       >
                         <div className="flex items-center gap-2.5">
-                          <span className="w-6 h-6 rounded bg-[var(--bg-main)] border border-[var(--border-color)] flex items-center justify-center font-mono font-bold text-[10px]">
+                          <span className={`w-6 h-6 rounded flex items-center justify-center font-mono font-bold text-[10px] ${
+                            isAnswered && isTargetCorrect ? 'bg-white text-emerald-600' :
+                            isAnswered && isSelected ? 'bg-white text-rose-600' :
+                            'bg-[var(--bg-main)] border border-[var(--border-color)] text-[var(--text-primary)]'
+                          }`}>
                             {letter}
                           </span>
                           <span>{opt}</span>
