@@ -326,9 +326,9 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
               let style = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
               if (selectedOpt !== null) {
                 if (isTargetCorrect) {
-                  style = 'border-emerald-500 bg-emerald-500 text-white font-semibold';
+                  style = 'border-emerald-600 bg-emerald-600 text-white font-semibold';
                 } else if (isSelected) {
-                  style = 'border-rose-500 bg-rose-500 text-white';
+                  style = 'border-rose-600 bg-rose-600 text-white';
                 } else {
                   style = 'opacity-40 border-[var(--border-color)]';
                 }
@@ -436,9 +436,9 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
               let style = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
               if (browseSelectedOpt !== null) {
                 if (isTargetCorrect) {
-                  style = 'border-emerald-500 bg-emerald-500 text-white font-semibold';
+                  style = 'border-emerald-600 bg-emerald-600 text-white font-semibold';
                 } else if (isSelected) {
-                  style = 'border-rose-500 bg-rose-500 text-white';
+                  style = 'border-rose-600 bg-rose-600 text-white';
                 } else {
                   style = 'opacity-40 border-[var(--border-color)]';
                 }

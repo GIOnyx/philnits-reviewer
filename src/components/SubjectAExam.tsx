@@ -287,9 +287,9 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
             let optionStyle = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
             if (isAnswered) {
               if (isTargetCorrect) {
-                optionStyle = 'border-emerald-500 bg-emerald-500 text-white font-semibold';
+                optionStyle = 'border-emerald-600 bg-emerald-600 text-white font-semibold';
               } else if (isSelected) {
-                optionStyle = 'border-rose-500 bg-rose-500 text-white';
+                optionStyle = 'border-rose-600 bg-rose-600 text-white';
               } else {
                 optionStyle = 'border-[var(--border-color)] opacity-50';
               }

@@ -108,7 +108,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Right Section: Countdown + Sync Status + Auth + Theme Switcher */}
         <div className="flex items-center gap-3">
           {/* Days Remaining Pill */}
-          <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500 border border-amber-600 text-white text-sm font-semibold">
+          <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-700 border border-amber-800 text-white text-sm font-semibold">
             <Calendar className="w-3.5 h-3.5" />
             <span>Oct 25 Exam: {daysRemaining} days</span>
           </div>
@@ -124,10 +124,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 'Cloud sync ready'
               }
               className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-sm font-semibold transition-colors ${
-                syncStatus === 'syncing' ? 'bg-cyan-500 border-cyan-600 text-white' :
-                syncStatus === 'synced'  ? 'bg-emerald-500 border-emerald-600 text-white' :
-                syncStatus === 'error'   ? 'bg-rose-500 border-rose-600 text-white' :
-                syncStatus === 'offline' ? 'bg-slate-500 border-slate-600 text-white' :
+                syncStatus === 'syncing' ? 'bg-cyan-700 border-cyan-800 text-white' :
+                syncStatus === 'synced'  ? 'bg-emerald-700 border-emerald-800 text-white' :
+                syncStatus === 'error'   ? 'bg-rose-700 border-rose-800 text-white' :
+                syncStatus === 'offline' ? 'bg-slate-600 border-slate-700 text-white' :
                 'bg-[var(--bg-card-hover)] border-[var(--border-color)] text-[var(--text-primary)]'
               }`}
             >
@@ -152,7 +152,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={onLogoutClick}
               title={`Logged in as ${currentUser.username}`}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:bg-rose-500 hover:text-white border border-[var(--border-color)] text-sm font-semibold transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:bg-rose-700 hover:text-white border border-[var(--border-color)] text-sm font-semibold transition-colors"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Log Out</span>
@@ -160,7 +160,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           ) : (
             <button
               onClick={onLoginClick}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-emerald)] text-white border border-[var(--accent-emerald)] text-sm font-semibold transition-colors hover:opacity-90"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-700 text-white border border-emerald-800 text-sm font-semibold transition-colors hover:opacity-90"
             >
               <LogIn className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Log In</span>

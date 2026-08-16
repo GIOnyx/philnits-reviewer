@@ -17,11 +17,11 @@
   --text-secondary: #000000;
   --text-muted: #000000;
   
-  /* Bright accent colors */
-  --accent-emerald: #2ecc71;
-  --accent-cyan: #00bcd4;
-  --accent-amber: #ffc107;
-  --accent-rose: #e74c3c;
+  /* Muted accent colors - balanced, not too bright */
+  --accent-emerald: #4a9d6f;
+  --accent-cyan: #3a9fb5;
+  --accent-amber: #d4a74d;
+  --accent-rose: #c85a76;
   
   --code-bg: rgba(15, 15, 15, 0.95);
   --code-text: #ffffff;
@@ -50,11 +50,11 @@
   --text-secondary: #000000;
   --text-muted: #000000;
   
-  /* Bright accent colors */
-  --accent-emerald: #2ecc71;
-  --accent-cyan: #00bcd4;
-  --accent-amber: #ffc107;
-  --accent-rose: #e74c3c;
+  /* Muted accent colors */
+  --accent-emerald: #4a9d6f;
+  --accent-cyan: #3a9fb5;
+  --accent-amber: #d4a74d;
+  --accent-rose: #c85a76;
   
   --code-bg: rgba(245, 245, 245, 0.98);
   --code-text: #000000;
