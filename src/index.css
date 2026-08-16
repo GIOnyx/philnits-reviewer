@@ -12,10 +12,10 @@
   --border-color: rgba(80, 80, 80, 0.5);
   --border-hover: rgba(120, 120, 120, 0.7);
   
-  /* Text colors - pure black text */
-  --text-primary: #000000;
-  --text-secondary: #000000;
-  --text-muted: #000000;
+  /* Text colors - white for dark mode */
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --text-muted: #ffffff;
   
   /* Muted accent colors - balanced, not too bright */
   --accent-emerald: #4a9d6f;
