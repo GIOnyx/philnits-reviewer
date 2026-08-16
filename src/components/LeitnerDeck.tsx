@@ -219,9 +219,10 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
       }
       domainStats[q.subdomain].total++;
       
-      // Use mastery state to determine if question is mastered
+      // Count correct attempts based on mastery streak
+      // If streak > 0, last attempt was correct
       const masteryState = masteryStates[q.id];
-      if (masteryState?.isMastered) {
+      if (masteryState?.consecutiveCorrect > 0) {
         domainStats[q.subdomain].correct++;
       }
     });
