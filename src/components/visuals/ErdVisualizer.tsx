@@ -46,7 +46,7 @@ export const ErdVisualizer: React.FC = () => {
       {activeStep === '1NF' && (
         <div className="space-y-3">
           <div className="border border-[var(--border-color)] rounded-lg overflow-hidden text-[11px] font-mono">
-            <div className="p-2 bg-[var(--bg-card-hover)] font-bold text-amber-500 border-b border-[var(--border-color)] flex justify-between">
+            <div className="p-2 bg-[var(--bg-card-hover)] font-bold text-white border-b border-[var(--border-color)] flex justify-between">
               <span>Orders (Composite PK: OrderID, ProductID)</span>
               <span>Partial Dependency Present</span>
             </div>

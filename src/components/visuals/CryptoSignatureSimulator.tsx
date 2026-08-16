@@ -96,7 +96,7 @@ export const CryptoSignatureSimulator: React.FC = () => {
         
         {step === 0 && (
           <div className="space-y-1.5">
-            <span className="text-[10px] text-amber-500 font-bold uppercase font-sans">Step 1: Hashing Plaintext</span>
+            <span className="text-[10px] text-white font-bold uppercase font-sans">Step 1: Hashing Plaintext</span>
             <div>Message: <span className="text-[var(--text-primary)] font-bold">"{plaintext}"</span></div>
             <div>SHA256 Hash Digest: <span className="text-[var(--accent-cyan)] font-bold">{hash}</span></div>
             <p className="text-[10px] text-[var(--text-muted)] font-sans italic mt-1">

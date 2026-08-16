@@ -146,7 +146,7 @@ export const SqlJoinVisualizer: React.FC = () => {
 
         {/* Departments Table */}
         <div className="border border-[var(--border-color)] rounded-lg overflow-hidden font-mono text-[10px]">
-          <div className="p-2 bg-[var(--bg-card-hover)] font-bold text-amber-500 border-b border-[var(--border-color)]">
+          <div className="p-2 bg-[var(--bg-card-hover)] font-bold text-white border-b border-[var(--border-color)]">
             Departments (Right Table)
           </div>
           <table className="w-full text-left">

@@ -355,13 +355,13 @@ export const AlgorithmWalkthrough: React.FC<AlgorithmWalkthroughProps> = ({ algo
                 <div className="h-6 w-full bg-slate-900 rounded overflow-hidden flex">
                   {aNumeric > 0 ? (
                     <div 
-                      className="bg-[var(--accent-cyan)] h-full transition-all duration-505 flex items-center justify-center text-[10px] font-bold text-slate-950" 
+                      className="bg-[var(--accent-cyan)] h-full transition-all duration-505 flex items-center justify-center text-[10px] font-bold text-white" 
                       style={{ width: `${Math.max(aPct, 15)}%` }}
                     >
                       {aVal}
                     </div>
                   ) : (
-                    <div className="w-full h-full flex items-center px-2 text-[10px] text-[var(--text-muted)] italic">uninitialized</div>
+                    <div className="w-full h-full flex items-center px-2 text-[10px] text-white italic">uninitialized</div>
                   )}
                 </div>
               </div>
@@ -375,7 +375,7 @@ export const AlgorithmWalkthrough: React.FC<AlgorithmWalkthroughProps> = ({ algo
                 <div className="h-6 w-full bg-slate-900 rounded overflow-hidden flex">
                   {bNumeric > 0 ? (
                     <div 
-                      className="bg-[var(--accent-emerald)] h-full transition-all duration-505 flex items-center justify-center text-[10px] font-bold text-slate-950" 
+                      className="bg-[var(--accent-emerald)] h-full transition-all duration-505 flex items-center justify-center text-[10px] font-bold text-white" 
                       style={{ width: `${Math.max(bPct, 15)}%` }}
                     >
                       {bVal}
@@ -387,9 +387,9 @@ export const AlgorithmWalkthrough: React.FC<AlgorithmWalkthroughProps> = ({ algo
               </div>
 
               {/* Modulus calculation visualization */}
-              <div className="flex justify-between items-center text-[11px] font-mono border-t border-[var(--border-color)]/50 pt-2 text-[var(--text-muted)]">
+              <div className="flex justify-between items-center text-[11px] font-mono border-t border-[var(--border-color)]/50 pt-2 text-[var(--text-secondary)]">
                 <span>Modulus Operation:</span>
-                <span className="text-[var(--accent-amber)] font-bold">
+                <span className="text-white font-bold">
                   {aNumeric} mod {bNumeric} = {rVal}
                 </span>
               </div>
@@ -416,7 +416,7 @@ export const AlgorithmWalkthrough: React.FC<AlgorithmWalkthroughProps> = ({ algo
                 const isTarget = val === target && currentStep.lineNo === 8;
                 
                 let bgClass = 'bg-[var(--bg-card)] border-[var(--border-color)] text-[var(--text-primary)]';
-                if (isDiscarded) bgClass = 'bg-slate-950 border-slate-900 text-slate-800 opacity-30 line-through';
+                if (isDiscarded) bgClass = 'bg-slate-950 border-slate-900 text-slate-300 opacity-30 line-through';
                 else if (isTarget) bgClass = 'bg-[var(--accent-emerald)]/20 border-[var(--accent-emerald)] text-[var(--accent-emerald)] scale-105 ring-2 ring-[var(--accent-emerald)]/30';
                 else if (isMid) bgClass = 'bg-[var(--accent-cyan)]/25 border-[var(--accent-cyan)] text-[var(--accent-cyan)] font-bold';
 
@@ -427,7 +427,7 @@ export const AlgorithmWalkthrough: React.FC<AlgorithmWalkthroughProps> = ({ algo
                       {val}
                     </div>
                     <div className="h-4 text-[9px] font-bold font-mono">
-                      {oneBasedIdx === left && <span className="text-amber-500">L</span>}
+                      {oneBasedIdx === left && <span className="text-white">L</span>}
                       {oneBasedIdx === right && <span className="text-rose-500">R</span>}
                       {oneBasedIdx === mid && <span className="text-[var(--accent-cyan)]">M</span>}
                     </div>
@@ -510,7 +510,7 @@ export const AlgorithmWalkthrough: React.FC<AlgorithmWalkthroughProps> = ({ algo
             </div>
 
             <div className="p-2.5 rounded bg-slate-900/80 border border-slate-700/60">
-              <div className="text-[10px] text-slate-400 uppercase mb-1 font-mono">In-Order Output stream</div>
+              <div className="text-[10px] text-slate-300 uppercase mb-1 font-mono">In-Order Output stream</div>
               <div className="font-mono text-xs font-bold text-[var(--accent-emerald)] tracking-wider">
                 {out.length > 0 ? out.join(' ➔ ') : <span className="text-slate-500 italic">no values printed yet</span>}
               </div>
@@ -528,7 +528,7 @@ export const AlgorithmWalkthrough: React.FC<AlgorithmWalkthroughProps> = ({ algo
             <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase block">Stack Data Structure (Size 5)</span>
             <div className="flex gap-6 items-center justify-center p-3 rounded-lg bg-[var(--bg-sidebar)] border border-[var(--border-color)]">
               {/* Stack Tower */}
-              <div className="w-[120px] flex flex-col-reverse border-b-4 border-l-2 border-r-2 border-slate-600 bg-slate-950 rounded-b p-1 gap-1">
+              <div className="w-[120px] flex flex-col-reverse border-b-4 border-l-2 border-r-2 border-slate-600 bg-slate-900 rounded-b p-1 gap-1">
                 {[0, 1, 2, 3, 4].map((idx) => {
                   const oneBased = idx + 1;
                   const item = stack[idx];
@@ -563,7 +563,7 @@ export const AlgorithmWalkthrough: React.FC<AlgorithmWalkthroughProps> = ({ algo
                   <span className="font-extrabold text-[var(--text-primary)]">{topVal}</span>
                 </div>
                 <div className="flex gap-2 justify-between border-t border-[var(--border-color)]/50 pt-1.5">
-                  <span className="text-amber-500">Operation:</span>
+                  <span className="text-white">Operation:</span>
                   <span className="font-bold text-[var(--text-primary)]">{currentStep.vars.operation}</span>
                 </div>
               </div>
@@ -598,7 +598,7 @@ export const AlgorithmWalkthrough: React.FC<AlgorithmWalkthroughProps> = ({ algo
                         isHead && isTail
                           ? 'bg-purple-500/20 border-purple-500 text-purple-400'
                           : isHead
-                          ? 'bg-amber-500/20 border-amber-500 text-amber-500'
+                          ? 'bg-amber-500/20 border-amber-500 text-white'
                           : isTail
                           ? 'bg-rose-500/25 border-rose-500 text-rose-500'
                           : hasVal
@@ -608,7 +608,7 @@ export const AlgorithmWalkthrough: React.FC<AlgorithmWalkthroughProps> = ({ algo
                         {hasVal ? item : ''}
                       </div>
                       <div className="h-4 text-[9px] font-bold font-mono">
-                        {isHead && <span className="text-amber-500">H</span>}
+                        {isHead && <span className="text-white">H</span>}
                         {isTail && <span className="text-rose-500">T</span>}
                       </div>
                     </div>

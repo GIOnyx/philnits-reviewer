@@ -118,7 +118,7 @@ export const CpuPipelineVisualizer: React.FC = () => {
                   const colors: Record<string, string> = {
                     IF: 'bg-blue-500/15 border-blue-500/35 text-blue-500',
                     ID: 'bg-purple-500/15 border-purple-500/35 text-purple-500',
-                    EX: 'bg-amber-500/15 border-amber-500/35 text-amber-500',
+                    EX: 'bg-amber-500/15 border-amber-500/35 text-white',
                     MEM: 'bg-emerald-500/15 border-emerald-500/35 text-emerald-500',
                     WB: 'bg-cyan-500/15 border-cyan-500/35 text-cyan-500'
                   };
