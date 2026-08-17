@@ -1,6 +1,6 @@
 /**
  * Hybrid API Client for PhilNITS Reviewer Application
- * Connects to deployed Windmill endpoints (Heroku instance) or falls back to Seed Data.
+ * Connects to deployed Windmill endpoints or loads from Supabase, falling back to seed data.
  */
 
 import { SEED_SUBJECT_A_QUESTIONS } from '../data/seed/subjectA_questions';
@@ -9,6 +9,7 @@ import { initialAnkiFlashcards } from '../data/seed/anki_flashcards';
 import { SubjectAQuestion, SubjectBScenario, AnkiFlashcard, LeitnerState, MasteryState } from '../types/exam';
 import { updateLeitnerState } from '../utils/leitnerEngine';
 import { updateMasteryState, saveMasteryStates, getStoredMasteryStates } from '../utils/masteryEngine';
+import { getSupabaseClient, isSupabaseConfigured } from './supabase';
 
 const WINDMILL_BASE_URL = import.meta.env.VITE_WINDMILL_BASE_URL || 'https://nameless-meadow-94317-9b68fe10ea55.herokuapp.com';
 const WINDMILL_WORKSPACE = import.meta.env.VITE_WINDMILL_WORKSPACE || 'main';
@@ -16,11 +17,9 @@ const WINDMILL_TOKEN = import.meta.env.VITE_WINDMILL_TOKEN || '';
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.VITE_WINDMILL_TOKEN || '';
 
 export class PhilnitsApiService {
-  // Check if live Windmill token is configured
-  // Windmill is disabled — the Heroku instance has CORS/auth issues.
-  // All data is served from local seed + Gemini AI generation.
+  // Windmill is enabled when a token is present in env
   private static isWindmillConfigured(): boolean {
-    return false;
+    return Boolean(WINDMILL_TOKEN && WINDMILL_TOKEN.length > 5);
   }
 
   // Check if Gemini API key is configured
@@ -38,8 +37,93 @@ export class PhilnitsApiService {
     return shuffled;
   }
 
-  // Fetch Subject A Questions
+  /**
+   * Load Subject A questions from the normalized Supabase schema (exams / questions / question_choices).
+   * Returns null if Supabase is not configured or the tables are empty.
+   */
+  public static async fetchSubjectAFromSupabase(): Promise<SubjectAQuestion[] | null> {
+    const sb = getSupabaseClient();
+    if (!sb) return null;
+
+    try {
+      // First get all FE-A exam IDs
+      const { data: exams, error: examError } = await sb
+        .from('exams')
+        .select('id, year, session, subject')
+        .eq('subject', 'FE-A');
+
+      if (examError || !exams || exams.length === 0) return null;
+
+      const examIds = exams.map((e: any) => e.id);
+      const examMap = Object.fromEntries(exams.map((e: any) => [e.id, e]));
+
+      // Fetch questions for those exams
+      const { data: questions, error } = await sb
+        .from('questions')
+        .select(`
+          id,
+          exam_id,
+          question_number,
+          question_text,
+          pseudo_code,
+          diagram_description,
+          correct_answer,
+          explanation,
+          question_choices ( letter, text, blank_a, blank_b, blank_c )
+        `)
+        .in('exam_id', examIds)
+        .order('question_number', { ascending: true });
+
+      if (error) {
+        console.warn('[Supabase] fetchSubjectAFromSupabase error:', error.message);
+        return null;
+      }
+      if (!questions || questions.length === 0) return null;
+
+      const mapped: SubjectAQuestion[] = questions.map((q: any) => {
+        const exam = examMap[q.exam_id] ?? {};
+        const sortedChoices = (q.question_choices ?? [])
+          .sort((a: any, b: any) => a.letter.localeCompare(b.letter));
+
+        const options: string[] = sortedChoices.map((c: any) =>
+          c.text ?? [c.blank_a, c.blank_b, c.blank_c].filter(Boolean).join(' / ')
+        );
+
+        const correctIndex = Math.max(
+          0,
+          sortedChoices.findIndex((c: any) => c.letter === q.correct_answer)
+        );
+
+        return {
+          id: q.id,
+          category: 'Technology' as const,
+          subdomain: `FE-A ${exam.year ?? ''} ${exam.session ?? ''}`.trim(),
+          examYear: exam.year ?? 2024,
+          questionText: q.question_text,
+          options,
+          correctIndex,
+          explanation: q.explanation ?? '',
+          difficultyWeight: 1.0,
+        } as SubjectAQuestion;
+      });
+
+      console.log(`[Supabase] Loaded ${mapped.length} Subject A questions from DB.`);
+      return mapped;
+    } catch (err) {
+      console.warn('[Supabase] fetchSubjectAFromSupabase exception:', err);
+      return null;
+    }
+  }
+
+  // Fetch Subject A Questions — tries Supabase first, then Windmill, then seed
   public static async getSubjectAQuestions(): Promise<SubjectAQuestion[]> {
+    // 1. Try Supabase normalized tables (populated by Windmill extraction pipeline)
+    if (isSupabaseConfigured()) {
+      const fromDb = await this.fetchSubjectAFromSupabase();
+      if (fromDb && fromDb.length > 0) return this.shuffleArray(fromDb);
+    }
+
+    // 2. Try Windmill REST endpoint
     if (this.isWindmillConfigured()) {
       try {
         const res = await fetch(`${WINDMILL_BASE_URL}/api/w/${WINDMILL_WORKSPACE}/jobs/run_wait_result/f/exam/get_morning_questions`, {
@@ -51,17 +135,26 @@ export class PhilnitsApiService {
         });
         if (res.ok) {
           const data = await res.json();
-          if (Array.isArray(data)) return this.shuffleArray(data);
+          if (Array.isArray(data) && data.length > 0) return this.shuffleArray(data);
         }
       } catch (err) {
-        console.warn('Windmill API fallback to local seed data:', err);
+        console.warn('[Windmill] getSubjectAQuestions fallback to seed:', err);
       }
     }
+
+    // 3. Local seed data
     return this.shuffleArray(SEED_SUBJECT_A_QUESTIONS);
   }
 
-  // Fetch Subject B Scenarios
+  // Fetch Subject B Scenarios — tries Supabase first, then Windmill, then seed
   public static async getSubjectBScenarios(): Promise<SubjectBScenario[]> {
+    // 1. Try Supabase normalized tables (populated by Windmill extraction pipeline)
+    if (isSupabaseConfigured()) {
+      const fromDb = await this.fetchSubjectBFromSupabase();
+      if (fromDb && fromDb.length > 0) return this.shuffleArray(fromDb);
+    }
+
+    // 2. Try Windmill REST endpoint
     if (this.isWindmillConfigured()) {
       try {
         const res = await fetch(`${WINDMILL_BASE_URL}/api/w/${WINDMILL_WORKSPACE}/jobs/run_wait_result/f/exam/get_pm_scenarios`, {
@@ -73,13 +166,233 @@ export class PhilnitsApiService {
         });
         if (res.ok) {
           const data = await res.json();
-          if (Array.isArray(data)) return this.shuffleArray(data);
+          if (Array.isArray(data) && data.length > 0) return this.shuffleArray(data);
         }
       } catch (err) {
-        console.warn('Windmill API fallback to local seed scenarios:', err);
+        console.warn('[Windmill] getSubjectBScenarios fallback to seed:', err);
       }
     }
+
+    // 3. Local seed data
     return this.shuffleArray(SEED_SUBJECT_B_SCENARIOS);
+  }
+
+  /**
+   * Load Subject B scenarios from the normalized Supabase schema (exams / questions / question_choices).
+   * Groups flat question rows into SubjectBScenario objects: every 3 consecutive questions
+   * from the same exam form one scenario (matching FE-B structure: 4 scenarios × 3 sub-questions).
+   * Returns null if Supabase is not configured or the tables are empty.
+   */
+  public static async fetchSubjectBFromSupabase(): Promise<SubjectBScenario[] | null> {
+    const sb = getSupabaseClient();
+    if (!sb) return null;
+
+    const DOMAINS = [
+      'Algorithms & Programming',
+      'Data Structures & Memory',
+      'Software Engineering',
+      'Computer Architecture & OS',
+      'Databases & SQL',
+      'Networking & Security',
+    ];
+
+    try {
+      // Step 1: get all FE-B exam IDs
+      const { data: exams, error: examError } = await sb
+        .from('exams')
+        .select('id, year, session, subject')
+        .eq('subject', 'FE-B');
+
+      if (examError || !exams || exams.length === 0) return null;
+
+      const examIds = exams.map((e: any) => e.id);
+      const examMap = Object.fromEntries(exams.map((e: any) => [e.id, e]));
+
+      // Step 2: fetch all FE-B questions with choices
+      const { data: questions, error } = await sb
+        .from('questions')
+        .select(`
+          id,
+          exam_id,
+          question_number,
+          question_text,
+          pseudo_code,
+          diagram_description,
+          correct_answer,
+          explanation,
+          question_choices ( letter, text, blank_a, blank_b, blank_c )
+        `)
+        .in('exam_id', examIds)
+        .order('question_number', { ascending: true });
+
+      if (error) {
+        console.warn('[Supabase] fetchSubjectBFromSupabase error:', error.message);
+        return null;
+      }
+      if (!questions || questions.length === 0) return null;
+
+      // Group by exam id
+      const byExam = new Map<string, { exam: any; questions: any[] }>();
+      for (const q of questions) {
+        const examId = q.exam_id;
+        if (!examId) continue;
+        if (!byExam.has(examId)) byExam.set(examId, { exam: examMap[examId], questions: [] });
+        byExam.get(examId)!.questions.push(q);
+      }
+
+      const scenarios: SubjectBScenario[] = [];
+      const SUBQS_PER_SCENARIO = 3;
+
+      for (const { exam, questions: examQs } of byExam.values()) {
+        examQs.sort((a, b) => a.question_number - b.question_number);
+
+        for (let i = 0; i < examQs.length; i += SUBQS_PER_SCENARIO) {
+          const group = examQs.slice(i, i + SUBQS_PER_SCENARIO);
+          const scenarioNum = Math.floor(i / SUBQS_PER_SCENARIO) + 1;
+          const yearCode = `${exam.year}${exam.session === 'Spring' ? 's' : 'a'}`;
+          const scenarioId = `fe-${yearCode}-scenario${scenarioNum}`;
+          const domain = DOMAINS[(scenarioNum - 1) % DOMAINS.length];
+
+          // contextMarkdown: first question text + pseudo_code if present
+          const firstQ = group[0];
+          let contextMarkdown = `### Background Context & Specifications\n\n${firstQ.question_text}`;
+          if (firstQ.pseudo_code) {
+            contextMarkdown += `\n\n---\n\n### ITPEC Pseudocode Specification\n\`\`\`text\n${firstQ.pseudo_code}\n\`\`\``;
+          }
+
+          const subQuestions = group.map((q, idx) => {
+            const sortedChoices = (q.question_choices ?? [])
+              .sort((a: any, b: any) => a.letter.localeCompare(b.letter));
+
+            const options: string[] = sortedChoices.map((c: any) => {
+              if (c.text) return c.text;
+              return [c.blank_a, c.blank_b, c.blank_c].filter(Boolean).join(' / ');
+            });
+
+            const correctIndex = Math.max(
+              0,
+              sortedChoices.findIndex((c: any) => c.letter === q.correct_answer)
+            );
+
+            return {
+              questionId: q.id,
+              questionNumber: idx + 1,
+              prompt: q.question_text,
+              options,
+              correctIndex,
+              explanation: q.explanation ?? '',
+              requiresPseudocode: Boolean(q.pseudo_code),
+              pseudocodeBlock: q.pseudo_code ?? undefined,
+            };
+          });
+
+          scenarios.push({
+            scenarioId,
+            title: `Subject B Scenario ${scenarioNum} (${exam.year} ${exam.session}): ${domain}`,
+            examYear: exam.year,
+            domain,
+            contextMarkdown,
+            subQuestions,
+          });
+        }
+      }
+
+      console.log(`[Supabase] Loaded ${scenarios.length} Subject B scenarios from DB.`);
+      return scenarios.length > 0 ? scenarios : null;
+    } catch (err) {
+      console.warn('[Supabase] fetchSubjectBFromSupabase exception:', err);
+      return null;
+    }
+  }
+
+  /**
+   * Trigger a Windmill pdf_vision_extractor job from the frontend.
+  public static async triggerWindmillExtraction(
+    file: File,
+    examYear: number,
+    session: string,
+    subject: string,
+  ): Promise<string> {
+    if (!WINDMILL_TOKEN) {
+      throw new Error('VITE_WINDMILL_TOKEN is not configured in .env');
+    }
+
+    // Read file as base64
+    const fileBuffer = await file.arrayBuffer();
+    const base64Data = btoa(
+      new Uint8Array(fileBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
+    );
+
+    const res = await fetch(
+      `${WINDMILL_BASE_URL}/api/w/${WINDMILL_WORKSPACE}/jobs/run/f/exam/pdf_vision_extractor`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${WINDMILL_TOKEN}`,
+        },
+        body: JSON.stringify({
+          pdf_base64: base64Data,
+          pdf_filename: file.name,
+          exam_year: examYear,
+          session,
+          subject,
+        }),
+      }
+    );
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`Windmill API error (${res.status}): ${errorText}`);
+    }
+
+    // Windmill returns the job UUID as plain text
+    const jobId = (await res.text()).replace(/"/g, '').trim();
+    return jobId;
+  }
+
+  /**
+   * Poll a Windmill job until it completes or fails.
+   * Returns { success: true, result } or { success: false, error }.
+   */
+  public static async pollWindmillJob(
+    jobId: string,
+    onProgress?: (message: string) => void,
+    maxAttempts = 72, // 6 minutes at 5s intervals
+  ): Promise<{ success: boolean; result?: any; error?: string }> {
+    if (!WINDMILL_TOKEN) return { success: false, error: 'No Windmill token configured' };
+
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      await new Promise((r) => setTimeout(r, 5000));
+
+      try {
+        const res = await fetch(
+          `${WINDMILL_BASE_URL}/api/w/${WINDMILL_WORKSPACE}/jobs/get/${jobId}`,
+          { headers: { 'Authorization': `Bearer ${WINDMILL_TOKEN}` } }
+        );
+        if (!res.ok) continue;
+
+        const job = await res.json();
+
+        if (job.type === 'CompletedJob') {
+          if (job.success === false) {
+            return { success: false, error: job.result?.error ?? 'Job failed with no message' };
+          }
+          return { success: true, result: job.result };
+        }
+
+        if (job.type === 'RunningJob') {
+          const lastLog = (job.logs ?? '').trim().split('\n').pop() ?? 'Processing…';
+          onProgress?.(lastLog);
+        } else if (job.type === 'QueuedJob') {
+          onProgress?.('Queued — waiting for a free worker…');
+        }
+      } catch {
+        // network blip — keep polling
+      }
+    }
+
+    return { success: false, error: 'Job timed out after 6 minutes' };
   }
 
   // Fetch Anki Flashcards
