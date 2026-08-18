@@ -33,7 +33,7 @@ export const DbNormalizationFlowchart: React.FC = () => {
     {
       id: '3nf',
       name: '3NF (No Transitive Dependency)',
-      rule: 'Must be in 2NF AND no non-key attribute is transitively dependent on another non-key attribute ($X \\rightarrow Y \\rightarrow Z$).',
+      rule: 'Must be in 2NF AND no non-key attribute is transitively dependent on another non-key attribute (<i>X &rarr; Y &rarr; Z</i>).',
       violationExample: 'EmployeeID -> DepartmentID -> DepartmentBuilding (Building depends on Dept, not directly on Emp).',
       resolution: 'Split Department info into its own Department relation.',
       tableHeaders: ['DeptID', 'DepartmentName', 'BuildingLocation'],
@@ -45,7 +45,7 @@ export const DbNormalizationFlowchart: React.FC = () => {
     {
       id: 'bcnf',
       name: 'BCNF (Boyce-Codd NF)',
-      rule: 'Must be in 3NF AND for every functional dependency $X \\rightarrow Y$, $X$ must be a superkey.',
+      rule: 'Must be in 3NF AND for every functional dependency <i>X &rarr; Y</i>, <i>X</i> must be a superkey.',
       violationExample: 'Course, Instructor -> Student (where Instructor -> Course, meaning Instructor determines Course without being superkey).',
       resolution: 'Decompose relations so every determinant is a candidate key.',
       tableHeaders: ['InstructorID', 'AssignedCourse'],

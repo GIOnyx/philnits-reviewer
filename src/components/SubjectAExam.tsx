@@ -71,8 +71,13 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
       const newQuestion = await PhilnitsApiService.generateDynamicQuestion(topic, false);
       
       if (newQuestion && newQuestion.id && newQuestion.questionText) {
+        const markedQuestion = {
+          ...newQuestion,
+          isAiGenerated: true,
+          examYear: newQuestion.examYear || 2026
+        };
         if (onAddDynamicQuestion) {
-          onAddDynamicQuestion(newQuestion);
+          onAddDynamicQuestion(markedQuestion);
           // Display the newly generated question immediately (index 0)
           setCurrentIndex(0);
         }
@@ -303,7 +308,18 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
 
       {currentQ.pdfUrl ? (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 space-y-4">
+            {(currentQ as any).isAiGenerated || currentQ.id.startsWith('ai_') || String(currentQ.examYear).includes('2026') ? (
+              <div className="glass-panel p-4 flex items-center justify-between bg-purple-500/10 border-purple-500/30">
+                <div className="flex items-center gap-2">
+                  <span className="badge bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center gap-1 font-semibold">
+                    <Sparkles className="w-3 h-3 text-purple-400 animate-pulse" />
+                    AI Generated Question
+                  </span>
+                  <span className="text-xs text-[var(--text-muted)]">Dynamically generated via Gemini AI</span>
+                </div>
+              </div>
+            ) : null}
             <PdfQuestionPanel
               title={`${currentQ.id.replace(/_/g, ' ')}: Subject A`}
               examYear={currentQ.examYear}
@@ -321,6 +337,12 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="badge badge-emerald">{currentQ.category}</span>
                   <span className="badge badge-cyan">{currentQ.subdomain}</span>
+                  {(currentQ as any).isAiGenerated || currentQ.id.startsWith('ai_') || String(currentQ.examYear).includes('2026') ? (
+                    <span className="badge bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center gap-1 font-semibold">
+                      <Sparkles className="w-3 h-3 text-purple-400 animate-pulse" />
+                      AI Generated
+                    </span>
+                  ) : null}
                   <span className="text-xs text-[var(--text-primary)] font-medium">Exam Year: {currentQ.examYear}</span>
                 </div>
                 {isAnswered && (
@@ -397,11 +419,28 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
         </div>
       ) : (
         <div className="glass-panel p-6 space-y-6">
+          {(currentQ as any).isAiGenerated || currentQ.id.startsWith('ai_') || String(currentQ.examYear).includes('2026') ? (
+            <div className="p-3 rounded-xl flex items-center justify-between bg-purple-500/10 border border-purple-500/30">
+              <div className="flex items-center gap-2">
+                <span className="badge bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center gap-1 font-semibold">
+                  <Sparkles className="w-3 h-3 text-purple-400 animate-pulse" />
+                  AI Generated Question
+                </span>
+                <span className="text-xs text-[var(--text-muted)]">Dynamically generated via Gemini AI</span>
+              </div>
+            </div>
+          ) : null}
           {/* Meta badges */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="badge badge-emerald">{currentQ.category}</span>
               <span className="badge badge-cyan">{currentQ.subdomain}</span>
+              {(currentQ as any).isAiGenerated || currentQ.id.startsWith('ai_') || String(currentQ.examYear).includes('2026') ? (
+                <span className="badge bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center gap-1 font-semibold">
+                  <Sparkles className="w-3 h-3 text-purple-400 animate-pulse" />
+                  AI Generated
+                </span>
+              ) : null}
               <span className="text-xs text-[var(--text-primary)] font-medium">Exam Year: {currentQ.examYear}</span>
             </div>
             {isAnswered && (

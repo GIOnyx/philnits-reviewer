@@ -61,7 +61,7 @@ export const HammingCodeVisualizer: React.FC = () => {
             <h3 className="text-xl font-bold text-[var(--text-primary)]">Bitwise & Hamming (7,4) Code Visualizer</h3>
           </div>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
-            Simulate error-correcting codes, Galois Field modulo-2 arithmetic, and syndrome detection ($S = rH^T$).
+            Simulate error-correcting codes, Galois Field modulo-2 arithmetic, and syndrome detection (<i>S = rH<sup>T</sup></i>).
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -76,14 +76,14 @@ export const HammingCodeVisualizer: React.FC = () => {
           />
         </div>
       </div>
-
+    
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl p-4 space-y-3">
           <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--accent-cyan)] flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" /> 1. Encoding (Hamming 7,4)
           </h4>
           <p className="text-xs text-[var(--text-secondary)]">
-            Parity bits calculated via XOR sums: $P_1 = D_3 \oplus D_2 \oplus D_0$, $P_2 = D_3 \oplus D_1 \oplus D_0$, $P_4 = D_2 \oplus D_1 \oplus D_0$.
+            Parity bits calculated via XOR sums: <i>P<sub>1</sub> = D<sub>3</sub> ⊕ D<sub>2</sub> ⊕ D<sub>0</sub></i>, <i>P<sub>2</sub> = D<sub>3</sub> ⊕ D<sub>1</sub> ⊕ D<sub>0</sub></i>, <i>P<sub>4</sub> = D<sub>2</sub> ⊕ D<sub>1</sub> ⊕ D<sub>0</sub></i>.
           </p>
           <div className="grid grid-cols-7 gap-1.5 pt-2 text-center font-mono">
             {['P1', 'P2', 'D3', 'P4', 'D2', 'D1', 'D0'].map((label, idx) => (
@@ -137,10 +137,10 @@ export const HammingCodeVisualizer: React.FC = () => {
       <div className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="space-y-1">
           <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--accent-emerald)] flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5" /> 3. Syndrome Detection & Correction ($S = rH^T$)
+            <CheckCircle2 className="w-3.5 h-3.5" /> 3. Syndrome Detection & Correction (<i>S = rH<sup>T</sup></i>)
           </h4>
           <p className="text-xs text-[var(--text-secondary)]">
-            Syndrome calculated: $S_1 = {s1}$, $S_2 = {s2}$, $S_4 = {s4}$. Decimal position: <span className="font-mono font-bold text-[var(--text-primary)]">{syndromeValue}</span>
+            Syndrome calculated: <i>S<sub>1</sub> = {s1}</i>, <i>S<sub>2</sub> = {s2}</i>, <i>S<sub>4</sub> = {s4}</i>. Decimal position: <span className="font-mono font-bold text-[var(--text-primary)]">{syndromeValue}</span>
           </p>
         </div>
         <div className="flex items-center gap-3">

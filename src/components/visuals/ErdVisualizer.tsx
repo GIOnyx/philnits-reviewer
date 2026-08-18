@@ -121,7 +121,7 @@ export const ErdVisualizer: React.FC = () => {
       {activeStep === '3NF' && (
         <div className="space-y-3">
           <p className="text-[11px] text-[var(--text-muted)] italic">
-            3NF eliminates transitive dependencies (e.g. EmployeeID $\rightarrow$ DeptID $\rightarrow$ DeptName). Splitting Employee and Department schemas resolves redundancy.
+            3NF eliminates transitive dependencies (e.g. EmployeeID <i>&rarr;</i> DeptID <i>&rarr;</i> DeptName). Splitting Employee and Department schemas resolves redundancy.
           </p>
           <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
             <span>Schema fully normalized to 3NF. Insert/Update Anomalies Eliminated!</span>

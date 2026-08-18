@@ -139,8 +139,13 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
       const newScenario = await PhilnitsApiService.generateDynamicQuestion(domain, true);
       
       if (newScenario && newScenario.scenarioId && newScenario.subQuestions?.length > 0) {
+        const markedScenario = {
+          ...newScenario,
+          isAiGenerated: true,
+          examYear: newScenario.examYear || 2026
+        };
         if (onAddDynamicScenario) {
-          onAddDynamicScenario(newScenario);
+          onAddDynamicScenario(markedScenario);
           setActiveScenarioIdx(0);
           setActiveSubQIdx(0);
         }
@@ -437,6 +442,17 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
         
         {/* Left Pane: PDF-backed question source (Col 7) */}
         <div className="lg:col-span-7 space-y-4">
+          {(currentScenario as any).isAiGenerated || currentScenario.scenarioId.startsWith('ai_') || String(currentScenario.examYear).includes('2026') ? (
+            <div className="glass-panel p-4 flex items-center justify-between bg-purple-500/10 border-purple-500/30">
+              <div className="flex items-center gap-2">
+                <span className="badge bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center gap-1 font-semibold">
+                  <Sparkles className="w-3 h-3 text-purple-400 animate-pulse" />
+                  AI Generated Scenario
+                </span>
+                <span className="text-xs text-[var(--text-muted)]">Dynamically generated via Gemini AI</span>
+              </div>
+            </div>
+          ) : null}
           <PdfQuestionPanel
             title={currentScenario.title}
             examYear={currentScenario.examYear}

@@ -66,7 +66,7 @@ export const SubnetCalculator: React.FC = () => {
             <h3 className="text-xl font-bold text-[var(--text-primary)]">CIDR & Subnetting Sandbox</h3>
           </div>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
-            Explore 32-bit logical IP splitting, subnet masks, network prefixes, and host capacities ($2^n - 2$).
+            Explore 32-bit logical IP splitting, subnet masks, network prefixes, and host capacities (<i>2<sup>n</sup> - 2</i>).
           </p>
         </div>
         <div className="flex items-center gap-3">
