@@ -2,7 +2,7 @@
 
 export type ThemeMode = 'dark' | 'light';
 
-export type ExamTab = 'study' | 'subject_a' | 'subject_b' | 'leitner' | 'flashcards' | 'analytics';
+export type ExamTab = 'study' | 'subject_a' | 'subject_b' | 'leitner';
 
 export type DomainCategory = 'Technology' | 'Management' | 'Strategy';
 
@@ -12,6 +12,8 @@ export interface SubjectAQuestion {
   subdomain: string;
   examYear: number;
   questionText: string;
+  pdfUrl?: string;
+  pdfPage?: number;
   options: string[];
   correctIndex: number;
   explanation: string;
@@ -46,12 +48,33 @@ export interface SubjectBSubQuestion {
   traceTableSpec?: TraceTableSpec;
 }
 
+/**
+ * A single answer choice from the normalized question_choices table.
+ * Standard mode (Subject A / Subject B non-matrix): `text` is populated.
+ * Matrix mode (Subject B fill-in-the-blank): `blank_a/b/c` are populated.
+ */
+export interface QuestionChoice {
+  /** Lowercase letter 'a' through 'j' */
+  letter: string;
+  /** Standard mode: full choice text string. Null for matrix choices. */
+  text?: string | null;
+  /** Matrix mode: value for blank column A. Null for standard choices. */
+  blank_a?: string | null;
+  /** Matrix mode: value for blank column B. Null for standard choices. */
+  blank_b?: string | null;
+  /** Matrix mode: value for blank column C. Null for standard choices. */
+  blank_c?: string | null;
+}
+
+
 export interface SubjectBScenario {
   scenarioId: string;
   title: string;
   examYear: number;
   domain: string;
   contextMarkdown: string;
+  pdfUrl?: string;
+  pdfPage?: number;
   diagramSvg?: string;
   subQuestions: SubjectBSubQuestion[];
 }
@@ -93,4 +116,25 @@ export interface DiagnosticMetrics {
   domainAccuracy: Record<DomainCategory, number>;
   subdomainAccuracy: Record<string, { attempted: number; correct: number }>;
   currentStreak: number;
+}
+
+export interface CuratedResource {
+  id: string;
+  resource_title: string;
+  category: string;
+  subtopic: string;
+  resource_type: 'PDF' | 'SlideDeck' | 'GitHub Repo' | 'Web Article' | 'VideoEmbed';
+  embed_url: string;
+  summary_of_content: string;
+  badge?: string;
+  fileSize?: string;
+}
+
+export interface StudyDomainSection {
+  id: string;
+  title: string;
+  description: string;
+  iconName: string;
+  widgetType?: 'hamming' | 'subnet' | 'normalization' | 'evm';
+  subtopics: string[];
 }

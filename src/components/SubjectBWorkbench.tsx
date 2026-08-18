@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { parseMarkdownToHtml } from '../utils/markdown';
-import { SubjectBScenario, MasteryState } from '../types/exam';
+import { SubjectBScenario, MasteryState, QuestionChoice } from '../types/exam';
 import { TraceTableGrid } from './TraceTableGrid';
-import { FileText, Code, CheckCircle, XCircle, ChevronRight, ChevronLeft, Lightbulb, Sparkles, Trophy, Trash2 } from 'lucide-react';
-import { AiChatAssistant } from './AiChatAssistant';
+import { QuestionCard } from './QuestionCard';
+import { PdfQuestionPanel } from './PdfQuestionPanel';
+import { ChevronRight, ChevronLeft, Sparkles, RotateCcw, CheckSquare } from 'lucide-react';
 import { PhilnitsApiService } from '../services/api';
-import { isMastered, saveMasteryStates, saveQuestionIndex, getQuestionIndex } from '../utils/masteryEngine';
+import { isMastered, saveQuestionIndex, getQuestionIndex } from '../utils/masteryEngine';
 import { registerKeyboardHandlers, clearKeyboardHandlers } from '../utils/globalKeyboardShortcuts';
-import { ConfirmationModal } from './ConfirmationModal';
 
 interface SubjectBWorkbenchProps {
   scenarios: SubjectBScenario[];
@@ -15,6 +14,8 @@ interface SubjectBWorkbenchProps {
   onAnswerLogged: (questionId: string, isCorrect: boolean, timeSeconds: number) => void;
   onAddDynamicScenario?: (scenario: SubjectBScenario) => void;
 }
+
+const LOCAL_STORAGE_SUBJECT_B_KEY = 'philnits_subject_b_answers';
 
 export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({ 
   scenarios,
@@ -24,46 +25,98 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
 }) => {
   const [activeScenarioIdx, setActiveScenarioIdx] = useState<number>(() => getQuestionIndex('subject_b'));
   const [activeSubQIdx, setActiveSubQIdx] = useState<number>(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
+  
+  // Persistent selected answers from localStorage
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_SUBJECT_B_KEY);
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
   const [startTime] = useState<number>(Date.now());
 
-  // Filter out mastered scenarios
-  const activeScenarios = scenarios.filter(s => !isMastered(masteryStates[s.scenarioId]));
+  // Filter state for scenario selector UI
+  const [selectedYearFilter, setSelectedYearFilter] = useState<string>('All');
+  const [selectedDomainFilter, setSelectedDomainFilter] = useState<string>('All');
 
   // AI Dynamic Scenario Generator states
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [genError, setGenError] = useState<string | null>(null);
 
-  // Reset progress modal state
-  const [showResetModal, setShowResetModal] = useState<boolean>(false);
+  // Compute available years and domains from scenarios
+  const availableYears = Array.from(new Set(scenarios.map(s => s.examYear))).sort((a, b) => b - a);
+  const availableDomains = Array.from(new Set(scenarios.map(s => s.domain)));
 
-  const handleResetProgress = () => {
-    // Clear all mastery states for Subject B
-    saveMasteryStates({});
-    setShowResetModal(false);
-    setActiveScenarioIdx(0);
-    setActiveSubQIdx(0);
-    setSelectedAnswers({});
+  // Progress metrics across all subquestions
+  const allSubQuestions = scenarios.flatMap(s => s.subQuestions);
+  const totalSubQuestionsCount = allSubQuestions.length;
+  const answeredCount = Object.keys(selectedAnswers).length;
+  const answeredPercentage = totalSubQuestionsCount > 0 ? Math.round((answeredCount / totalSubQuestionsCount) * 100) : 0;
+
+  // Filter scenarios based on year and domain filters
+  const filteredScenarios = scenarios.filter(s => {
+    const matchYear = selectedYearFilter === 'All' || s.examYear === Number(selectedYearFilter);
+    const matchDomain = selectedDomainFilter === 'All' || s.domain === selectedDomainFilter;
+    return matchYear && matchDomain;
+  });
+
+  const activeScenario = scenarios[activeScenarioIdx];
+  const activeFilteredIdx = filteredScenarios.findIndex(
+    s => s.scenarioId === activeScenario?.scenarioId
+  );
+
+  React.useEffect(() => {
+    if (filteredScenarios.length === 0) return;
+    if (activeFilteredIdx !== -1) return;
+
+    const nextGlobalIdx = scenarios.findIndex(
+      s => s.scenarioId === filteredScenarios[0].scenarioId
+    );
+    if (nextGlobalIdx !== -1) {
+      setActiveScenarioIdx(nextGlobalIdx);
+      setActiveSubQIdx(0);
+    }
+  }, [activeFilteredIdx, filteredScenarios, scenarios]);
+
+  // Save selected answer to state & localStorage
+  const saveSubjectBAnswer = (questionId: string, optionIdx: number) => {
+    setSelectedAnswers((prev) => {
+      const updated = { ...prev, [questionId]: optionIdx };
+      try {
+        localStorage.setItem(LOCAL_STORAGE_SUBJECT_B_KEY, JSON.stringify(updated));
+      } catch (err) {
+        console.error('Failed to save Subject B answer:', err);
+      }
+      return updated;
+    });
   };
 
-  // Persist question index
+  const handleClearSubjectBAnswers = () => {
+    if (window.confirm('Reset all saved answers for Subject B scenarios?')) {
+      setSelectedAnswers({});
+      try {
+        localStorage.removeItem(LOCAL_STORAGE_SUBJECT_B_KEY);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
+
+  // Persist current question index
   React.useEffect(() => {
     saveQuestionIndex('subject_b', activeScenarioIdx);
   }, [activeScenarioIdx]);
 
-  // Persist question index
   React.useEffect(() => {
-    saveQuestionIndex('subject_b', activeScenarioIdx);
-  }, [activeScenarioIdx]);
-
-  React.useEffect(() => {
-    // Register keyboard handlers for Subject B
     const cleanup = registerKeyboardHandlers({
       answerSelection: (optionIndex: number) => {
         handleSelectOption(optionIndex);
       },
       nextCard: () => {
-        setActiveSubQIdx(prev => prev + 1);
+        setActiveSubQIdx(prev => Math.min((scenarios[activeScenarioIdx]?.subQuestions.length ?? 1) - 1, prev + 1));
       },
       prevCard: () => {
         if (activeSubQIdx > 0) {
@@ -76,7 +129,7 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
       cleanup();
       clearKeyboardHandlers();
     };
-  }, []);
+  }, [activeSubQIdx, activeScenarioIdx, scenarios]);
 
   const handleGenerateAiScenario = async () => {
     setIsGenerating(true);
@@ -88,7 +141,6 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
       if (newScenario && newScenario.scenarioId && newScenario.subQuestions?.length > 0) {
         if (onAddDynamicScenario) {
           onAddDynamicScenario(newScenario);
-          // Display the newly generated scenario immediately (index 0)
           setActiveScenarioIdx(0);
           setActiveSubQIdx(0);
         }
@@ -103,20 +155,96 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
     }
   };
 
-  const currentScenario = activeScenarios[activeScenarioIdx] || activeScenarios[0];
+  const handlePrevScenario = () => {
+    if (activeFilteredIdx > 0) {
+      const prevScenario = filteredScenarios[activeFilteredIdx - 1];
+      const prevGlobalIdx = scenarios.findIndex(s => s.scenarioId === prevScenario.scenarioId);
+      if (prevGlobalIdx !== -1) {
+        setActiveScenarioIdx(prevGlobalIdx);
+        setActiveSubQIdx(0);
+      }
+    }
+  };
+
+  const handleNextScenario = () => {
+    if (activeFilteredIdx >= 0 && activeFilteredIdx < filteredScenarios.length - 1) {
+      const nextScenario = filteredScenarios[activeFilteredIdx + 1];
+      const nextGlobalIdx = scenarios.findIndex(s => s.scenarioId === nextScenario.scenarioId);
+      if (nextGlobalIdx !== -1) {
+        setActiveScenarioIdx(nextGlobalIdx);
+        setActiveSubQIdx(0);
+      }
+    }
+  };
+
+  const currentScenario = activeScenario || scenarios[0];
   const currentSubQ = currentScenario?.subQuestions[activeSubQIdx];
+  const scenarioQuestionNumber = currentScenario?.title.match(/Q(\d+)/)?.[1];
+
+  React.useEffect(() => {
+    if (!currentScenario) return;
+    if (activeSubQIdx < currentScenario.subQuestions.length) return;
+    setActiveSubQIdx(0);
+  }, [activeSubQIdx, currentScenario]);
 
   const selectedIdx = currentSubQ ? selectedAnswers[currentSubQ.questionId] : undefined;
   const isAnswered = selectedIdx !== undefined;
-  const isCorrect = isAnswered && selectedIdx === currentSubQ?.correctIndex;
 
+  /**
+   * Legacy index-based handler (used by keyboard shortcut registration).
+   * Maps option index to lowercase letter then delegates to handleSelectLetter.
+   */
   const handleSelectOption = (idx: number) => {
     if (!currentSubQ || isAnswered) return;
+    const letter = String.fromCharCode(97 + idx);
+    handleSelectLetter(letter);
+  };
+
+  /** Primary handler used by QuestionCard (letter-based). */
+  const handleSelectLetter = (letter: string) => {
+    if (!currentSubQ) return;
+    const idx = letter.charCodeAt(0) - 97; // 'a'→0, 'b'→1, …
+    if (selectedAnswers[currentSubQ.questionId] !== undefined) return;
     const timeSpent = Math.max(1, Math.round((Date.now() - startTime) / 1000));
-    
-    setSelectedAnswers((prev) => ({ ...prev, [currentSubQ.questionId]: idx }));
+    saveSubjectBAnswer(currentSubQ.questionId, idx);
     const correct = idx === currentSubQ.correctIndex;
     onAnswerLogged(currentSubQ.questionId, correct, timeSpent);
+  };
+
+  /**
+   * Convert a SubjectBSubQuestion's string options array into QuestionChoice[]
+   * for use with AnswerGroupRenderer inside QuestionCard.
+   * Options that contain tab-separated blanks (e.g. "value1\tvalue2\tvalue3")
+   * are auto-parsed into blank_a/b/c fields.
+   */
+  const buildChoices = (options: string[], letterOnly = false): QuestionChoice[] => {
+    return options.map((opt, idx) => {
+      const letter = String.fromCharCode(97 + idx);
+      if (letterOnly) {
+        return {
+          letter,
+          text: `Option ${letter.toUpperCase()}`,
+          blank_a: null,
+          blank_b: null,
+          blank_c: null,
+        };
+      }
+
+      // Strip leading letter prefix like 'a) ' before further processing
+      const cleaned = opt.replace(/^[a-j]\)\s*/i, '').trim();
+      // Detect tab-separated multi-blank format
+      const parts = cleaned.split('\t');
+      if (parts.length >= 2) {
+        return {
+          letter,
+          text: null,
+          blank_a: parts[0]?.trim() ?? null,
+          blank_b: parts[1]?.trim() ?? null,
+          blank_c: parts[2]?.trim() ?? null,
+        };
+      }
+      return { letter, text: cleaned, blank_a: null, blank_b: null, blank_c: null };
+    });
   };
 
   if (!currentScenario) {
@@ -132,201 +260,259 @@ export const SubjectBWorkbench: React.FC<SubjectBWorkbenchProps> = ({
         </div>
       )}
       
-      {/* Scenario Selector Header */}
-      <div className="glass-panel p-4 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-2 overflow-x-auto">
-          <span className="text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wider whitespace-nowrap">
-            Scenario Selector:
-          </span>
-          {scenarios.map((scen, idx) => (
+      {/* Improved Scenario Selector & Progress Panel */}
+      <div className="glass-panel p-5 space-y-4 shadow-sm">
+        {/* Top Control Bar: Filters, Persistence Stats & Stepper */}
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--border-color)] pb-3">
+          
+          {/* Year Filter Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto">
+            <span className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider whitespace-nowrap">
+              Year:
+            </span>
             <button
-              key={scen.scenarioId}
               onClick={() => {
-                setActiveScenarioIdx(idx);
-                setActiveSubQIdx(0);
+                setSelectedYearFilter('All');
+                const matched = scenarios.filter(s => selectedDomainFilter === 'All' || s.domain === selectedDomainFilter);
+                if (matched.length > 0) {
+                  const idx = scenarios.findIndex(s => s.scenarioId === matched[0].scenarioId);
+                  if (idx !== -1) { setActiveScenarioIdx(idx); setActiveSubQIdx(0); }
+                }
               }}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
-                activeScenarioIdx === idx
-                  ? 'bg-[var(--accent-cyan)] text-white shadow-sm'
-                  : 'bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:text-[var(--text-primary)]'
+              className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer ${
+                selectedYearFilter === 'All'
+                  ? 'bg-[var(--accent-cyan)] text-white'
+                  : 'bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]'
               }`}
             >
-              Scenario {idx + 1}: {scen.domain}
+              All ({scenarios.length})
             </button>
-          ))}
+            {availableYears.map(year => {
+              const count = scenarios.filter(s => s.examYear === year).length;
+              return (
+                <button
+                  key={year}
+                  onClick={() => {
+                    setSelectedYearFilter(String(year));
+                    const matched = scenarios.filter(s => s.examYear === year && (selectedDomainFilter === 'All' || s.domain === selectedDomainFilter));
+                    if (matched.length > 0) {
+                      const idx = scenarios.findIndex(s => s.scenarioId === matched[0].scenarioId);
+                      if (idx !== -1) { setActiveScenarioIdx(idx); setActiveSubQIdx(0); }
+                    }
+                  }}
+                  className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer ${
+                    selectedYearFilter === String(year)
+                      ? 'bg-[var(--accent-cyan)] text-white'
+                      : 'bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]'
+                  }`}
+                >
+                  {year} ({count})
+                </button>
+              );
+            })}
+          </div>
 
-          <button
-            onClick={handleGenerateAiScenario}
-            disabled={isGenerating}
-            className="btn-primary text-xs py-1.5 px-3 flex items-center gap-1.5 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 shadow-sm border-none shrink-0 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            title="Generate a brand new Afternoon Exam (Subject B) scenario using Gemini"
-          >
-            <Sparkles className={`w-3.5 h-3.5 ${isGenerating ? 'animate-spin' : ''}`} />
-            {isGenerating ? 'Generating...' : 'Gen AI Scenario'}
-          </button>
+          {/* Domain Filter Select */}
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider whitespace-nowrap">
+              Domain:
+            </span>
+            <select
+              value={selectedDomainFilter}
+              onChange={(e) => {
+                const dom = e.target.value;
+                setSelectedDomainFilter(dom);
+                const matched = scenarios.filter(s => (selectedYearFilter === 'All' || s.examYear === Number(selectedYearFilter)) && (dom === 'All' || s.domain === dom));
+                if (matched.length > 0) {
+                  const idx = scenarios.findIndex(s => s.scenarioId === matched[0].scenarioId);
+                  if (idx !== -1) { setActiveScenarioIdx(idx); setActiveSubQIdx(0); }
+                }
+              }}
+              className="bg-[var(--bg-card-hover)] text-[var(--text-primary)] border border-[var(--border-color)] rounded-md text-xs px-2.5 py-1 focus:outline-none focus:border-[var(--accent-cyan)] cursor-pointer"
+            >
+              <option value="All">All Domains ({availableDomains.length})</option>
+              {availableDomains.map(d => (
+                <option key={d} value={d}>{d}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Answer Persistence Progress Stats */}
+          <div className="flex items-center gap-3 ml-auto">
+            <div className="flex items-center gap-2 text-xs font-mono">
+              <CheckSquare className="w-3.5 h-3.5 text-[var(--accent-emerald)]" />
+              <span className="text-[var(--text-primary)] font-semibold">
+                Answered: {answeredCount} / {totalSubQuestionsCount} ({answeredPercentage}%)
+              </span>
+              <div className="w-20 h-2 bg-[var(--bg-card-hover)] rounded-full overflow-hidden border border-[var(--border-color)] hidden sm:block">
+                <div 
+                  className="h-full bg-[var(--accent-emerald)] transition-all duration-300"
+                  style={{ width: `${answeredPercentage}%` }}
+                />
+              </div>
+            </div>
+
+            {answeredCount > 0 && (
+              <button
+                onClick={handleClearSubjectBAnswers}
+                className="text-[11px] font-semibold text-rose-500 hover:text-rose-600 flex items-center gap-1 cursor-pointer"
+                title="Reset all saved Subject B answers"
+              >
+                <RotateCcw className="w-3 h-3" /> Reset Answers
+              </button>
+            )}
+
+            {/* AI Generator Button */}
+            <button
+              onClick={handleGenerateAiScenario}
+              disabled={isGenerating}
+              className="btn-primary text-xs py-1 px-3 flex items-center gap-1.5 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 shadow-sm border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              title="Generate a brand new Subject B scenario using Gemini"
+            >
+              <Sparkles className={`w-3.5 h-3.5 ${isGenerating ? 'animate-spin' : ''}`} />
+              {isGenerating ? 'Generating...' : 'Gen AI Scenario'}
+            </button>
+          </div>
         </div>
 
-        <div className="text-xs text-[var(--text-primary)] font-mono">
-          Year: {currentScenario.examYear} | Sub-questions: {currentScenario.subQuestions.length}
+        {/* Dropdown Selector & Direct Stepper Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2 flex-1 min-w-[280px]">
+            <span className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider whitespace-nowrap">
+              Select Scenario:
+            </span>
+            <select
+              value={activeScenarioIdx}
+              onChange={(e) => {
+                setActiveScenarioIdx(Number(e.target.value));
+                setActiveSubQIdx(0);
+              }}
+              className="w-full bg-[var(--bg-card-hover)] text-[var(--text-primary)] border border-[var(--border-color)] rounded-lg text-xs p-2 font-semibold focus:outline-none focus:border-[var(--accent-cyan)] cursor-pointer truncate"
+            >
+              {filteredScenarios.map((scen) => {
+                const globalIdx = scenarios.findIndex(s => s.scenarioId === scen.scenarioId);
+                const isFullyAnswered = scen.subQuestions.every(sq => selectedAnswers[sq.questionId] !== undefined);
+                const isMasteredState = isMastered(masteryStates[scen.scenarioId]);
+                
+                let badge = '';
+                if (isMasteredState) badge = '🏆 ';
+                else if (isFullyAnswered) badge = '✓ ';
+
+                return (
+                  <option key={scen.scenarioId} value={globalIdx}>
+                    {badge}[{scen.examYear}] Scenario {globalIdx + 1}: {scen.title}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          {/* Stepper Buttons */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handlePrevScenario}
+              disabled={activeFilteredIdx <= 0}
+              className="px-3 py-1.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] text-xs font-semibold flex items-center gap-1 hover:bg-[var(--border-color)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+            >
+              <ChevronLeft className="w-3.5 h-3.5" /> Previous
+            </button>
+
+            <span className="text-xs font-mono font-bold text-[var(--text-primary)] px-2">
+              {activeFilteredIdx >= 0 ? activeFilteredIdx + 1 : 0} / {filteredScenarios.length}
+            </span>
+
+            <button
+              onClick={handleNextScenario}
+              disabled={activeFilteredIdx < 0 || activeFilteredIdx >= filteredScenarios.length - 1}
+              className="px-3 py-1.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] text-xs font-semibold flex items-center gap-1 hover:bg-[var(--border-color)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+            >
+              Next <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Main Split Pane Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        {/* Left Pane: Long-form Reading Context & Pseudocode (Col 7) */}
+        {/* Left Pane: PDF-backed question source (Col 7) */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="glass-panel p-6 space-y-4">
-            <div className="flex items-center gap-2 border-b border-[var(--border-color)] pb-3">
-              <FileText className="w-5 h-5 text-[var(--accent-cyan)]" />
-              <h2 className="text-base font-bold text-[var(--text-primary)]">
-                {currentScenario.title}
-              </h2>
-            </div>
-
-            {/* Markdown Context Body */}
-            <div 
-              className="prose dark:prose-invert max-w-none text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed font-sans"
-              dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(currentScenario.contextMarkdown) }}
-            />
-          </div>
+          <PdfQuestionPanel
+            title={currentScenario.title}
+            examYear={currentScenario.examYear}
+            pdfUrl={currentScenario.pdfUrl}
+            initialPage={currentScenario.pdfPage}
+            focusLabel={scenarioQuestionNumber ? `Look for Q${scenarioQuestionNumber} in the PDF` : undefined}
+          />
         </div>
 
-        {/* Right Pane: Sub-question Workbench & Trace Table (Col 5) */}
+        {/* Right Pane: Sub-question Workbench via QuestionCard (Col 5) */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="glass-panel p-6 space-y-6">
-            
-            {/* Subquestion Pagination Pills */}
-            <div className="flex items-center justify-between border-b border-[var(--border-color)] pb-3">
-              <span className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">
-                Question {activeSubQIdx + 1} of {currentScenario.subQuestions.length}
-              </span>
 
-              <div className="flex items-center gap-1">
-                {currentScenario.subQuestions.map((_, qIdx) => (
+          {/* Sub-question pagination pills */}
+          <div className="glass-panel p-4 flex items-center justify-between">
+            <span className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">
+              Question {activeSubQIdx + 1} of {currentScenario.subQuestions.length}
+            </span>
+            <div className="flex items-center gap-1.5">
+              {currentScenario.subQuestions.map((sq, qIdx) => {
+                const sqAnswered = selectedAnswers[sq.questionId] !== undefined;
+                return (
                   <button
                     key={qIdx}
                     onClick={() => setActiveSubQIdx(qIdx)}
-                    className={`w-6 h-6 rounded-full text-xs font-bold font-mono transition-colors ${
+                    className={`w-6 h-6 rounded-full text-xs font-bold font-mono transition-colors flex items-center justify-center ${
                       activeSubQIdx === qIdx
                         ? 'bg-[var(--accent-emerald)] text-white'
+                        : sqAnswered
+                        ? 'bg-emerald-600/30 text-emerald-400 border border-emerald-500/50'
                         : 'bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:bg-[var(--border-color)]'
                     }`}
                   >
-                    {qIdx + 1}
+                    {sqAnswered ? '✓' : qIdx + 1}
                   </button>
-                ))}
-              </div>
+                );
+              })}
             </div>
-
-            {/* Subquestion Prompt */}
-            {currentSubQ && (
-              <div className="space-y-4">
-                <p className="text-sm font-semibold text-[var(--text-primary)] leading-relaxed">
-                  {currentSubQ.prompt}
-                </p>
-
-                {/* Subquestion Pseudocode block if present */}
-                {currentSubQ.requiresPseudocode && currentSubQ.pseudocodeBlock && (
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-bold text-[var(--accent-cyan)] uppercase tracking-wider flex items-center gap-1">
-                      <Code className="w-3 h-3" /> ITPEC Pseudocode Snippet
-                    </span>
-                    <div className="pseudocode-container">
-                      {currentSubQ.pseudocodeBlock}
-                    </div>
-                  </div>
-                )}
-
-                {/* Interactive Trace Table Grid if specified */}
-                {currentSubQ.traceTableSpec && (
-                  <TraceTableGrid spec={currentSubQ.traceTableSpec} />
-                )}
-
-                {/* Multiple Choice Options */}
-                <div className="space-y-2 pt-2">
-                  {currentSubQ.options.map((opt, idx) => {
-                    const letter = String.fromCharCode(65 + idx);
-                    const isSelected = selectedIdx === idx;
-                    const isTargetCorrect = currentSubQ.correctIndex === idx;
-
-                    let optStyle = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
-                    if (isAnswered) {
-                      if (isTargetCorrect) {
-                        optStyle = 'border-emerald-600 bg-emerald-600 text-white font-semibold';
-                      } else if (isSelected) {
-                        optStyle = 'border-rose-600 bg-rose-600 text-white';
-                      } else {
-                        optStyle = 'border-[var(--border-color)] opacity-50';
-                      }
-                    }
-
-                    return (
-                      <button
-                        key={idx}
-                        disabled={isAnswered}
-                        onClick={() => handleSelectOption(idx)}
-                        className={`w-full text-left p-3 rounded-lg border flex items-center justify-between text-xs transition-all ${optStyle}`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <span className={`w-6 h-6 rounded flex items-center justify-center font-mono font-bold text-[10px] ${
-                            isAnswered && isTargetCorrect ? 'bg-white text-emerald-600' :
-                            isAnswered && isSelected ? 'bg-white text-rose-600' :
-                            'bg-[var(--bg-main)] border border-[var(--border-color)] text-[var(--text-primary)]'
-                          }`}>
-                            {letter}
-                          </span>
-                          <span>{opt}</span>
-                        </div>
-                        {isAnswered && isTargetCorrect && <CheckCircle className="w-4 h-4 text-emerald-500" />}
-                        {isAnswered && isSelected && !isTargetCorrect && <XCircle className="w-4 h-4 text-rose-500" />}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Explanation Box */}
-                {isAnswered && (
-                  <div className="p-3.5 rounded-lg bg-emerald-500 border border-emerald-600 text-xs space-y-1.5 shadow-sm">
-                    <div className="flex items-center gap-1.5 font-bold text-white uppercase tracking-wider text-[10px]">
-                      <Lightbulb className="w-3.5 h-3.5" /> Solution Rationale
-                    </div>
-                    <div 
-                      className="text-white leading-relaxed prose prose-sm max-w-none"
-                      dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(currentSubQ.explanation) }}
-                    />
-                  </div>
-                )}
-              </div>
-            )}
           </div>
+
+          {/* QuestionCard — renders prompt, pseudo-code, choices, explanation */}
+          {currentSubQ && (
+            <>
+              <QuestionCard
+                key={`${currentScenario.scenarioId}-${activeSubQIdx}`}
+                questionNumber={currentSubQ.questionNumber}
+                questionText={
+                  currentScenario.pdfUrl
+                    ? `Subquestion ${currentSubQ.questionNumber}`
+                    : currentSubQ.prompt
+                }
+                pseudoCode={
+                  !currentScenario.pdfUrl && currentSubQ.requiresPseudocode && currentSubQ.pseudocodeBlock
+                    ? currentSubQ.pseudocodeBlock
+                    : null
+                }
+                diagramDescription={null}
+                choices={buildChoices(currentSubQ.options, Boolean(currentScenario.pdfUrl))}
+                correctLetter={String.fromCharCode(97 + currentSubQ.correctIndex)}
+                explanation={currentSubQ.explanation}
+                onAnswer={(letter) => handleSelectLetter(letter)}
+                preSelectedLetter={
+                  selectedIdx !== undefined
+                    ? String.fromCharCode(97 + selectedIdx)
+                    : null
+                }
+              />
+
+              {/* Trace Table (when traceTableSpec is set on this sub-question) */}
+              {currentSubQ.traceTableSpec && (
+                <TraceTableGrid spec={currentSubQ.traceTableSpec} />
+              )}
+            </>
+          )}
         </div>
 
       </div>
-
-      <div className="flex items-center justify-center pt-4">
-        <button
-          onClick={() => setShowResetModal(true)}
-          className="btn-danger text-xs py-2 px-3 flex items-center gap-1.5"
-          title="Reset all progress for Subject B"
-        >
-          <Trash2 className="w-4 h-4" /> Reset Progress
-        </button>
-      </div>
-
-      <AiChatAssistant activeContext={`${currentScenario.title} - Question ${activeSubQIdx + 1}`} hide={false} />
-
-      {/* Confirmation Modal */}
-      <ConfirmationModal
-        isOpen={showResetModal}
-        title="Reset Subject B Progress?"
-        message="This will clear all your mastery progress for Subject B scenarios. You can undo this by refreshing the page if you haven't closed it yet."
-        confirmText="Reset All"
-        cancelText="Cancel"
-        onConfirm={handleResetProgress}
-        onCancel={() => setShowResetModal(false)}
-        isDangerous={true}
-      />
     </div>
   );
 };

@@ -1,167 +1,164 @@
 import React, { useState } from 'react';
+import { Globe } from 'lucide-react';
 
 export const SubnetCalculator: React.FC = () => {
-  const [ipInput, setIpInput] = useState<string>('192.168.1.100');
-  const [prefix, setPrefix] = useState<number>(26);
+  const [ipAddress, setIpAddress] = useState<string>('192.168.10.50');
+  const [cidr, setCidr] = useState<number>(24);
 
-  const calculateSubnet = () => {
-    // Validate IP input
-    const ipParts = ipInput.split('.').map((p) => parseInt(p, 10));
-    if (ipParts.length !== 4 || ipParts.some((p) => isNaN(p) || p < 0 || p > 255)) {
-      return null;
-    }
-
-    // Convert IP to 32-bit integer
-    let ipNum = 0;
-    ipParts.forEach((part, idx) => {
-      ipNum += part * Math.pow(256, 3 - idx);
-    });
-
-    // Create netmask
-    let mask = 0;
-    for (let i = 31; i >= 32 - prefix; i--) {
-      mask |= (1 << i);
-    }
-    // Convert mask to positive integer representation
-    mask = mask >>> 0;
-
-    // Netmask string representation
-    const maskParts = [
-      (mask >>> 24) & 255,
-      (mask >>> 16) & 255,
-      (mask >>> 8) & 255,
-      mask & 255
-    ];
-    const maskStr = maskParts.join('.');
-
-    // Network Address
-    const netNum = (ipNum & mask) >>> 0;
-    const netStr = [
-      (netNum >>> 24) & 255,
-      (netNum >>> 16) & 255,
-      (netNum >>> 8) & 255,
-      netNum & 255
-    ].join('.');
-
-    // Broadcast Address
-    const broadcastNum = (netNum | ~mask) >>> 0;
-    const broadcastStr = [
-      (broadcastNum >>> 24) & 255,
-      (broadcastNum >>> 16) & 255,
-      (broadcastNum >>> 8) & 255,
-      broadcastNum & 255
-    ].join('.');
-
-    // Host Bounds
-    const firstHostStr = [
-      (netNum >>> 24) & 255,
-      (netNum >>> 16) & 255,
-      (netNum >>> 8) & 255,
-      (netNum & 255) + 1
-    ].join('.');
-
-    const lastHostStr = [
-      (broadcastNum >>> 24) & 255,
-      (broadcastNum >>> 16) & 255,
-      (broadcastNum >>> 8) & 255,
-      (broadcastNum & 255) - 1
-    ].join('.');
-
-    const totalHosts = Math.pow(2, 32 - prefix) - 2;
-
-    return {
-      maskStr,
-      netStr,
-      broadcastStr,
-      firstHostStr,
-      lastHostStr,
-      totalHosts
-    };
+  const handleIpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIpAddress(e.target.value);
   };
 
-  const results = calculateSubnet();
+  const ipOctets = ipAddress.split('.').map(o => parseInt(o) || 0);
+  const safeOctets = [
+    ipOctets[0] ?? 192,
+    ipOctets[1] ?? 168,
+    ipOctets[2] ?? 10,
+    ipOctets[3] ?? 50
+  ];
+
+  const ipBinary32 = safeOctets
+    .map(oct => oct.toString(2).padStart(8, '0'))
+    .join('');
+
+  const maskBinary32 = ''.padEnd(cidr, '1').padEnd(32, '0');
+  const maskOctets = [
+    parseInt(maskBinary32.slice(0, 8), 2),
+    parseInt(maskBinary32.slice(8, 16), 2),
+    parseInt(maskBinary32.slice(16, 24), 2),
+    parseInt(maskBinary32.slice(24, 32), 2),
+  ];
+  const subnetMaskStr = maskOctets.join('.');
+
+  const netBinary32 = ipBinary32.split('').map((bit, i) => (bit === '1' && maskBinary32[i] === '1' ? '1' : '0')).join('');
+  const netOctets = [
+    parseInt(netBinary32.slice(0, 8), 2),
+    parseInt(netBinary32.slice(8, 16), 2),
+    parseInt(netBinary32.slice(16, 24), 2),
+    parseInt(netBinary32.slice(24, 32), 2),
+  ];
+  const networkAddressStr = netOctets.join('.');
+
+  const broadBinary32 = netBinary32.split('').map((bit, i) => (maskBinary32[i] === '0' ? '1' : bit)).join('');
+  const broadOctets = [
+    parseInt(broadBinary32.slice(0, 8), 2),
+    parseInt(broadBinary32.slice(8, 16), 2),
+    parseInt(broadBinary32.slice(16, 24), 2),
+    parseInt(broadBinary32.slice(24, 32), 2),
+  ];
+  const broadcastAddressStr = broadOctets.join('.');
+
+  const hostBits = 32 - cidr;
+  const totalHosts = Math.pow(2, hostBits);
+  const usableHosts = cidr >= 31 ? (cidr === 32 ? 1 : 2) : totalHosts - 2;
+
+  const prefixBinary = ipBinary32.slice(0, cidr);
+  const suffixBinary = ipBinary32.slice(cidr);
 
   return (
-    <div className="glass-panel p-5 space-y-4 my-4">
-      <div className="border-b border-[var(--border-color)] pb-2 flex justify-between items-center">
+    <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6 shadow-xl space-y-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border-color)] pb-4">
         <div>
-          <h4 className="text-sm font-bold text-[var(--text-primary)]">IP Subnet Mask & Network Boundary Calculator</h4>
-          <p className="text-xs text-[var(--text-muted)]">Input an IP and select CIDR prefix to calculate host address bounds.</p>
-        </div>
-        <span className="badge badge-emerald text-[10px]">IPv4 Netmasks</span>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* IP Address Field */}
-        <div className="space-y-1.5">
-          <label className="text-xs font-bold text-[var(--text-secondary)]">IP Address</label>
-          <input
-            type="text"
-            value={ipInput}
-            onChange={(e) => setIpInput(e.target.value)}
-            className="trace-input"
-            placeholder="e.g. 192.168.1.100"
-          />
-        </div>
-
-        {/* CIDR Prefix Slider */}
-        <div className="space-y-1.5">
-          <div className="flex justify-between text-xs font-bold text-[var(--text-secondary)]">
-            <span>CIDR Prefix Mask</span>
-            <span className="text-[var(--accent-cyan)] font-mono">/{prefix}</span>
-          </div>
-          <input
-            type="range"
-            min="24"
-            max="30"
-            value={prefix}
-            onChange={(e) => setPrefix(parseInt(e.target.value, 10))}
-            className="w-full h-1.5 bg-[var(--border-color)] rounded-lg appearance-none cursor-pointer accent-[var(--accent-cyan)]"
-          />
-          <div className="flex justify-between text-[9px] text-[var(--text-muted)] font-mono">
-            <span>/24 (254 hosts)</span>
-            <span>/27</span>
-            <span>/30 (2 hosts)</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Results grid */}
-      {results ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 pt-2">
-          
-          <div className="p-3 bg-[var(--bg-sidebar)] rounded-lg border border-[var(--border-color)] text-xs font-mono">
-            <span className="text-[9px] text-[var(--text-muted)] uppercase block font-sans font-bold">Subnet Mask</span>
-            <span className="text-xs text-[var(--text-primary)] font-bold">{results.maskStr}</span>
-          </div>
-
-          <div className="p-3 bg-[var(--bg-sidebar)] rounded-lg border border-[var(--border-color)] text-xs font-mono">
-            <span className="text-[9px] text-[var(--text-muted)] uppercase block font-sans font-bold">Network ID</span>
-            <span className="text-xs text-[var(--accent-cyan)] font-bold">{results.netStr}</span>
-          </div>
-
-          <div className="p-3 bg-[var(--bg-sidebar)] rounded-lg border border-[var(--border-color)] text-xs font-mono">
-            <span className="text-[9px] text-[var(--text-muted)] uppercase block font-sans font-bold">Broadcast IP</span>
-            <span className="text-xs text-rose-500 font-bold">{results.broadcastStr}</span>
-          </div>
-
-          <div className="p-3 bg-[var(--bg-sidebar)] rounded-lg border border-[var(--border-color)] text-xs font-mono col-span-2">
-            <span className="text-[9px] text-[var(--text-muted)] uppercase block font-sans font-bold">Assignable Host Bounds</span>
-            <span className="text-[11px] text-[var(--text-primary)]">
-              {results.firstHostStr} <span className="text-[var(--text-muted)]">to</span> {results.lastHostStr}
+          <div className="flex items-center gap-2">
+            <span className="p-2 bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] rounded-lg">
+              <Globe className="w-5 h-5" />
             </span>
+            <h3 className="text-xl font-bold text-[var(--text-primary)]">CIDR & Subnetting Sandbox</h3>
           </div>
-
-          <div className="p-3 bg-[var(--bg-sidebar)] rounded-lg border border-[var(--border-color)] text-xs font-mono">
-            <span className="text-[9px] text-[var(--text-muted)] uppercase block font-sans font-bold">Total Host Capacity</span>
-            <span className="text-xs text-[var(--accent-emerald)] font-bold">{results.totalHosts} Hosts</span>
-          </div>
-
+          <p className="text-sm text-[var(--text-secondary)] mt-1">
+            Explore 32-bit logical IP splitting, subnet masks, network prefixes, and host capacities ($2^n - 2$).
+          </p>
         </div>
-      ) : (
-        <p className="text-xs text-rose-500 font-mono">Invalid IP Address Format. Enter 4 octets separated by dots (0-255).</p>
-      )}
+        <div className="flex items-center gap-3">
+          <div>
+            <label className="block text-[10px] uppercase font-semibold text-[var(--text-secondary)] mb-1">IPv4 Address</label>
+            <input
+              type="text"
+              value={ipAddress}
+              onChange={handleIpChange}
+              className="w-36 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-[var(--text-primary)] font-mono text-sm focus:outline-none focus:border-[var(--accent-cyan)]"
+            />
+          </div>
+          <div>
+            <label className="block text-[10px] uppercase font-semibold text-[var(--text-secondary)] mb-1">CIDR: /{cidr}</label>
+            <select
+              value={cidr}
+              onChange={(e) => setCidr(parseInt(e.target.value))}
+              className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-[var(--text-primary)] font-mono text-sm focus:outline-none focus:border-[var(--accent-cyan)]"
+            >
+              {Array.from({ length: 25 }, (_, i) => i + 8).map(c => (
+                <option key={c} value={c}>/{c} ({Math.max(0, Math.pow(2, 32 - c) - 2)} hosts)</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl p-4">
+        <div className="flex justify-between text-xs font-semibold text-[var(--text-primary)]">
+          <span>Network Prefix Slider (/{cidr})</span>
+          <span className="text-[var(--accent-cyan)] font-mono">{hostBits} host bits ({totalHosts.toLocaleString()} total IP addresses)</span>
+        </div>
+        <input
+          type="range"
+          min={8}
+          max={30}
+          value={cidr}
+          onChange={(e) => setCidr(parseInt(e.target.value))}
+          className="w-full accent-[var(--accent-cyan)] cursor-pointer"
+        />
+        <div className="flex justify-between text-[10px] text-[var(--text-muted)] font-mono">
+          <span>/8 (Class A)</span>
+          <span>/16 (Class B)</span>
+          <span>/24 (Class C)</span>
+          <span>/30 (WAN)</span>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <div className="flex items-center justify-between text-xs">
+          <span className="font-semibold text-[var(--text-primary)]">32-Bit Logical Identifier Split</span>
+          <div className="flex items-center gap-4 text-xs font-mono">
+            <span className="flex items-center gap-1.5 text-[var(--accent-cyan)]"><span className="w-3 h-3 bg-[var(--accent-cyan)] rounded-sm inline-block"></span> Network Prefix ({cidr} bits)</span>
+            <span className="flex items-center gap-1.5 text-[var(--accent-emerald)]"><span className="w-3 h-3 bg-[var(--accent-emerald)] rounded-sm inline-block"></span> Host Suffix ({hostBits} bits)</span>
+          </div>
+        </div>
+        <div className="w-full h-10 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl overflow-hidden flex font-mono text-xs shadow-inner">
+          <div
+            style={{ width: `${(cidr / 32) * 100}%` }}
+            className="bg-[var(--accent-cyan)]/20 border-r border-[var(--accent-cyan)] text-[var(--accent-cyan)] flex items-center justify-center font-bold overflow-hidden px-2 whitespace-nowrap"
+            title="Network Prefix"
+          >
+            Prefix: {prefixBinary}
+          </div>
+          <div
+            style={{ width: `${(hostBits / 32) * 100}%` }}
+            className="bg-[var(--accent-emerald)]/20 text-[var(--accent-emerald)] flex items-center justify-center font-bold overflow-hidden px-2 whitespace-nowrap"
+            title="Host Suffix"
+          >
+            Host: {suffixBinary}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl p-3.5 space-y-1">
+          <div className="text-[10px] uppercase font-semibold text-[var(--text-secondary)]">Subnet Mask</div>
+          <div className="text-sm font-mono font-bold text-[var(--text-primary)]">{subnetMaskStr}</div>
+        </div>
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl p-3.5 space-y-1">
+          <div className="text-[10px] uppercase font-semibold text-[var(--text-secondary)]">Network Address</div>
+          <div className="text-sm font-mono font-bold text-[var(--accent-cyan)]">{networkAddressStr}</div>
+        </div>
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl p-3.5 space-y-1">
+          <div className="text-[10px] uppercase font-semibold text-[var(--text-secondary)]">Broadcast Address</div>
+          <div className="text-sm font-mono font-bold text-amber-500 dark:text-amber-400">{broadcastAddressStr}</div>
+        </div>
+        <div className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl p-3.5 space-y-1">
+          <div className="text-[10px] uppercase font-semibold text-[var(--text-secondary)]">Usable Host Capacity</div>
+          <div className="text-sm font-mono font-bold text-[var(--accent-emerald)]">{usableHosts.toLocaleString()} hosts</div>
+        </div>
+      </div>
     </div>
   );
 };
-export default SubnetCalculator;

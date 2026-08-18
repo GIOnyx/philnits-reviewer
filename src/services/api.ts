@@ -5,8 +5,7 @@
 
 import { SEED_SUBJECT_A_QUESTIONS } from '../data/seed/subjectA_questions';
 import { SEED_SUBJECT_B_SCENARIOS } from '../data/seed/subjectB_scenarios';
-import { initialAnkiFlashcards } from '../data/seed/anki_flashcards';
-import { SubjectAQuestion, SubjectBScenario, AnkiFlashcard, LeitnerState, MasteryState } from '../types/exam';
+import { SubjectAQuestion, SubjectBScenario, LeitnerState, MasteryState } from '../types/exam';
 import { updateLeitnerState } from '../utils/leitnerEngine';
 import { updateMasteryState, saveMasteryStates, getStoredMasteryStates } from '../utils/masteryEngine';
 import { getSupabaseClient, isSupabaseConfigured } from './supabase';
@@ -115,65 +114,13 @@ export class PhilnitsApiService {
     }
   }
 
-  // Fetch Subject A Questions — tries Supabase first, then Windmill, then seed
+  // Fetch Subject A Questions from the curated local set.
   public static async getSubjectAQuestions(): Promise<SubjectAQuestion[]> {
-    // 1. Try Supabase normalized tables (populated by Windmill extraction pipeline)
-    if (isSupabaseConfigured()) {
-      const fromDb = await this.fetchSubjectAFromSupabase();
-      if (fromDb && fromDb.length > 0) return this.shuffleArray(fromDb);
-    }
-
-    // 2. Try Windmill REST endpoint
-    if (this.isWindmillConfigured()) {
-      try {
-        const res = await fetch(`${WINDMILL_BASE_URL}/api/w/${WINDMILL_WORKSPACE}/jobs/run_wait_result/f/exam/get_morning_questions`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${WINDMILL_TOKEN}`
-          }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) return this.shuffleArray(data);
-        }
-      } catch (err) {
-        console.warn('[Windmill] getSubjectAQuestions fallback to seed:', err);
-      }
-    }
-
-    // 3. Local seed data
     return this.shuffleArray(SEED_SUBJECT_A_QUESTIONS);
   }
 
-  // Fetch Subject B Scenarios — tries Supabase first, then Windmill, then seed
+  // Fetch Subject B scenarios from the curated PDF-backed local set.
   public static async getSubjectBScenarios(): Promise<SubjectBScenario[]> {
-    // 1. Try Supabase normalized tables (populated by Windmill extraction pipeline)
-    if (isSupabaseConfigured()) {
-      const fromDb = await this.fetchSubjectBFromSupabase();
-      if (fromDb && fromDb.length > 0) return this.shuffleArray(fromDb);
-    }
-
-    // 2. Try Windmill REST endpoint
-    if (this.isWindmillConfigured()) {
-      try {
-        const res = await fetch(`${WINDMILL_BASE_URL}/api/w/${WINDMILL_WORKSPACE}/jobs/run_wait_result/f/exam/get_pm_scenarios`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${WINDMILL_TOKEN}`
-          }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) return this.shuffleArray(data);
-        }
-      } catch (err) {
-        console.warn('[Windmill] getSubjectBScenarios fallback to seed:', err);
-      }
-    }
-
-    // 3. Local seed data
     return this.shuffleArray(SEED_SUBJECT_B_SCENARIOS);
   }
 
@@ -307,6 +254,7 @@ export class PhilnitsApiService {
 
   /**
    * Trigger a Windmill pdf_vision_extractor job from the frontend.
+   */
   public static async triggerWindmillExtraction(
     file: File,
     examYear: number,
@@ -395,11 +343,6 @@ export class PhilnitsApiService {
     return { success: false, error: 'Job timed out after 6 minutes' };
   }
 
-  // Fetch Anki Flashcards
-  public static async getFlashcards(): Promise<AnkiFlashcard[]> {
-    return this.shuffleArray(initialAnkiFlashcards);
-  }
-
   // Log user answer telemetry & update both Leitner and Mastery state
   public static async logTelemetry(
     questionId: string,
@@ -408,7 +351,7 @@ export class PhilnitsApiService {
     existingLeitnerStates: Record<string, LeitnerState>,
     existingMasteryStates: Record<string, MasteryState>,
     username?: string,
-    examType: 'subject_a' | 'subject_b' | 'flashcard' | 'leitner' = 'subject_a'
+    examType: 'subject_a' | 'subject_b' | 'leitner' = 'subject_a'
   ): Promise<{ leitner: Record<string, LeitnerState>; mastery: Record<string, MasteryState> }> {
     // Update Leitner (time-based spacing for Leitner tab)
     const updatedLeitnerState = updateLeitnerState(existingLeitnerStates[questionId], questionId, isCorrect);

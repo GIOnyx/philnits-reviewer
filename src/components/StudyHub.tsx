@@ -1,212 +1,251 @@
-import React, { useState, useEffect } from 'react';
-import { SEED_STUDY_TOPICS } from '../data/seed/study_topics';
-import { CpuPipelineVisualizer } from './visuals/CpuPipelineVisualizer';
-import { ErdVisualizer } from './visuals/ErdVisualizer';
-import { RadixSandbox } from './visuals/RadixSandbox';
+import React, { useState } from 'react';
+import { StudyDomainSection, CuratedResource } from '../types/exam';
+import { STUDY_DOMAINS, CURATED_RESOURCES } from '../data/seed/study_resources_catalogue';
+import { HammingCodeVisualizer } from './visuals/HammingCodeVisualizer';
 import { SubnetCalculator } from './visuals/SubnetCalculator';
-import { PagingSimulator } from './visuals/PagingSimulator';
-import { LogicGatePanel } from './visuals/LogicGatePanel';
-import { PertCpmVisualizer } from './visuals/PertCpmVisualizer';
-import { SqlJoinVisualizer } from './visuals/SqlJoinVisualizer';
-import { CryptoSignatureSimulator } from './visuals/CryptoSignatureSimulator';
-import { AlgorithmWalkthrough } from './AlgorithmWalkthrough';
-import { BookOpen, Award, Code, List } from 'lucide-react';
-import { parseTopicSections, parseMarkdownToHtml } from '../utils/markdown';
-import { AiChatAssistant } from './AiChatAssistant';
+import { DbNormalizationFlowchart } from './visuals/DbNormalizationFlowchart';
+import { EvmGraphVisualizer } from './visuals/EvmGraphVisualizer';
+import { ResourceEmbedModal } from './modals/ResourceEmbedModal';
+import { BookOpen, Briefcase, Code, Database, Layers, Globe, Cpu, Sparkles, ChevronRight, CheckCircle2, FileText, Video, ExternalLink, Eye } from 'lucide-react';
 
-interface StudyHubProps {}
+export const StudyHub: React.FC = () => {
+  const [activeDomainId, setActiveDomainId] = useState<string>(STUDY_DOMAINS[0].id);
+  const [selectedResource, setSelectedResource] = useState<CuratedResource | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-export const StudyHub: React.FC<StudyHubProps> = () => {
-  const [selectedTopicId, setSelectedTopicId] = useState<string>(SEED_STUDY_TOPICS[0].id);
-  const [activeSectionIdx, setActiveSectionIdx] = useState<number>(0);
+  const activeDomain = STUDY_DOMAINS.find(d => d.id === activeDomainId) || STUDY_DOMAINS[0];
 
-  const activeTopic = SEED_STUDY_TOPICS.find((t) => t.id === selectedTopicId) || SEED_STUDY_TOPICS[0];
-  const sections = parseTopicSections(activeTopic.markdownContent);
-  const activeSection = sections[activeSectionIdx] || sections[0];
+  const domainResources = CURATED_RESOURCES.filter(res => {
+    const matchesSubtopic = activeDomain.subtopics.some(sub => 
+      res.subtopic.toLowerCase().includes(sub.toLowerCase()) || 
+      sub.toLowerCase().includes(res.subtopic.toLowerCase()) ||
+      res.summary_of_content.toLowerCase().includes(sub.toLowerCase())
+    );
+    const matchesCategory = res.category.toLowerCase().includes('database') && (activeDomain.id === 'relational-db' || activeDomain.id === 'transaction-mgmt');
+    const matchesKeyword = activeDomain.id === 'transaction-mgmt' && (res.summary_of_content.toLowerCase().includes('lock') || res.summary_of_content.toLowerCase().includes('transaction') || res.summary_of_content.toLowerCase().includes('recovery') || res.summary_of_content.toLowerCase().includes('aries'));
+    return matchesSubtopic || matchesCategory || matchesKeyword;
+  });
 
-  // Reset section index when topic changes
-  useEffect(() => {
-    setActiveSectionIdx(0);
-  }, [selectedTopicId]);
+  // Group resources for this domain into PDFs, Slide Decks / PPTs, and Video Embeds
+  const pdfResources = domainResources.filter(r => r.resource_type === 'PDF');
+  const slideDeckResources = domainResources.filter(r => r.resource_type === 'SlideDeck');
+  const videoResources = domainResources.filter(r => r.resource_type === 'VideoEmbed');
+  const otherResources = domainResources.filter(r => r.resource_type !== 'PDF' && r.resource_type !== 'SlideDeck' && r.resource_type !== 'VideoEmbed');
 
-  // Helper to split markdown and inject visualizers / walkthroughs inline
-  const renderContentWithComponents = (content: string) => {
-    const parts = content.split(/(\[\[VISUALIZER: \w+\]\]|\[\[WALKTHROUGH: \w+\]\])/g);
-    
-    return parts.map((part, index) => {
-      const visMatch = part.match(/^\[\[VISUALIZER: (\w+)\]\]$/);
-      if (visMatch) {
-        const name = visMatch[1];
-        switch (name) {
-          case 'RadixSandbox': return <RadixSandbox key={index} />;
-          case 'LogicGatePanel': return <LogicGatePanel key={index} />;
-          case 'CpuPipelineVisualizer': return <CpuPipelineVisualizer key={index} />;
-          case 'PagingSimulator': return <PagingSimulator key={index} />;
-          case 'SubnetCalculator': return <SubnetCalculator key={index} />;
-          case 'ErdVisualizer': return <ErdVisualizer key={index} />;
-          case 'SqlJoinVisualizer': return <SqlJoinVisualizer key={index} />;
-          case 'CryptoSignatureSimulator': return <CryptoSignatureSimulator key={index} />;
-          case 'PertCpmVisualizer': return <PertCpmVisualizer key={index} />;
-          default: return null;
-        }
-      }
-      
-      const walkMatch = part.match(/^\[\[WALKTHROUGH: (\w+)\]\]$/);
-      if (walkMatch) {
-        const name = walkMatch[1];
-        return <AlgorithmWalkthrough key={index} algorithmId={name} />;
-      }
-      
-      return (
-        <div 
-          key={index}
-          className="font-sans"
-          dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(part) }}
-        />
-      );
-    });
+  const getDomainIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Briefcase': return <Briefcase className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />;
+      case 'Code': return <Code className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />;
+      case 'Database': return <Database className="w-5 h-5 text-purple-500 dark:text-purple-400" />;
+      case 'Layers': return <Layers className="w-5 h-5 text-amber-500 dark:text-amber-400" />;
+      case 'Globe': return <Globe className="w-5 h-5 text-cyan-500 dark:text-cyan-400" />;
+      case 'Cpu': return <Cpu className="w-5 h-5 text-rose-500 dark:text-rose-400" />;
+      default: return <BookOpen className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />;
+    }
   };
 
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-      
-      {/* Left Sidebar: Syllabus Taxonomy AND Section Selector Modules (Col 3) */}
-      <div className="lg:col-span-3 space-y-4 lg:sticky lg:top-6">
-        
-        {/* Syllabus Taxonomy List */}
-        <div className="glass-panel p-4 space-y-3 bg-[var(--bg-sidebar)]">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] flex items-center gap-1.5 border-b border-[var(--border-color)] pb-2">
-            <BookOpen className="w-4 h-4 text-[var(--accent-cyan)]" />
-            <span>Syllabus Taxonomy</span>
-          </h3>
+  const getResourceTypeIcon = (type: string) => {
+    switch (type) {
+      case 'PDF': return <FileText className="w-4 h-4 text-rose-500 dark:text-rose-400" />;
+      case 'SlideDeck': return <BookOpen className="w-4 h-4 text-amber-500 dark:text-amber-400" />;
+      case 'VideoEmbed': return <Video className="w-4 h-4 text-red-500 dark:text-red-400" />;
+      default: return <ExternalLink className="w-4 h-4 text-cyan-500 dark:text-cyan-400" />;
+    }
+  };
 
-          <div className="space-y-1">
-            {SEED_STUDY_TOPICS.map((topic) => (
-              <button
-                key={topic.id}
-                onClick={() => setSelectedTopicId(topic.id)}
-                className={`w-full text-left p-3 rounded-lg text-xs font-semibold border transition-all ${
-                  selectedTopicId === topic.id
-                    ? 'bg-[var(--bg-card)] border-[var(--accent-emerald)] text-[var(--text-primary)] shadow-sm font-bold'
-                    : 'bg-transparent border-transparent text-[var(--text-secondary)] hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)]'
-                }`}
-              >
-                <div className="text-[9px] text-[var(--text-muted)] uppercase mb-0.5 font-mono">
-                  {topic.domainName}
-                </div>
-                <div className="truncate">{topic.title}</div>
-              </button>
+  const renderWidget = (widgetType?: string) => {
+    switch (widgetType) {
+      case 'evm': return <EvmGraphVisualizer />;
+      case 'normalization': return <DbNormalizationFlowchart />;
+      case 'subnet': return <SubnetCalculator />;
+      case 'hamming': return <HammingCodeVisualizer />;
+      default: return null;
+    }
+  };
+
+  const renderResourceCard = (res: CuratedResource) => (
+    <div
+      key={res.id}
+      className="bg-[var(--bg-card)] border border-[var(--border-color)] hover:border-[var(--accent-cyan)]/50 rounded-xl p-4 shadow-md flex flex-col justify-between transition-all group"
+    >
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="flex items-center gap-1.5 px-2 py-0.5 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-md text-[10px] font-semibold text-[var(--text-primary)]">
+            {getResourceTypeIcon(res.resource_type)}
+            {res.resource_type}
+          </span>
+          {res.badge && (
+            <span className="text-[10px] font-bold px-2 py-0.5 bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] border border-[var(--accent-cyan)]/30 rounded-full">
+              {res.badge}
+            </span>
+          )}
+        </div>
+        <h4 className="text-sm font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition line-clamp-2">
+          {res.resource_title}
+        </h4>
+        <p className="text-xs text-[var(--text-secondary)] line-clamp-2">
+          {res.summary_of_content}
+        </p>
+      </div>
+
+      <div className="pt-3 mt-3 border-t border-[var(--border-color)] flex items-center justify-between gap-2">
+        <button
+          onClick={() => { setSelectedResource(res); setIsModalOpen(true); }}
+          className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 bg-[var(--accent-cyan)] hover:opacity-90 text-slate-950 rounded-lg text-xs font-bold transition cursor-pointer shadow"
+        >
+          <Eye className="w-3.5 h-3.5" /> Preview Embed
+        </button>
+        <a
+          href={res.embed_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-1.5 bg-[var(--bg-secondary)] hover:bg-[var(--border-color)] text-[var(--text-primary)] rounded-lg transition"
+          title="Open External URL"
+        >
+          <ExternalLink className="w-4 h-4" />
+        </a>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start animate-fadeIn pb-12">
+      {/* Left Sidebar: 6 Theoretical Domains Taxonomy */}
+      <div className="lg:col-span-4 space-y-4 lg:sticky lg:top-6">
+        <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-5 shadow-xl space-y-4">
+          <div className="flex items-center gap-2 border-b border-[var(--border-color)] pb-3">
+            <span className="p-2 bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] rounded-lg">
+              <BookOpen className="w-5 h-5" />
+            </span>
+            <div>
+              <h3 className="text-base font-bold text-[var(--text-primary)]">Interactive Study Hub</h3>
+              <p className="text-xs text-[var(--text-secondary)]">PhilNITS FE 6 Core Theoretical Pillars</p>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            {STUDY_DOMAINS.map((domain) => {
+              const isActive = activeDomainId === domain.id;
+              return (
+                <button
+                  key={domain.id}
+                  onClick={() => setActiveDomainId(domain.id)}
+                  className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
+                    isActive
+                      ? 'bg-[var(--accent-cyan)]/15 border-[var(--accent-cyan)] text-[var(--text-primary)] shadow-lg font-bold'
+                      : 'bg-[var(--bg-secondary)] border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-cyan)]/50'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`p-2 rounded-lg ${isActive ? 'bg-[var(--accent-cyan)]/20' : 'bg-[var(--bg-card)]'}`}>
+                      {getDomainIcon(domain.iconName)}
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold leading-snug line-clamp-1">{domain.title}</div>
+                      <div className="text-[10px] text-[var(--text-muted)] mt-0.5">{domain.subtopics.length} Subtopics & Interactive Widget</div>
+                    </div>
+                  </div>
+                  <ChevronRight className={`w-4 h-4 transition-transform ${isActive ? 'text-[var(--accent-cyan)] translate-x-0.5' : 'text-[var(--text-muted)]'}`} />
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Right Content Area: Detailed Theory, Interactive Widget, and Categorized Embedded Resources */}
+      <div className="lg:col-span-8 space-y-6">
+        {/* Domain Overview Banner */}
+        <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6 shadow-xl space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] rounded-xl">
+              {getDomainIcon(activeDomain.iconName)}
+            </div>
+            <div>
+              <span className="text-xs font-semibold px-2.5 py-1 bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] rounded-full uppercase tracking-wider">
+                PhilNITS FE Core Pillar
+              </span>
+              <h2 className="text-2xl font-bold text-[var(--text-primary)] mt-1">{activeDomain.title}</h2>
+            </div>
+          </div>
+
+          <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
+            {activeDomain.description}
+          </p>
+
+          <div className="pt-2 flex flex-wrap gap-2">
+            {activeDomain.subtopics.map((sub, idx) => (
+              <span key={idx} className="flex items-center gap-1.5 px-3 py-1 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg text-xs font-medium text-[var(--text-primary)]">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[var(--accent-emerald)]" /> {sub}
+              </span>
             ))}
           </div>
         </div>
 
-        {/* Section Modules selector menu */}
-        <div className="glass-panel p-4 space-y-2.5 bg-[var(--bg-sidebar)]">
-          <h4 className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--text-primary)] border-b border-[var(--border-color)] pb-1.5 flex items-center gap-1">
-            <List className="w-3.5 h-3.5 text-[var(--accent-cyan)]" /> Topic Modules
-          </h4>
-          {sections.length > 0 ? (
-            <nav className="space-y-1 font-sans text-xs">
-              {sections.map((item, idx) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    setActiveSectionIdx(idx);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className={`w-full text-left py-2 px-2.5 rounded-md border text-xs transition-all ${
-                    activeSectionIdx === idx
-                      ? 'bg-[var(--accent-emerald)]/10 border-[var(--accent-emerald)] text-[var(--accent-emerald)] font-bold shadow-sm'
-                      : 'bg-transparent border-transparent text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)] font-medium'
-                  }`}
-                >
-                  {idx + 1}. {item.title}
-                </button>
-              ))}
-            </nav>
-          ) : (
-            <div className="text-[10px] text-[var(--text-muted)] italic">No sections found.</div>
-          )}
-        </div>
-      </div>
+        {/* Interactive Visualization Widget Container */}
+        {activeDomain.widgetType && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <span className="p-1.5 bg-[var(--accent-emerald)]/10 text-[var(--accent-emerald)] rounded-lg">
+                <Sparkles className="w-4 h-4" />
+              </span>
+              <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--text-primary)]">Interactive Visualization Widget</h3>
+            </div>
+            {renderWidget(activeDomain.widgetType)}
+          </div>
+        )}
 
-      {/* Right Content Panel: Full Width for Reading Material & Simulators (Col 9) */}
-      <div className="lg:col-span-9 space-y-6">
-        <div className="glass-panel p-6 space-y-6">
-          
-          {/* Header */}
-          <div className="space-y-2 border-b border-[var(--border-color)] pb-4">
-            <span className="badge badge-emerald">{activeTopic.domainName}</span>
-            <h2 className="text-xl font-extrabold text-[var(--text-primary)] leading-tight">
-              {activeTopic.title}
-            </h2>
-            <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-              {activeTopic.summary}
-            </p>
+        {/* Categorized Embedded Resources by Subtopic for this Domain */}
+        <div className="space-y-8 pt-4">
+          <div className="flex items-center justify-between border-b border-[var(--border-color)] pb-3">
+            <h3 className="text-base font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <FileText className="w-5 h-5 text-[var(--accent-cyan)]" /> Subtopic-Categorized Reference Materials & Tutorials
+            </h3>
+            <span className="text-xs font-semibold px-2.5 py-1 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-full text-[var(--text-secondary)]">
+              {domainResources.length} Total Items
+            </span>
           </div>
 
-          {/* Key takeaways cards */}
-          <div className="space-y-2.5">
-            <h4 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider flex items-center gap-1">
-              <Award className="w-4 h-4 text-amber-500" /> Syllabus Core Takeaways
-            </h4>
-            <div className="grid grid-cols-1 gap-2">
-              {activeTopic.takeaways.map((takeaway, idx) => (
-                <div key={idx} className="p-3 rounded-lg bg-[var(--bg-card-hover)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)] leading-relaxed">
-                  {takeaway}
+          {activeDomain.subtopics.map(subtopicName => {
+            const subtopicResources = domainResources.filter(res =>
+              res.subtopic.toLowerCase().includes(subtopicName.toLowerCase()) ||
+              subtopicName.toLowerCase().includes(res.subtopic.toLowerCase()) ||
+              res.summary_of_content.toLowerCase().includes(subtopicName.toLowerCase())
+            );
+
+            if (subtopicResources.length === 0) return null;
+
+            return (
+              <div key={subtopicName} className="space-y-4 bg-[var(--bg-card)]/50 border border-[var(--border-color)] rounded-2xl p-5 shadow-sm">
+                <div className="flex items-center justify-between border-b border-[var(--border-color)] pb-2">
+                  <h4 className="text-sm font-bold text-[var(--accent-cyan)] flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[var(--accent-emerald)]" /> {subtopicName}
+                  </h4>
+                  <span className="text-[11px] font-semibold px-2 py-0.5 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-md text-[var(--text-secondary)]">
+                    {subtopicResources.length} {subtopicResources.length === 1 ? 'Resource' : 'Resources'}
+                  </span>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Active module content */}
-          {activeSection ? (
-            <div className="space-y-4 border-t border-[var(--border-color)] pt-6">
-              <h3 className="text-base font-extrabold text-[var(--text-primary)] border-b border-[var(--border-color)] pb-2 uppercase tracking-wider font-mono">
-                {activeSectionIdx + 1}. {activeSection.title}
-              </h3>
-              
-              {/* Parsed long-form body content of the active section with inline components */}
-              <div className="space-y-4 pt-2">
-                {renderContentWithComponents(activeSection.content)}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {subtopicResources.map(renderResourceCard)}
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="text-sm text-[var(--text-secondary)] italic border-t border-[var(--border-color)] pt-6">Select a module to begin reading.</div>
-          )}
+            );
+          })}
 
-          {/* Formula Display if configured */}
-          {activeTopic.formula && (
-            <div className="p-4 rounded-lg bg-[var(--code-bg)] border border-[var(--border-color)] font-mono text-xs text-center text-[var(--code-text)] my-4">
-              <div className="text-[10px] text-[var(--text-muted)] uppercase mb-1">Standard Equation</div>
-              {activeTopic.formula}
+          {domainResources.length === 0 && (
+            <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl p-6 text-center text-xs text-[var(--text-secondary)]">
+              General curated resources apply across all study modules. Visit the Curated Resource Catalogue tab for the complete library.
             </div>
           )}
-
-          {/* Code Worked Example if configured */}
-          {activeTopic.codeExample && (
-            <div className="space-y-2 border-t border-[var(--border-color)] pt-4">
-              <h4 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider flex items-center gap-1">
-                <Code className="w-4 h-4 text-[var(--accent-cyan)]" /> Worked Code Example
-              </h4>
-              <div className="pseudocode-container">
-                {activeTopic.codeExample.code}
-              </div>
-              {activeTopic.codeExample.annotation && (
-                <p className="text-xs text-[var(--text-muted)] italic">
-                  * {activeTopic.codeExample.annotation}
-                </p>
-              )}
-            </div>
-          )}
-
-
-
         </div>
       </div>
 
-      <AiChatAssistant activeContext={`${activeTopic.title} - ${activeSection ? activeSection.title : ''}`} hide={false} />
+      {/* Resource Embed Modal */}
+      <ResourceEmbedModal
+        resource={selectedResource}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };
-export default StudyHub;

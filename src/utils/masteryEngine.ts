@@ -74,7 +74,6 @@ interface QuestionIndices {
   subject_a?: number;
   subject_b?: number;
   leitner?: number;
-  flashcards?: number;
 }
 
 export function getStoredQuestionIndices(): QuestionIndices {
@@ -87,13 +86,13 @@ export function getStoredQuestionIndices(): QuestionIndices {
   }
 }
 
-export function saveQuestionIndex(tab: 'subject_a' | 'subject_b' | 'leitner' | 'flashcards', index: number): void {
+export function saveQuestionIndex(tab: 'subject_a' | 'subject_b' | 'leitner', index: number): void {
   const current = getStoredQuestionIndices();
   current[tab] = index;
   localStorage.setItem(QUESTION_INDEX_KEY, JSON.stringify(current));
 }
 
-export function getQuestionIndex(tab: 'subject_a' | 'subject_b' | 'leitner' | 'flashcards'): number {
+export function getQuestionIndex(tab: 'subject_a' | 'subject_b' | 'leitner'): number {
   const indices = getStoredQuestionIndices();
   return indices[tab] ?? 0;
 }

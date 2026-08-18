@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  BookOpen, 
+import {
+  BookOpen,
   HelpCircle,
-  Code2, 
+  Code2,
   Repeat, 
-  Layers, 
   BarChart3, 
   Sun, 
   Moon, 
@@ -14,7 +13,8 @@ import {
   LogOut,
   Cloud,
   CloudOff,
-  Loader2
+  Loader2,
+  Globe
 } from 'lucide-react';
 import { ExamTab, ThemeMode } from '../types/exam';
 import { getDaysToExam } from '../utils/leitnerEngine';
@@ -55,8 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'study', label: 'Study Hub', icon: <BookOpen className="w-4 h-4" /> },
     { id: 'subject_a', label: 'Subject A', icon: <HelpCircle className="w-4 h-4" /> },
     { id: 'subject_b', label: 'Subject B', icon: <Code2 className="w-4 h-4" /> },
-    { id: 'leitner', label: 'Leitner', icon: <Repeat className="w-4 h-4" />, badge: dueCount },
-    { id: 'flashcards', label: 'Flashcards', icon: <Layers className="w-4 h-4" /> }
+    { id: 'leitner', label: 'Leitner', icon: <Repeat className="w-4 h-4" />, badge: dueCount }
   ];
 
   return (

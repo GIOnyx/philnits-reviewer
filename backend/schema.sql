@@ -143,3 +143,63 @@ CREATE TABLE IF NOT EXISTS question_attempt_tracking (
 );
 
 CREATE INDEX IF NOT EXISTS idx_question_attempt_tracking_username ON question_attempt_tracking(username);
+
+-- ============================================================================
+-- ADDITIVE MIGRATION: Normalized exam extraction schema (PDF vision pipeline)
+-- These tables coexist alongside the seed-data tables above.
+-- ============================================================================
+
+-- 12. Top-level Exam Container
+--     Identifies each official past exam by year, session, and subject.
+CREATE TABLE IF NOT EXISTS exams (
+    id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    year        INT  NOT NULL,
+    session     TEXT NOT NULL CHECK (session IN ('Spring', 'Autumn', 'October')),
+    subject     TEXT NOT NULL CHECK (subject IN ('FE-A', 'FE-B')),
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE (year, session, subject)
+);
+
+CREATE INDEX IF NOT EXISTS idx_exams_year_session ON exams (year, session);
+
+-- 13. Unified Question Record
+--     Stores both Subject A (MCQ) and Subject B (pseudo-code) questions.
+--     pseudo_code, diagram_description, and explanation are nullable.
+CREATE TABLE IF NOT EXISTS questions (
+    id                   UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    exam_id              UUID NOT NULL REFERENCES exams (id) ON DELETE CASCADE,
+    question_number      INT  NOT NULL CHECK (question_number >= 1),
+    question_text        TEXT NOT NULL,
+    pseudo_code          TEXT,                 -- raw ITPEC pseudo-code, indentation preserved
+    diagram_description  TEXT,                 -- textual description of any accompanying diagram
+    correct_answer       TEXT NOT NULL,        -- lowercase letter e.g. 'a', 'c', 'h'
+    explanation          TEXT,
+    created_at           TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE (exam_id, question_number)
+);
+
+CREATE INDEX IF NOT EXISTS idx_questions_exam_id          ON questions (exam_id);
+CREATE INDEX IF NOT EXISTS idx_questions_exam_number      ON questions (exam_id, question_number);
+
+-- 14. Dynamic Choice Records
+--     Supports both standard single-text choices (Subject A/B standard)
+--     and multi-blank matrix choices (Subject B fill-in-the-blank tables).
+--     For standard choices: populate `text`, leave blank_* NULL.
+--     For matrix choices:   populate blank_a/b/c, leave `text` NULL.
+CREATE TABLE IF NOT EXISTS question_choices (
+    id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    question_id  UUID NOT NULL REFERENCES questions (id) ON DELETE CASCADE,
+    letter       TEXT NOT NULL CHECK (letter IN ('a','b','c','d','e','f','g','h','i','j')),
+    text         TEXT,       -- standard mode: full choice string
+    blank_a      TEXT,       -- matrix mode: value for blank A
+    blank_b      TEXT,       -- matrix mode: value for blank B
+    blank_c      TEXT,       -- matrix mode: value for blank C
+    UNIQUE (question_id, letter),
+    -- Enforce: either text OR at least one blank must be present
+    CONSTRAINT choice_has_content CHECK (
+        text IS NOT NULL OR blank_a IS NOT NULL OR blank_b IS NOT NULL OR blank_c IS NOT NULL
+    )
+);
+
+CREATE INDEX IF NOT EXISTS idx_question_choices_question ON question_choices (question_id);
+CREATE INDEX IF NOT EXISTS idx_question_choices_letter   ON question_choices (question_id, letter);

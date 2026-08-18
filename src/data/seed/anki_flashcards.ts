@@ -4338,5 +4338,1771 @@ export const initialAnkiFlashcards: AnkiFlashcard[] = [
     "topic": "Mock Exam",
     "front": "Which of the following is the most appropriate term to express the change where by using \ndigital technology, a company creates a user experience (UX) and a business model that \nattract customers, expels conventional services in the industry, and as a result destroys the \nexisting structure of an industry?",
     "back": "Correct Answer: Digital disruption\n\n"
+  },
+
+  {
+    "id": "2026S_FE_AM_1",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_1\n\nQ1. Which of the fo llowing should be used for marki ng your answer on the answer \nsheet?\n\na)\nb)\nc) Fount\nd)\n Pen",
+    "back": "c) Fount\n\n### Explanation\nOfficial ITPEC Subject A answer for Q1 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_2",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_2\n\nQ2.  What is the decimal equivalent value of the octal number 1234.2?\n\na) 27.0\nb) 668.25\nc) 1542.5\nd) 5346.0",
+    "back": "b) 668.25\n\n### Explanation\nOfficial ITPEC Subject A answer for Q2 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_3",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_3\n\nQ3.   Which of the following is the ratio of the mean arrival rate to the mean service rate in \nqueuing theory?\n\na) Utiliz\nb)\nc)\nd)",
+    "back": "a) Utiliz\n\n### Explanation\nOfficial ITPEC Subject A answer for Q3 (2026S) is Option (a)."
+  },
+  {
+    "id": "2026S_FE_AM_4",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_4\n\nQ4.\n  In regular expressions (regex), which of the following is the string that correctly matches \nthe pattern ^\\d{2,4}-\\d+-\\d{3,4}$ ? Here, \u201c\\d\u201d represents a decimal digit 0-9, the \u201c +\u201d \nsymbol indicates one or more repetitions, and the \u201c$\u201d symbol denotes the line's end.\n\na) 123-456-12\nb) 1-234-5678\nc) 123-456-7890\nd) 12345-678-910",
+    "back": "c) 123-456-7890\n\n### Explanation\nOfficial ITPEC Subject A answer for Q4 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_5",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_5\n\nQ5.  Which of the following is the postfix notation for the expression a +( b \u00d7 c )+( d \u00d7 e )?\n\na) Option A\nb) Option B\nc) Option C\nd) Option D",
+    "back": "c) Option C\n\n### Explanation\nOfficial ITPEC Subject A answer for Q5 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_6",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_6\n\nQ6.  In the binary search tree below, when a new node of value 11 is inserted, where will this \ninsertion be made?\n\na) Left\nb) Left\nc) Right\nd) Right",
+    "back": "d) Right\n\n### Explanation\nOfficial ITPEC Subject A answer for Q6 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_7",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_7\n\nQ7.  For integers x and y (x > y \u2265 0), a function F(x, y) is defined as below: \nF(x, y) = \n\uf0ee\n\uf0ed\n\uf0ec\n0)>(when      ) mod ,( \n0)=(when                            \n yyxyF\nyx\n\u3000\n\u3000\n \nWhat is the value F(231, 15)? Here, \u201cx mod y\u201d represents the remainder after division of \n x by y.\n\na) 2\nb) 3\nc) 5\nd) 7",
+    "back": "b) 3\n\n### Explanation\nOfficial ITPEC Subject A answer for Q7 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_8",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_8\n\nQ8.  Which of the following is the appropriate description of constructors in Object-Oriented \nProgramming (OOP)?\n\na)\nb) In\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q8 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_9",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_9\n\nQ9.  The figure shows the storage sequence of inst ructions fetched by a processor. Which of the \nfollowing corresponds to a? \n \nProcessor\nMain \nmemory a Instruction \ndecoder\n\na)\nb)\nc) Instru\nd) Progr",
+    "back": "c) Instru\n\n### Explanation\nOfficial ITPEC Subject A answer for Q9 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_10",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_10\n\nQ10. Which of the following is an appropriate CPU operation associated with cache \nmemory?\n\na) When\nb) When\nc) When\nd) When",
+    "back": "d) When\n\n### Explanation\nOfficial ITPEC Subject A answer for Q10 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_11",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_11\n\nQ11. What is the theoretical maximum data transfer rate in MB/s for the external bus of a 64-\nbit microprocessor that uses a 64-bit external data bus driven by a 64 MHz input clock? \nHere, it takes 4 input clock cycles to complete 1 bus cycle. \n \n \na ) 12.8\n\na) Option A\nb) Option B\nc) Option C\nd) Option D",
+    "back": "b) Option B\n\n### Explanation\nOfficial ITPEC Subject A answer for Q11 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_12",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_12\n\nQ12. Which of the following is the RAID level that can maximize reliability and fault \ntolerance for a NAS device equipped with two hard disk drives of identical capacity?\n\na) R\nb) R\nc) R\nd) R",
+    "back": "b) R\n\n### Explanation\nOfficial ITPEC Subject A answer for Q12 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_13",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_13\n\nQ13. The operating status of a system is being continuously monitored. When a new task is \napplied to the system after several years of operation, which of the following is an \nappropriate sequence of work items in capacity planning? \n \n[Work items in capacity planning] \n(i) Evaluate the proposed syst em configuration, assess its appropriateness, and conduct a \nreview if necessary. \n(ii) Consider a proposal for the necessary  system configuration based on system \ncharacteristics, including factors such as the number of servers and whether parallel \ndistributed processing can be performed. \n(iii) Understand the performance information of  the hardware or environment inherent to \nthe system based on the operating status of the system. \n(iv) Conduct a meeting with us ers to gather information about the new task, understand \nrequirements such as the estimated number of processes, and determine the time \nrequired by the processes.\n\na) (iii\nb) (iii\nc) (iv\nd) (iv",
+    "back": "b) (iii\n\n### Explanation\nOfficial ITPEC Subject A answer for Q13 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_14",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_14\n\nQ14. Which of the following is the CPU utilization in percentage rounded to a decimal \nnumber when three (3) jobs with 30% average I/O (Input/Output) wait time are running on a \nsingle CPU? Here, I/O wait time refers to the percentage of time a job is waiting for its I/O  \noperation to complete.\n\na) 10\nb) 34\nc) 90\nd) 97",
+    "back": "d) 97\n\n### Explanation\nOfficial ITPEC Subject A answer for Q14 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_15",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_15\n\nQ15. There are four processes, namely, P1, P2, P3, and P4, and their corresponding CPU-\nexecution times are shown in the table below. All four (4) processes arrive at time 0, in the \ngiven order, and waiting time is the time a process waits before it gets its time slice for \nexecution. Time slice is 5 ms. Which of the following is the average waiting time in \nmilliseconds for the processes to be executed in Round Robin?  \n \nProcess CPU-execution \ntime in \nmilliseconds \nP1 5 \nP2 13 \nP3 4 \nP4 8\n\na) 7.5\nb) 10\nc) 11.5\nd) 19",
+    "back": "c) 11.5\n\n### Explanation\nOfficial ITPEC Subject A answer for Q15 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_16",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_16\n\nQ16. Which of the following is a program that combines the separately compiled modules of \na program into a form suitable for execution in C language?\n\na)\nb)\nc) Interpreter\nd) Linker",
+    "back": "d) Linker\n\n### Explanation\nOfficial ITPEC Subject A answer for Q16 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_17",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_17\n\nQ17. Which of the following is the appropriate circuit with two (2) inputs and one (1) output \nwhere the output X is 0 only when the two (2) inputs A and B are both 1? \n \nXA\nB\n\na)\nb) N\nc) OR\nd) XOR",
+    "back": "b) N\n\n### Explanation\nOfficial ITPEC Subject A answer for Q17 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_18",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_18\n\nQ18. For a given decimal data, the check digit is calculated using the method below and \nappended to the original data. When the given data is 7394, what is the result? Here, the \nweight is 1234 and the base number is 11. \n \n(1) For each digit of the data, calculate the product with the digit at the same digit position \nof the weight and sum these products. \n(2) Calculate the remainder after dividing the total sum by the base number. \n(3) Subtract the remainder from the base number and let the last digit of the result be the \ncheck digit.\n\na) 73940\nb) 73941\nc) 73944\nd) 73947",
+    "back": "a) 73940\n\n### Explanation\nOfficial ITPEC Subject A answer for Q18 (2026S) is Option (a)."
+  },
+  {
+    "id": "2026S_FE_AM_19",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_19\n\nQ19. Which of the following is an appropriate description of the mapping between a relational \nmodel and relational database in implementation?\n\na)\nb)\nc)\nd) Neither tuples nor rows h",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q19 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_20",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_20\n\nQ20. In database normalization, which of the following is the most appropriate description of \na table in the third normal form? Here, 2NF stands for the second normal form and 3NF \nstands for the third normal form.\n\na)\nb)\nc)\nd)",
+    "back": "d)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q20 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_21",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_21\n\nQ21. There is a relation schema A = (P, Q, R, S, T, Y) with functional dependencies below: \n\u2022 P \u2192 Q \n\u2022 QR \u2192 S \n\u2022 T \u2192 R \n\u2022 S \u2192 P \nWhich of the following is the candidate keys of A?\n\na) PT, QT\nb) PT, QT, ST\nc) PTY, QTY, QRY\nd) PTY, QTY, STY",
+    "back": "d) PTY, QTY, STY\n\n### Explanation\nOfficial ITPEC Subject A answer for Q21 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_22",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_22\n\nQ22. A student\u2019s ID, name, and class ID are reco rded in the Student table. Which of the \nfollowing is the SQL statement that returns records of all students whose names start with A?\n\na) SELE\nb) SELE\nc) SELE\nd) SELE",
+    "back": "d) SELE\n\n### Explanation\nOfficial ITPEC Subject A answer for Q22 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_23",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_23\n\nQ23. Which of the following is an appropriate explanation of a log file in DBMS?\n\na)\nb) The\nc) The\nd) The v",
+    "back": "d) The v\n\n### Explanation\nOfficial ITPEC Subject A answer for Q23 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_24",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_24\n\nQ24. In IPv4, which of the following is a description concerning the NAT function of a \nrouter that connects some computers to the Internet?\n\na) It\nb) It\nc) It inspe\nd) It only p",
+    "back": "b) It\n\n### Explanation\nOfficial ITPEC Subject A answer for Q24 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_25",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_25\n\nQ25. Which of the following is a data link layer function that enables a receiver to control the \namount of data a sender transmits?\n\na)\nb) Error\nc) Flow\nd) Me",
+    "back": "c) Flow\n\n### Explanation\nOfficial ITPEC Subject A answer for Q25 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_26",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_26\n\nQ26. Which of the following is a role pl ayed by a DNS in a TCP/IP network?\n\na) It\nb) It\nc) It\nd) It en",
+    "back": "b) It\n\n### Explanation\nOfficial ITPEC Subject A answer for Q26 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_27",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_27\n\nQ27. In telecommunication, which of the following is a standard for wireless broadband \ncommunication for mobile devices and data terminals?\n\na) IEEE 802.11\nb) LTE\nc) NF\nd) UW",
+    "back": "b) LTE\n\n### Explanation\nOfficial ITPEC Subject A answer for Q27 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_28",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_28\n\nQ28. Which of the following is multi-factor authentication?\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q28 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_29",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_29\n\nQ29. In the context of information security defined by ISO/IEC 27000, which of the \nfollowing is the property of accuracy and completeness of information assets?\n\na)\nb)\nc)\nd) Integrity",
+    "back": "d) Integrity\n\n### Explanation\nOfficial ITPEC Subject A answer for Q29 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_30",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_30\n\nQ30. Which of the following is an appropriate description of a Trojan horse?\n\na)\nb)\nc)\nd)",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q30 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_31",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_31\n\nQ31. Which of the following is an example of ransomware?\n\na)\nb) M\nc) Softw\nd) Softw",
+    "back": "b) M\n\n### Explanation\nOfficial ITPEC Subject A answer for Q31 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_32",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_32\n\nQ32. Company A, a mobile game developer, is developing a new version of its game with a \nsocial media plugin that allows users to post their achievements on social media platforms. \nHowever, during beta testing, some users point out that posts from the game can bypass their \nprivacy settings, making them visible to the public. Company A understands the risk and \ndecides not to include the social media plugin in their new version of the game. Which of the \nfollowing is the risk management strategy that Company A is choosing?\n\na) Risk\nb) Risk\nc) Risk mitig\nd) Risk sh",
+    "back": "b) Risk\n\n### Explanation\nOfficial ITPEC Subject A answer for Q32 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_33",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_33\n\nQ33. Which of the following is an appropriate explanation of CSIRT?\n\na)\nb)\nc)\nd)",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q33 (2026S) is Option (a)."
+  },
+  {
+    "id": "2026S_FE_AM_34",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_34\n\nQ34. An SQL injection attack caused the SQL statement below to be executed. Which of the \nfollowing does the SQL statement do? Here, the accounts table contains user account \ninformation in each row. \n \nSELECT * FROM accounts WHERE username='1' or '1'='1'; DROP TABLE accounts;\n\na) It\nb) It\nc) It sele\nd) It sele",
+    "back": "c) It sele\n\n### Explanation\nOfficial ITPEC Subject A answer for Q34 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_35",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_35\n\nQ35. Among UML 2.x diagrams (including 2.0 and late r versions), which of the following is \nthe most appropriate diagram for providing a graphic overview of the actors involved in a \nsystem, the different functions those actors need to perform and how these different \nfunctions interact?\n\na)\nb)\nc) Inter\nd) Use",
+    "back": "d) Use\n\n### Explanation\nOfficial ITPEC Subject A answer for Q35 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_36",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_36\n\nQ36. Which of the following is a structural design pattern that allows classes with incompatible \ninterfaces to work together?\n\na)\nb) F\nc) Iter\nd) Singleton",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q36 (2026S) is Option (a)."
+  },
+  {
+    "id": "2026S_FE_AM_37",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_37\n\nQ37. Which of the following is an appropriate explanation of encapsulation in object \norientation?\n\na)\nb)\nc)\nd) Inherit",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q37 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_38",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_38\n\nQ38. Which of the following is an appropriate category of system maintenance performed for \nthe purpose of modifying the system to cope with changes in the software environment (e.g. \nDBMS, Operating system)?\n\na)\nb)\nc) Perfe\nd) Preventive m",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q38 (2026S) is Option (a)."
+  },
+  {
+    "id": "2026S_FE_AM_39",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_39\n\nQ39. Which of the following is a software development model for a small, and cross-\nfunctional team to develop a new social shopping platform, including creating user profiles, \nfollowing friends, sharing products, and personalizing recommendation? Here, this platform \nconstantly evolves, so frequent user feedback on all modules is expected.\n\na)\nb) Prototyping mo\nc) Spir\nd) W",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q39 (2026S) is Option (a)."
+  },
+  {
+    "id": "2026S_FE_AM_40",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_40\n\nQ40. According to the Capability Maturity Model Integration, which is the final stage and has \nthe highest level of maturity?\n\na)\nb) M\nc) Optimizing\nd) Qu",
+    "back": "c) Optimizing\n\n### Explanation\nOfficial ITPEC Subject A answer for Q40 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_41",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_41\n\nQ41. In project management, which of the following is the subj ect group with Purpose 1 and \nPurpose 2? \n \nPurpose 1: To clarify the objectives, deliver ables, requirements, and boundaries of the \nproject \nPurpose 2: To maximize positive impact and minimize negative impact to the project \noccurring as a result of the changes in project objectives and deliverables\n\na)\nb) Pro\nc) Risk\nd) S",
+    "back": "d) S\n\n### Explanation\nOfficial ITPEC Subject A answer for Q41 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_42",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_42\n\nQ42. The functional size of a new system was estimated to be 500 function points (FPs). \nApart from development, the project requires 10 person-months in total for installation of the \nsystem and education of developers. Additionally project management requires 10% of the \ntotal person-months of development, installation, and education. How many person-months \nare required in total for this project? Here, the productivity in development is 10 FPs per \nperson-month.\n\na) 51\nb) 60\nc) 65\nd) 66",
+    "back": "d) 66\n\n### Explanation\nOfficial ITPEC Subject A answer for Q42 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_43",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_43\n\nQ43. Which of the following is an appropria te meaning of a mission-critical system?\n\na)\nb) It is\nc) It is\nd) It is",
+    "back": "b) It is\n\n### Explanation\nOfficial ITPEC Subject A answer for Q43 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_44",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_44\n\nQ44. As for the activities in capacity management to estimate a service\u2019s capacity, capability, \nand performance, which of the following is trend analysis?\n\na)\nb) Gener\nc) Un\nd) Using m",
+    "back": "c) Un\n\n### Explanation\nOfficial ITPEC Subject A answer for Q44 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_45",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_45\n\nQ45. In an information security audit, which of the following is a check item for confirming \navailability?\n\na)\nb)\nc) M\nd) Prohi",
+    "back": "c) M\n\n### Explanation\nOfficial ITPEC Subject A answer for Q45 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_46",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_46\n\nQ46. Which of the following is an appropriate description of Business Process Reengineering \n(BPR)?\n\na)\nb)\nc)\nd)",
+    "back": "d)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q46 (2026S) is Option (d)."
+  },
+  {
+    "id": "2026S_FE_AM_47",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_47\n\nQ47. Which of the following is a method of training in which trainees handle multiple \nsimulated tasks within a set time limit, such  as editing a piece of written correspondence, \ncreating purchase orders, and completing travel expense reports?\n\na)\nb)\nc) In-\nd) Role-pl",
+    "back": "c) In-\n\n### Explanation\nOfficial ITPEC Subject A answer for Q47 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_48",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_48\n\nQ48. When an information system is procured th rough the steps shown in the figure below, \nwhich of the following is a word or phrase that should be inserted in the blank B? \n \nThe orderer indicates the purpose of the systemization and the details \nof the business to a vendor, and requests provision of information.\nThe orderer indicates the system that is the target of the procurement \nand conditions of the procurement to a vendor, and requests \nsubmission of a proposal document.\nThe orderer determines a procurement source on the basis of the \nproposal document and capabilities of the vendor.\nThe orderer and the procurement source mutually confirm their roles \nand the assignment of responsibilities on a document.\nA\nB\nC\nD\n\na)\nb) RFI\nc) RFP\nd) Sele",
+    "back": "c) RFP\n\n### Explanation\nOfficial ITPEC Subject A answer for Q48 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_49",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_49\n\nQ49. Company A (a software company) acquires Company B (a data analytics company). \nAfter the acquisition, the resulting company implements the following: \n \n\u2022 Cross-sells Company A\u2019s software tools to company B\u2019s customers to boost revenue. \n\u2022 Integrates Company B\u2019s algorithms into Company A\u2019s products to enhance \nfunctionality. \n\u2022 Cuts redundant office leases to save $3 million annually. \n \nWhich of the following is the phenomenon that creates greater value than the sum of what \neach company could have achieved independently?\n\na) Horizont\nb) M\nc) Synergy effe\nd) Verti",
+    "back": "c) Synergy effe\n\n### Explanation\nOfficial ITPEC Subject A answer for Q49 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_50",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2026S_FE_AM_50\n\nQ50. A company expands into new markets by allowing independent business owners to \noperate under its brand name and quality standards including store management obligations. \nThese local business owners pay royalties for using the brand name and getting business \nsupport from the company while investing in and managing their own stores. From a \nmarketing strategy perspective, which of the following describes this arrangement?\n\na)\nb) Fr\nc) Li\nd) Wholes",
+    "back": "b) Fr\n\n### Explanation\nOfficial ITPEC Subject A answer for Q50 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_51",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2026S_FE_AM_51\n\nQ51. Which of the following is an example of the strategic target and key performance \nindicator from the viewpoint of internal business processes in a Balanced Scorecard (BS\n\nC)?\na) Sin\nb) Sin\nc) Sin",
+    "back": "a) Sin\n\n### Explanation\nOfficial ITPEC Subject A answer for Q51 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_52",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2026S_FE_AM_52\n\nQ52. When trial production is performed for components to be loaded into electrical \nappliances, which of the following is the least expensive development method? Here, the \nconstruction time of each process is six (6) months during the creation process, three (3) \nmonths during the modification process, and two (2) months during the evaluation process. \nThe cost per one (1) person-month is 6,000 dollars during the creation process and 10,000 \ndollars for each modification and evaluation process. Costs other than the purchasing, \noutsourcing, and person-month are not considered.  \n \n Development \nmethod \nPurchase \ncost \n(dollars) \nOutsourci\nng cost \n(dollars) \nNumber of persons per month (persons) \nCreation \nprocess \nModification \nprocess \nEvaluation \nprocess\n\na) \nPur\nb) Outsour\nc) Mo\nd)",
+    "back": "a) \nPur\n\n### Explanation\nOfficial ITPEC Subject A answer for Q52 (2026S) is Option (a)."
+  },
+  {
+    "id": "2026S_FE_AM_53",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2026S_FE_AM_53\n\nQ53. Which of the following is an explanation of a smart grid?\n\na)\nb)\nc)\nd)",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q53 (2026S) is Option (a)."
+  },
+  {
+    "id": "2026S_FE_AM_54",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2026S_FE_AM_54\n\nQ54. Which of the following is an appropriate ex ample of utilizing machine learning at a \nproduction site?\n\na)\nb) Inste\nc) Pro\nd) Pro",
+    "back": "b) Inste\n\n### Explanation\nOfficial ITPEC Subject A answer for Q54 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_55",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2026S_FE_AM_55\n\nQ55. Which of the following is a case using deep learning in order to improve the \nperformance of an in-car device?\n\na)\nb)\nc)\nd) The n",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q55 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_56",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2026S_FE_AM_56\n\nQ56. Which of the following is part  of total quality management?\n\na)\nb) Fo\nc) Prioritizing\nd) Promoting the",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q56 (2026S) is Option (a)."
+  },
+  {
+    "id": "2026S_FE_AM_57",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2026S_FE_AM_57\n\nQ57. Which of the following can secure em ployment and create employment opportunities \nacross an entire society by shortening work hours per employee?\n\na)\nb) Free-\nc) Work sh\nd) Work-life",
+    "back": "c) Work sh\n\n### Explanation\nOfficial ITPEC Subject A answer for Q57 (2026S) is Option (c)."
+  },
+  {
+    "id": "2026S_FE_AM_58",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2026S_FE_AM_58\n\nQ58. A factory manager is planning the costs for the next two years. Instead of using a single \nestimate, the manager runs thousands of simulations where material prices, customer \ndemand, and labor costs vary randomly within realistic ranges. This creates a probability \ndistribution of possible costs, helping in risk planning and setting contingency budgets. \nWhich of the following is an analytical method that the manager is using?\n\na) Line\nb)  Monte\nc) S\nd) Sensitivity",
+    "back": "b)  Monte\n\n### Explanation\nOfficial ITPEC Subject A answer for Q58 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_59",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2026S_FE_AM_59\n\nQ59. When a company wants to earn a profit of $42,000, which of following is the number \nof units that the company must sell under the conditions shown in the table below? \n \n Unit: dollar \nSelling price per unit 17 \nFixed costs  \n General and administrative expense 130,000 \n Interest expense 10,000 \nVariable costs per unit  \n General and administrative expense 3 \n Selling expense 4\n\na) 14,000\nb) 18,200\nc) 26,000\nd) 26,200",
+    "back": "b) 18,200\n\n### Explanation\nOfficial ITPEC Subject A answer for Q59 (2026S) is Option (b)."
+  },
+  {
+    "id": "2026S_FE_AM_60",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2026S_FE_AM_60\n\nQ60. In developing new products that are expected to be employed by government agencies \nof WTO member countries, which of the following are the appropriate standards to be \napplied?\n\na)\nb)\nc) F\nd) ISO st",
+    "back": "d) ISO st\n\n### Explanation\nOfficial ITPEC Subject A answer for Q60 (2026S) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_2",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_2\n\nQ2.  Let n be a binary integer represented in two\u2019s complement. Which of the following is the \noperation that results in the value 9 \u00d7 n using only bit shifting and an addition or subtraction?\n\na) Shift n 2\nb) Shift n 2\nc) Shift n 3\nd) Shift n 3",
+    "back": "c) Shift n 3\n\n### Explanation\nOfficial ITPEC Subject A answer for Q2 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_3",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_3\n\nQ3.  Three friends and 4 other people are randomly seated in 7 seats arranged in a row. What is \nthe probability that the 3 friends sit next to one another?\n\na) Option A\nb) Option B\nc) Option C\nd) Option D",
+    "back": "d) Option D\n\n### Explanation\nOfficial ITPEC Subject A answer for Q3 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_4",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_4\n\nQ4.  For an automaton with inpu t and output symbols {0, 1} and a state transition diagram shown \nbelow, which of the following is the output string for the input string 0011001110? Here, S1 \nrepresents the initial state, and the label x/y on each arc indicates that if x is an input, then y \nis the corresponding output at the state transition.   \n \nS2S1\n0/0\n1/0\n0/0\n0/0 1/1\n1/1\nS3\n\na) 0001000110\nb) 0001001110\nc) 0010001000\nd) 0011111110",
+    "back": "a) 0001000110\n\n### Explanation\nOfficial ITPEC Subject A answer for Q4 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_5",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_5\n\nQ5.  The table below shows the data in a list structure that has bidirectional pointers. In this table, \na new Employee G is to be inserted between Employee A and Employee K. Which of the \nfollowing contains only  the pointers (among a through f) whose values change after the \ninsertion? \n \nTable \nAddress EmployeeName Next Pointer PreviousPointer \n100 Employee A 300   0 \n200 Employee T   0 300 \n300 Employee K 200 100 \n \nTable after the addition \nAddress EmployeeName Next Pointer PreviousPointer \n100 Employee A a b \n200 Employee T c d \n300 Employee K e f \n400 Employee G x y\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q5 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_6",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_6\n\nQ6.  The flowchart shown below expresses an al gorithm that determines the greatest common \ndivisor between two integers a and b. How many times is A passed?\n\na) 1\nb) 2\nc) 4\nd) 8",
+    "back": "b) 2\n\n### Explanation\nOfficial ITPEC Subject A answer for Q6 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_7",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_7\n\nQ7.  In object-oriented progr amming, which of the following is the concept that refers to a class \nthat defines a method with the same name and type signature as a method in its superclass?\n\na) Hi\nb)  Inherit\nc) Overlo\nd)  Overri",
+    "back": "d)  Overri\n\n### Explanation\nOfficial ITPEC Subject A answer for Q7 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_8",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_8\n\nQ8.  There exists a main process and the two (2) interrupt processes A and B, as shown in the \ntable below. Multiplex interrupts are permitted. When interrupts A and B occur with the \ntiming shown in the diagram below, how many milliseconds (ms) can the main process use \nthe CPU during the time period between 0 ms and 5 ms? Here, the overhead from calling an \ninterrupt process and resuming from it can be ignored. \n \nInterrupt Processing time (ms) Interrupt priority \nA 0.5 High \nB 1.5 Low \n \n012345\nOccurrence of interrupt A\nOccurrence of interrupt B\nTime (ms)\nindicates the timing of an interrupt.Note:\n\na) 2\nb) 2.5\nc) 3.5\nd) 5",
+    "back": "a) 2\n\n### Explanation\nOfficial ITPEC Subject A answer for Q8 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_9",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_9\n\nQ9.  When an HDD has the specifications shown in the table below, what is the average access \ntime for the HDD to transfer 16 kB of data in milliseconds (ms)? The average access time is \ncalculated as the sum of the average seek ti me, controller overhead, rotational latency, and \ntransfer time. Other overheads can be ignored. Here, 1 MB = 1,024 kB. \n \nAverage seek time 5 ms \nRotation Speed 6,000 RPM \nTransfer rate 1 MB/s \nController overhead 0.1 ms\n\na) Option A\nb) Option B\nc) Option C\nd) Option D",
+    "back": "b) Option B\n\n### Explanation\nOfficial ITPEC Subject A answer for Q9 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_10",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_10\n\nQ10. Which of the following is an appropriate description of a 3D printer\u2019s function?\n\na) It\nb) It fun\nc) It m\nd) It proje",
+    "back": "c) It m\n\n### Explanation\nOfficial ITPEC Subject A answer for Q10 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_11",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_11\n\nQ11.  Which of the following is the most appropriate explanation of edge computing?\n\na) In\nb) In\nc) In\nd) St",
+    "back": "b) In\n\n### Explanation\nOfficial ITPEC Subject A answer for Q11 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_12",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_12\n\nQ12. One (1) server, three (3) clients, and two (2) printers are connected via a LAN as shown \nin the figure below. This system prints data that is located on the server in response to \ninstructions from the clients. When the availab ility of each device is as shown in the table \nbelow, which of the following is the expression that represents the availability for the system? \nHere, the system is considered available if one (1) of the three (3) clients and one (1) of the \ntwo (2) printers are running. \n \nPrinterClient Printer\nServer\nClientClient\n \n \nDevice Availability \nServer a \nClient b \nPrinter c \nLAN 1\n\na)\nb)\nc)\nb)3 (1\u2212",
+    "back": "b)3 (1\u2212\n\n### Explanation\nOfficial ITPEC Subject A answer for Q12 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_13",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_13\n\nQ13. Five processes A, B, C, D and E arrive at almost the same time in the order of A, B, C, D \nand E. The processes have estimated running  times of 10, 6, 2, 8, and 4 milliseconds, \nrespectively. Which of the foll owing is the average process turnaround time with the First-\nCome-First-Served (FCFS) scheduling algorithm?\n\na) 14\nb) 19.2\nc) 20\nd) 22",
+    "back": "c) 20\n\n### Explanation\nOfficial ITPEC Subject A answer for Q13 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_14",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_14\n\nQ14. In indirect addressing of direct file organization, which of the following is an appropriate \nmethod for calculating the record address from a record key in the superposition addressing \nmethod, or folding and adding method? Here, the record key is 123456 in decimal. The total \nnumber of records is 1,000, and the closest prime number to 1,000 is 997. The decimal number \n123456 is equivalent to 361100 in octal.\n\na)\nb)\nc) Splitting the re\nd) Using the re",
+    "back": "c) Splitting the re\n\n### Explanation\nOfficial ITPEC Subject A answer for Q14 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_15",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_15\n\nQ15. The page capacity of main memory is thr ee pages, and the pages are referenced in the \norder {1, 2, 3, 2, 1, 4, 5}. Which of the following is the page that will be replaced from main \nmemory for the last page reference if LRU is used as the page replacement technique?\n\na) 1\nb) 2\nc) 3\nd) 4",
+    "back": "b) 2\n\n### Explanation\nOfficial ITPEC Subject A answer for Q15 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_16",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_16\n\nQ16. Which of the following is equivalent  to the logical circuit shown below?\n\na) \ud835\udc34\u22c5\ud835\udc35\nb) \ud835\udc34\u0305 \u22c5\ud835\udc35\nc) \ud835\udc34\u22c5\ud835\udc35\u0d24\nd) \ud835\udc34\u0305 \u22c5\ud835\udc35\u0d24",
+    "back": "b) \ud835\udc34\u0305 \u22c5\ud835\udc35\n\n### Explanation\nOfficial ITPEC Subject A answer for Q16 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_17",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_17\n\nQ17. Which of the following is a method used to improve the appearance of a jagged edge of \na slanted line so that it appears smooth on a screen, such as that of an LCD?\n\na)\nb)\nc) Sh\nd) Texture m",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q17 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_18",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_18\n\nQ18. Which of the following is the appropriate explanation of attributes in the relational \nmodel?\n\na) It is possi\nb) The\nc) The s\nd) There is no me",
+    "back": "d) There is no me\n\n### Explanation\nOfficial ITPEC Subject A answer for Q18 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_19",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_19\n\nQ19. When the functional dependenc ies shown below are satisfied, which of the following is \nthe transitive functional dependency that holds? Here, \u201cA\u2192B\u201d indicates that B is functionally \ndependent on A, and \u201cA\u2192{B, C}\u201d indicates that \u201cA\u2192B\u201d and \u201cA\u2192C \u201d both hold. \n \n[Functional dependencies] \n{OrderCode, ProductCode} \u2192 {CustomerOrderQuantity, OrderAmount} \nOrderCode \u2192 {OrderDate, CustomerCode, OrderManagerCode} \nProductCode \u2192 {ProductName, SupplierCode, ProductSalePrice} \nSupplierCode \u2192 {SupplierName, SupplierAddress, SupplierManagerCode} \nCustomerCode \u2192 {CustomerName, CustomerAddress}\n\na) Or\nb) Or\nc) Pro\nd) Supplier",
+    "back": "a) Or\n\n### Explanation\nOfficial ITPEC Subject A answer for Q19 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_20",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_20\n\nQ20.\n Which of the following is an appropriate description of distributed database?\n\na)\nb) It is\nc) It is\nd) It stores",
+    "back": "d) It stores\n\n### Explanation\nOfficial ITPEC Subject A answer for Q20 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_21",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_21\n\nQ21. Which of the following is the clause that is inserted into blank A of the SQL statement in \norder to display the names of employees who work in the same department as any employee \nlocated in \"New York\"? \n \n Employees (employee_id, employ ee_name, salary, department_i\n\nd)\na)\nb)\nc)",
+    "back": "d)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q21 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_22",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_22\n\nQ22. In the context of transaction management, which of the following is a condition that the \nIsolation property ensures?\n\na)\nb) Only v\nc) Tr\nd) Tr",
+    "back": "d) Tr\n\n### Explanation\nOfficial ITPEC Subject A answer for Q22 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_23",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_23\n\nQ23. Which of the following is a mechanism used to prioritize traffic based on its importance \nand minimize network latency for network applications?\n\na)\nb) PoE\nc) QoS\nd) RTP",
+    "back": "c) QoS\n\n### Explanation\nOfficial ITPEC Subject A answer for Q23 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_24",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_24\n\nQ24. PC5 has been newly added to the network. It wants to send data  to PC4 using SSH \nprotocol. It must resolve the MAC address of PC4 from its IP address before sending the data. \nWhich of the following is the destination MAC address that PC5 will use in ARP request?\n\na) 00:00:00:00:00:00\nb) 78:E1:00:3\nc) 78:E1:00:3\nd) FF:FF:FF:FF:FF:FF",
+    "back": "d) FF:FF:FF:FF:FF:FF\n\n### Explanation\nOfficial ITPEC Subject A answer for Q24 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_25",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_25\n\nQ25. Between LAN systems that are different from the transport layer upward in the OSI basic \nreference model, which of the following is a device that performs protocol conversion?\n\na)\nb) G\nc) Repe\nd) Router",
+    "back": "b) G\n\n### Explanation\nOfficial ITPEC Subject A answer for Q25 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_26",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_26\n\nQ26. Which of the following is an Internet standard that extends the format of email header \nfields to handle not only text messages but also audio and image files?\n\na) HTML\nb) MHS\nc) MIME\nd) SMTP",
+    "back": "c) MIME\n\n### Explanation\nOfficial ITPEC Subject A answer for Q26 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_27",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_27\n\nQ27. An attacker left a USB stick labeled \u201cNex t ITPEC exam questions and answers\u201d that \ncontains malware in front of an office, expecting someone to plug it into a PC. Once plugged \nin, the attacker gains control of the PC. Which of the following types of attack is this?\n\na)\nb) I\nc) Phishing\nd) Pretexting \n \n  \n192.168.1.2\n78:E1:00:3",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q27 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_28",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_28\n\nQ28. When X receives a message with a digital signa ture that uses public  key cryptography \nfrom Y, which of the follow ing is the key that  X uses to verify that the message truly came \nfrom Y?\n\na) X\u2019s priv\nb) X\u2019s pu\nc) Y\u2019s priv\nd) Y\u2019s pu",
+    "back": "d) Y\u2019s pu\n\n### Explanation\nOfficial ITPEC Subject A answer for Q28 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_29",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_29\n\nQ29. The IP address of server X that is owned by an attack er, is recorded on Company B\u2019s \nDNS cache server as the IP address corresponding to the FQDN of Company A\u2019s web server. \nAs a result, which of the following are the us ers that unintentionally connect to server X? \nHere, the employees of Company A and Company B use their own company\u2019s DNS cache \nserver for name resolution.\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q29 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_30",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_30\n\nQ30. When a fraud occurs, all three (3) elements of the \u201cfraud triangle\u201d are believed to exist. \nWhich of the following is the appropriate explanation of an element of the \u201cfraud triangle\u201d?\n\na) \u201cInform\nb) \u201cOpportunity\u201d refers to the existen\nc) \u201cPressure,\u201d\nd) \u201cR",
+    "back": "b) \u201cOpportunity\u201d refers to the existen\n\n### Explanation\nOfficial ITPEC Subject A answer for Q30 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_31",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_31\n\nQ31. Which of the following is  a function of an IDS?\n\na) It\nb) It\nc) It monitors\nd) It sen",
+    "back": "c) It monitors\n\n### Explanation\nOfficial ITPEC Subject A answer for Q31 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_32",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_32\n\nQ32. Which of the following is an appropriate description concerning the timing and purpose \nof port scanning when an attacker intrudes into a system?\n\na) It is\nb) It is\nc) It is\nd) It is",
+    "back": "b) It is\n\n### Explanation\nOfficial ITPEC Subject A answer for Q32 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_33",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_33\n\nQ33. In a system with the configuration and communication services shown in the figure below, \nwhich of the following is the most appropriate location for th e installation of a WAF as a \ncountermeasure for a vulnerabili ty in a web application? He re, the WAF has no function to \nencrypt or decrypt communications. \nFirewall\nHTTPS\nSSL accelerator\nWeb server\nDatabase server\nHTTPS\nHTTP\nService for accessing \nthe database\nA\nB\nC\nD\nPC\nInternet\nPC PC\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q33 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_34",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_34\n\nQ34. Which of the following is an appropriate  description of a UML use case diagram?\n\na) It shows the\nb) It shows the ex\nc) It shows the flow from one\nd) It shows the s",
+    "back": "d) It shows the s\n\n### Explanation\nOfficial ITPEC Subject A answer for Q34 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_35",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_35\n\nQ35. In the development process,  which of the following is an activity that should be \nperformed in software architecture design?\n\na)\nb)\nc) O\nd) Tr",
+    "back": "d) Tr\n\n### Explanation\nOfficial ITPEC Subject A answer for Q35 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_36",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_36\n\nQ36. Which of the following is an  appropriate description concerning a state transition test in \na system integration test?\n\na)\nb)\nc)\nd)",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q36 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_37",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_37\n\nQ37.  Which of the following is an approp riate description of an acceptance test?\n\na) It is\nb) It is\nc) It is\nd) It is",
+    "back": "d) It is\n\n### Explanation\nOfficial ITPEC Subject A answer for Q37 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_38",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_38\n\nQ38. What is the expected value in dollars for the correction cost of an application program in \nthe first year under the conditions shown below? \n \n[Conditions] \n(1) Program size: 2,000  k steps \n(2) Potential defective rate  of program: 0.04 defects / k steps \n(3) Annual discovery rate of pot ential defects: 20% / year \n(4) Classification of discovered defects : \n\u2013Major impact: 20% \n\u2013Minor impact: 80% \n(5) Correction cost per defect \nDefects with major impact: 20,000 dollars \nDefects with minor impact: 5,000 dollars \n(6) In the first year, only defects with major impact are corrected\n\na) 64,000\nb) 128,000\nc) 160,000\nd) 640,000",
+    "back": "a) 64,000\n\n### Explanation\nOfficial ITPEC Subject A answer for Q38 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_39",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_39\n\nQ39. Which of the following is refactoring in software development activities?\n\na) In or\nb) In or\nc) In or\nd) In or",
+    "back": "a) In or\n\n### Explanation\nOfficial ITPEC Subject A answer for Q39 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_40",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_40\n\nQ40. Which of the following is an appropriate explanation of comprehensive patent cross-\nlicensing?\n\na)\nb) The sour\nc) The use of p\nd) To ensure th",
+    "back": "c) The use of p\n\n### Explanation\nOfficial ITPEC Subject A answer for Q40 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_41",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_41\n\nQ41. Eight (8) activities and milest ones of a project are shown in  the arrow diagram below. \nWhich of the following is the critical path of this project?\n\na)\nb)\nc)\nd)",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q41 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_42",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_42\n\nQ42. Based on the requirements gathered, the cost of a software  project under normal \nconditions is estimated at $70,000. In case of smooth project implementation, some activities \nare not required and the estimated cost is reduced to $50,000; however, in the worst-case \nscenario, additional tasks are required and the cost increases to $120,000. What is the \nexpected cost of the project (in dollars) that is calculated by using the three-point estimate in \nthe beta distribution, also known as PERT?\n\na) 70,000\nb) 75,000\nc) 80,000\nd) 85,000 \n  \nE \n15",
+    "back": "b) 75,000\n\n### Explanation\nOfficial ITPEC Subject A answer for Q42 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_43",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_43\n\nQ43. IT services are provided under the conditions  in the SLA shown below. What is the \nmaximum number of hours of downtime in a month that can satisfy the SLA?  \n \n[Conditions in the SLA] \n\u2010Number of business days per month: 30 \n\u2010Service hours: 7 AM to 11 PM on business days \n\u2010Agreed availability: 99% or more \n\u2010Maintenance time can be ignored.\n\na) 1.2\nb) 3.0\nc) 4.8\nd) 7.2",
+    "back": "c) 4.8\n\n### Explanation\nOfficial ITPEC Subject A answer for Q43 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_44",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_44\n\nQ44. Which of the following is an appropriate description of the relationship between a record \nof an incident and a record of a problem in IT service management?\n\na)\nb) If known errors h\nc) One (1\nd) Pro",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q44 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_45",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_45\n\nQ45. In the system design phase, when an audit is performed on the control to reduce the risk \nof user requirements not being met, which of the following is a point to be checked?\n\na) Whether progr\nb) Whether the progr\nc) Whether the test pl\nd) Whether the user",
+    "back": "d) Whether the user\n\n### Explanation\nOfficial ITPEC Subject A answer for Q45 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_46",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_46\n\nQ46. Which of the following is an appropriate fe asibility evaluation when checking whether \nthe lifetime benefits of the proposed information system are greater than its lifetime costs?\n\na) E\nb)  Oper\nc) S\nd)  Te",
+    "back": "a) E\n\n### Explanation\nOfficial ITPEC Subject A answer for Q46 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_47",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_47\n\nQ47. Which of the following is a measure for the ri sk of a decline in the system maintenance \nand operation quality during the outsourcing of an IT service?\n\na)\nb) Requesting\nc) Se\nd) Using in",
+    "back": "d) Using in\n\n### Explanation\nOfficial ITPEC Subject A answer for Q47 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_48",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_48\n\nQ48. In a business scenario where marketing managers analyze customer interests and sales \npatterns, design promotional campaigns, and then send targeted emails to customers, which \nof the following is a modeling technique used to represent how information flows between \ninternal processes, data stores, and external entities?\n\na)\nb)\nD)\nc) Entity-Rel",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q48 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_49",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_49\n\nQ49. Which of the following is an explanation of  benchmarking that is  used for corporate \nmanagement?\n\na) It refers to\nb) It refers to\nc) It refers to the\nd) It refers to the",
+    "back": "a) It refers to\n\n### Explanation\nOfficial ITPEC Subject A answer for Q49 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_50",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2025A_FE_AM_50\n\nQ50. Which of the following is an explanation of relationship marketing?\n\na) It is\nb) It is\nc) It is\nd) It is",
+    "back": "d) It is\n\n### Explanation\nOfficial ITPEC Subject A answer for Q50 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_51",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2025A_FE_AM_51\n\nQ51. Which of the following is an explanation of ERP?\n\na) It is\nb) It is\nc) It is\nd) It is",
+    "back": "d) It is\n\n### Explanation\nOfficial ITPEC Subject A answer for Q51 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_52",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2025A_FE_AM_52\n\nQ52. Which of the following is the appropriate description of process innovation?\n\na)\nb)\nc) Outsour\nd) Wi",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q52 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_53",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2025A_FE_AM_53\n\nQ53. Basic elements and examples of devices and se rvices when the IoT is used in a factory\u2019s \nequipment maintenance tasks are compiled as shown below. When\n\na) through\nd)\na)\nb)",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q53 (2025A) is Option (c)."
+  },
+  {
+    "id": "2025A_FE_AM_54",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2025A_FE_AM_54\n\nQ54. Which of the following is a characteristic of an IC tag (RFI\n\nD)?\na) It h\nb) It is st\nc) It is use",
+    "back": "a) It h\n\n### Explanation\nOfficial ITPEC Subject A answer for Q54 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_55",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2025A_FE_AM_55\n\nQ55. Which of the following is an explanation of a sharing economy?\n\na) It is\nb) It is\nc) It is\nd) It is",
+    "back": "d) It is\n\n### Explanation\nOfficial ITPEC Subject A answer for Q55 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_56",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2025A_FE_AM_56\n\nQ56. Which of the following is an example of Green IT?\n\na)\nb)\nc) Using\nd) Using we",
+    "back": "d) Using we\n\n### Explanation\nOfficial ITPEC Subject A answer for Q56 (2025A) is Option (d)."
+  },
+  {
+    "id": "2025A_FE_AM_57",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2025A_FE_AM_57\n\nQ57. Which of the following is a major role of a CIO?\n\na) The\nb) The\nc) The\nd) The",
+    "back": "a) The\n\n### Explanation\nOfficial ITPEC Subject A answer for Q57 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_58",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2025A_FE_AM_58\n\nQ58. The horizontal and vertical axes of an Oper ating Characteristic (O\n\nC)\na) \n0\nb) \n0\nc) \n0",
+    "back": "a) \n0\n\n### Explanation\nOfficial ITPEC Subject A answer for Q58 (2025A) is Option (b)."
+  },
+  {
+    "id": "2025A_FE_AM_59",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2025A_FE_AM_59\n\nQ59. Which of the following is a financial statement that represents the assets, liabilities, and \nnet assets of a company at a certain point in time and indicates the financial situation of the \ncompany?\n\na)\nb) In\nc) St\nd) St",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q59 (2025A) is Option (a)."
+  },
+  {
+    "id": "2025A_FE_AM_60",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2025A_FE_AM_60\n\nQ60. For a shrink-wrap license, which of the following is the point in time when a software \nlicense agreement is concluded?\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q60 (2025A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_2",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_2\n\nQ2.  What is the value of the postfix expressi on below? Here, A, B, C, and D are operands \nwhose values are 4, 3, 5, and 6, respectively. Symbols \u201c+\u201d, \u201c\u2212\u201d, \u201c\u00d7\u201d, and \u201c\u00f7\u201d are arithmetic \noperators for addition, subtraction, multiplication, and division, respectively. \n \nA B 2 \u00d7\n + D B \u00f7 C \u00d7 \u2212\n\na) \u22123\nb) 0\nc) 3\nd) 40/3",
+    "back": "b) 0\n\n### Explanation\nOfficial ITPEC Subject A answer for Q2 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_3",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_3\n\nQ3.  Which of the following is the computational complexity of the Heapsort algorithm? Here, \nn is the number of elements to be sorted, and all comparisons, swaps, and other needed \noperations can proceed in constant time.\n\na) O (log n\nb) O (n\nc) O (n2\nd) O (n log n",
+    "back": "d) O (n log n\n\n### Explanation\nOfficial ITPEC Subject A answer for Q3 (2024A) is Option (d)."
+  },
+  {
+    "id": "2024A_FE_AM_4",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_4\n\nQ4.  The presence of an edge between nodes is represented by an adjacent matrix. When the \nadjacent matrix of an undirected graph is as below, which of the following is its graph \nrepresentation? Here, the nodes correspond with the rows and columns of the adjacent \nmatrix. If there is an edge between nodes, this is indicated with 1, and if there is no edge, \nthis is indicated with 0. \n \n0    1    0    0    0    0\n1    0    1    1    0    0\n0    1    1    0    0    0\n0    1    0    1    1    0\n0    0    1    0    0    1\n0    0    0    0    1    0\na    b    c    d    e    f\na\nb\nc\nd\ne\nf\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q4 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_5",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_5\n\nQ5.  What is the value of the arithmetic expression resulting from an in-order traversal of the \nbinary tree below?\n\na) 11\nb) 20\nc) 27\nd) 45",
+    "back": "b) 20\n\n### Explanation\nOfficial ITPEC Subject A answer for Q5 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_6",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_6\n\nQ6.  The function f (n) is recursively defined in terms of the natural number n as below. Which \nof the following is the value of f (5)? \n \nf (n): if n\u22661 then return 1 else return n + f (n\u22121)\n\na) 6\nb) 9\nc) 15\nd) 25",
+    "back": "c) 15\n\n### Explanation\nOfficial ITPEC Subject A answer for Q6 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_7",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_7\n\nQ7.  Which of the following is the appropriate description of the \u201cselection sort\u201d algorithm?\n\na)\nb) E\nc) The element with the l\nd) Two",
+    "back": "c) The element with the l\n\n### Explanation\nOfficial ITPEC Subject A answer for Q7 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_8",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_8\n\nQ8.  What is the approximate performance of a CPU in MIPS, when the instruction mix of the \nCPU is shown in the table below? Here, the CPU does not use a pipeline architecture. \n \nInstruction type Instruction execution \ntime in \u03bcs \nAppearance ratio \nRegister to register \noperation \n0.3 30% \nRegister to memory \noperation  \n0.6 50% \nConditional branch \noperation \n0.1 20%\n\na) 0.03\nb) 0.41\nc) 2.44\nd) 35.00",
+    "back": "c) 2.44\n\n### Explanation\nOfficial ITPEC Subject A answer for Q8 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_9",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_9\n\nQ9.  When the CPU needs data, it first accesse s the cache memory. When the data is not \navailable in the cache memory, the CPU accesses the main memory. If the miss ratio is 0.2 \nand the access times for cache memory and main memory are as shown below, what is the \napproximate average memory access time in ns for the CPU?  Here, there are only cache \nmemory and main memory for the CPU, the access time for main memory includes the time \nto confirm whether the data is available in cache memory, and the overhead time for the \ncache management can be ignored. \n \nAccess destination Access time (ns) \nCache Memory 75 \nMain Memory 1500\n\na) 315\nb) 360\nc) 1,215\nd) 1,260",
+    "back": "b) 360\n\n### Explanation\nOfficial ITPEC Subject A answer for Q9 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_10",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_10\n\nQ10. Which of the following is the appropriate purpose of defragmentation of hard disks?\n\na) To\nb) To\nc) To\nd) To prote",
+    "back": "a) To\n\n### Explanation\nOfficial ITPEC Subject A answer for Q10 (2024A) is Option (a)."
+  },
+  {
+    "id": "2024A_FE_AM_11",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_11\n\nQ11. Which of the following is a fail-safe concept for improving the security and reliability \nof the information system?\n\na) Even when the user performs\nb) Even when there is\nc) When\nd) When",
+    "back": "c) When\n\n### Explanation\nOfficial ITPEC Subject A answer for Q11 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_12",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_12\n\nQ12. Which of the following is the approximate availability of the system comprising five \ndevices, namely, A, B, C, D, and E as shown in the figure below? The numeric value in \nparentheses represents the availability of each device. The system is operational if either \ndevice connected in parallel is available.\n\na) 0.003\nb) 0.031\nc) 0.282\nd) 0.795",
+    "back": "d) 0.795\n\n### Explanation\nOfficial ITPEC Subject A answer for Q12 (2024A) is Option (d)."
+  },
+  {
+    "id": "2024A_FE_AM_13",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_13\n\nQ13. There are minor and major page faults in an Operating System (OS). Which of the \nfollowing is an appropriate action of the OS when a major page fault occurs?\n\na)\nb) Looking for\nc) Looking  for\nd) Looking  for the misse",
+    "back": "c) Looking  for\n\n### Explanation\nOfficial ITPEC Subject A answer for Q13 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_14",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_14\n\nQ14. A real-time OS that performs preemptive priority scheduling for tasks A and B with A \nhaving a higher priority than B. Which of the following is the action that the OS takes?\n\na) When\nb) When\nc) When\nd) When",
+    "back": "a) When\n\n### Explanation\nOfficial ITPEC Subject A answer for Q14 (2024A) is Option (a)."
+  },
+  {
+    "id": "2024A_FE_AM_15",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_15\n\nQ15. An OS chooses a process for CPU execution based on a scheduling algorithm. Consider \nfour processes, P1, P2, P3, and P4, and their corresponding arrival times along with their \nburst times shown in the table below. Which of the following is the correct combination of \nwaiting times for the processes to be executed in the First-Come-First-Serve (FCFS) \nscheduling algorithm? Here, arrival time is when a process enters the ready queue, burst \ntime is the time required for CPU execution, and waiting time is the time a process spends \nin the ready queue before CPU execution begins. \n \nUnit: millisecond \nProcess Arrival time Burst Time \nP1 0 6 \nP2 2 4 \nP3 4 9 \nP4 5 7 \n \n P1 P2 P3 P4\n\na) 0 2 4 5\nb) 0 4 6 14\nc) 6 4 9 7\nd) 6 6 13 12",
+    "back": "b) 0 4 6 14\n\n### Explanation\nOfficial ITPEC Subject A answer for Q15 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_16",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_16\n\nQ16. A graphical symbol for the 2-to-1 MUX (m ultiplexer) and its truth table are shown in \nthe figure below. The MUX has two data inputs (I0, I1), one select-line (S) and one output \n(Z). If the select line is S=0, then the output Z is switched to input I0, whereas if a select line \nis S=1, then the output Z is switched to input I1. \n \n \n \n \n \n \nWhich of the following is a logic gate that is equivalent to the circuit implemented with the \n2-to-1 MUX below?\n\na) Option A\nb) Option B\nc) Option C\nd) Option D",
+    "back": "d) Option D\n\n### Explanation\nOfficial ITPEC Subject A answer for Q16 (2024A) is Option (d)."
+  },
+  {
+    "id": "2024A_FE_AM_17",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_17\n\nQ17. Audio signals are recorded using 8-bit samp les at a sampling rate of 11,000 times per \nsecond. When a flash memory of 512 \u00d7 10 6 bytes is used, what is the maximum recording \ntime of such data in minutes?\n\na) 77\nb) 96\nc) 775\nd) 969",
+    "back": "c) 775\n\n### Explanation\nOfficial ITPEC Subject A answer for Q17 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_18",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_18\n\nQ18. Which of the following is a database design that consists of multiple tables with rows \nand columns that are linked together through matching data stored in each table?\n\na) Hier\nb) Network\nc) O\nd) Rel",
+    "back": "d) Rel\n\n### Explanation\nOfficial ITPEC Subject A answer for Q18 (2024A) is Option (d)."
+  },
+  {
+    "id": "2024A_FE_AM_19",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_19\n\nQ19. Which of the following is an appropriate ER diagram after considering  the conditions \nbelow?  \n- An employee is associated with 1 program and a program is associated with at least one \nemployee \n- A program belongs to 1 college and a college has one or many programs\n\na)\nb)\nc)\nd)  \n \n \n \n \n  \n1.1 1.* 1..1 \nEmployee",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q19 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_20",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_20\n\nQ20. An employee works for a department, which can  be located in multiple regions. Three \ntables EMP, DEPT, and DEPT_LOCS are created as shown below for recording the employee, \ndepartment, and department location data, respectively.  \n \nEMP DEPT DEPT_LOCS \n \nEID Ename DNO Salary \n11 John Bate 1 20000 \n12 Mohammed Karim 2 40000 \n13 Sadat Hossain 1 50000 \n14 Katherine Li 3 20000 \n15 Shuvashish Bose 3 40000 \n \nDNO Dname Manager \nID \n1 Admin 11 \n2 Accounts 13 \n3 Research 15 \n \nDNO Region  \n1 L1 \n1 L3 \n2 L2 \n3 L3 \n3 L2 \n \nWhat is the output of the SQL shown below?  \n \nSELECT EName, Salary \nFROM EMP \nWHERE DNO IN (( SELECT DNO \n                 FROM DEPT) \n                 MINUS \n                 (SELECT DNO \n                  FROM DEPT_LOCS \n                  WHERE Region=\u2019L2\u2019) \n                  ))\n\na) \n \nEn\nb)  \n \n \n \nEn\nc) \n \nEn\nd)  \n \nEn",
+    "back": "b)  \n \n \n \nEn\n\n### Explanation\nOfficial ITPEC Subject A answer for Q20 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_21",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_21\n\nQ21. If a transaction processing program ends abnormally while updating the database, the \ndatabase is recovered by a rollback process. In these circumstances, which of the following \nis the information that is used?\n\na) Post-up\nb) Pre-up\nc) The l\nd) The l",
+    "back": "b) Pre-up\n\n### Explanation\nOfficial ITPEC Subject A answer for Q21 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_22",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_22\n\nQ22. Which of the following is a property on a database that guarantees a result where a \ntransaction either fully completes update processing or is revoked as if no processing took \nplace at all?\n\na)\nb)\nc)\nd) Isol",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q22 (2024A) is Option (a)."
+  },
+  {
+    "id": "2024A_FE_AM_23",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_23\n\nQ23. Which of the following is an appropriate description of a device that connects LANs?\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q23 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_24",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_24\n\nQ24. What is the broadcast address of the network 192.168.128.0/22?\n\na) 192.168.128.127\nb) 192.168.128.255\nc) 192.168.131.255\nd) 192.168.255.255",
+    "back": "c) 192.168.131.255\n\n### Explanation\nOfficial ITPEC Subject A answer for Q24 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_25",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_25\n\nQ25. Which of the following is a protocol to gather information on network components to \nmanage and troubleshoot the network?\n\na) NTP\nb) SMTP\nc) SNMP\nd) TELNET",
+    "back": "c) SNMP\n\n### Explanation\nOfficial ITPEC Subject A answer for Q25 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_26",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_26\n\nQ26. Which of the following is the way of usi ng a phone to supply an Internet connection to \nother devices, such as a tablet or laptop computer over either Wi-Fi or Bluetooth?\n\na)\nb) PPPoE\nc) Tethering\nd) UPnP",
+    "back": "c) Tethering\n\n### Explanation\nOfficial ITPEC Subject A answer for Q26 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_27",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_27\n\nQ27. Which of the following is an example of a phishing email?\n\na)\nb)\nc)\nd)",
+    "back": "d)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q27 (2024A) is Option (d)."
+  },
+  {
+    "id": "2024A_FE_AM_28",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_28\n\nQ28. Which of the following bitwise logical operation can be applied in stream cipher \nbetween a plain text and a keystream to produce a cipher text, and between a ciphertext and \nthe keystream to recover the plaintext?\n\na)\nb) N\nc) OR\nd) XOR",
+    "back": "d) XOR\n\n### Explanation\nOfficial ITPEC Subject A answer for Q28 (2024A) is Option (d)."
+  },
+  {
+    "id": "2024A_FE_AM_29",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_29\n\nQ29. Which of the following description is an appropriate use of asymmetric encryption to \nensure the confidentiality of a message that a sender is going to send to a receiver?\n\na) The mess\nb) The mess\nc) The mess\nd) The mess",
+    "back": "c) The mess\n\n### Explanation\nOfficial ITPEC Subject A answer for Q29 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_30",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_30\n\nQ30. Which type of attack involves intercepting communication between sender and \nreceiver?\n\na)\nb) M\nc) Phishing\nd) R",
+    "back": "b) M\n\n### Explanation\nOfficial ITPEC Subject A answer for Q30 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_31",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_31\n\nQ31. Which of the following refers to a technique that is used in a credential stuffing attack?\n\na) Fo\nb) Fo\nc) Sele\nd) Sele",
+    "back": "b) Fo\n\n### Explanation\nOfficial ITPEC Subject A answer for Q31 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_32",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_32\n\nQ32. Which of the following is the name of an attack where manipulation is made to display \na malicious website near the top of the results on a search website?\n\na)\nb)\nc) SEO poisoning\nd) So",
+    "back": "c) SEO poisoning\n\n### Explanation\nOfficial ITPEC Subject A answer for Q32 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_33",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_33\n\nQ33. Which of the following is a function of security information and event management \n(SIEM)?\n\na) The\nb) The exe\nc) The gener\nd) The inspe",
+    "back": "c) The gener\n\n### Explanation\nOfficial ITPEC Subject A answer for Q33 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_34",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_34\n\nQ34. Which of the following is the UML behavi oral diagram showing the behavior of a \nsingle object in response to triggers?\n\na)\nb) Sequen\nc) St\nd) Use",
+    "back": "c) St\n\n### Explanation\nOfficial ITPEC Subject A answer for Q34 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_35",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_35\n\nQ35. In object-oriented programming, which of the following is abstraction?\n\na)\nb)\nc)\nd) Re",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q35 (2024A) is Option (a)."
+  },
+  {
+    "id": "2024A_FE_AM_36",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_36\n\nQ36. Which of the following is an appropriate  description of \u201cdelegation\u201d in object \norientation?\n\na)\nb)\nc)\nd)",
+    "back": "d)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q36 (2024A) is Option (d)."
+  },
+  {
+    "id": "2024A_FE_AM_37",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_37\n\nQ37. In unit testing, which of the following activities is part of white box testing?\n\na)\nb)\nc) Equiv\nd) Orthogon",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q37 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_38",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_38\n\nQ38. Which of the following is the appropriate explanation of a stub or a driver used in a test?\n\na)\nb)\nc)\nd)",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q38 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_39",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_39\n\nQ39. Scrum is an agile development method. In Scrum, which of the following is an event \nwhere each member of the development team talks in turn about topics such as \u201cthings I did \nyesterday,\u201d \u201cthings I will do today,\u201d and \u201cobstacles,\u201d and all members share the status of a \nproject?\n\na)\nb) Retrospe\nc) Sprint pl\nd) Sprint review",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q39 (2024A) is Option (a)."
+  },
+  {
+    "id": "2024A_FE_AM_40",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_40\n\nQ40. Among eXtreme Programming (XP) practices, which of the following is adopted to \nimprove program quality in program development through smooth communication between \nprogrammers by exchanging their roles and reviewing each other\u2019s work?\n\na)\nb) P\nc) Pl\nd) Test-",
+    "back": "b) P\n\n### Explanation\nOfficial ITPEC Subject A answer for Q40 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_41",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_41\n\nQ41. Which of the following is an appropr iate purpose for using a Work Breakdown \nStructure (WBS) in a software development project?\n\na) To\nb) To hier\nc) To optimize the tot\nd) To represent the s",
+    "back": "b) To hier\n\n### Explanation\nOfficial ITPEC Subject A answer for Q41 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_42",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_42\n\nQ42. Which of the following is an appropriate explanation concerning the scope creep in \nproject scope management?\n\na)\nb)\nc) The sum of the pro\nd) The un",
+    "back": "d) The un\n\n### Explanation\nOfficial ITPEC Subject A answer for Q42 (2024A) is Option (d)."
+  },
+  {
+    "id": "2024A_FE_AM_43",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_43\n\nQ43. Which of the following is a requirement for service level management?\n\na)\nb)\nc)\nd) Risks to servi",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q43 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_44",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_44\n\nQ44. A device that operates 24 hours a day, 360 days  a year has an MTBF value of 1,440 \nhours. Which of the following is the average number of failures for this device for 360 days? \nHere, the result is rounded to the closest w hole number, and the MTTR of the device is \nignored.\n\na) 3\nb) 6\nc) 9\nd) 12",
+    "back": "b) 6\n\n### Explanation\nOfficial ITPEC Subject A answer for Q44 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_45",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_45\n\nQ45. Which of the following is the most appropriate description of a system auditor?\n\na) The entire\nb) The system\nc) The system\nd) The system",
+    "back": "c) The system\n\n### Explanation\nOfficial ITPEC Subject A answer for Q45 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_46",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_46\n\nQ46. Which of the following is an explanation of an application architecture that constitutes \nenterprise architecture?\n\na) It system\nb) It system\nc) It system\nd) It system",
+    "back": "c) It system\n\n### Explanation\nOfficial ITPEC Subject A answer for Q46 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_47",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_47\n\nQ47. Which of the following is a description of the SOA?\n\na)\nb)\nc)\nd) Outsour",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q47 (2024A) is Option (a)."
+  },
+  {
+    "id": "2024A_FE_AM_48",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_48\n\nQ48. Which of the following is the work that is performed when non-functional requirements \nare defined?\n\na)\na)\nb)\nc)",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q48 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_49",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_49\n\nQ49. Which of the following is an explanation of diversity management?\n\na)\nb) For employees to h\nc) For employees to t\nd) To in",
+    "back": "d) To in\n\n### Explanation\nOfficial ITPEC Subject A answer for Q49 (2024A) is Option (d)."
+  },
+  {
+    "id": "2024A_FE_AM_50",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2024A_FE_AM_50\n\nQ50. In innovation theory, consumers are classified into five (5) groups innovators, early \nadopters, early majority, late majority, and laggards according to the timing of their \npurchase of a new product. Which of the following is the appropriate explanation of the \nearly adopters?\n\na)\nb)\nc)\nd)",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q50 (2024A) is Option (a)."
+  },
+  {
+    "id": "2024A_FE_AM_51",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2024A_FE_AM_51\n\nQ51. Which of the following is a definition of Customer Relationship Management (CRM)?\n\na)\nb)\nc)\nd) The",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q51 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_52",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2024A_FE_AM_52\n\nQ52. Which of the following is an appropriate  explanation of concurrent engineering?\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q52 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_53",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2024A_FE_AM_53\n\nQ53. Which of the following is one of the main characteristics of a blockchain?\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q53 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_54",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2024A_FE_AM_54\n\nQ54. Which of the following is the situation where an improvement can be expected by \ninstalling a Material Requirements Planning (MRP) system?\n\na)\nb) High-mix, low-volume pro\nc) Inform\nd) There",
+    "back": "c) Inform\n\n### Explanation\nOfficial ITPEC Subject A answer for Q54 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_55",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2024A_FE_AM_55\n\nQ55. Which of the following is the objects that can benefit from the cell production method?\n\na) Pro\nb) Pro\nc) Pro\nd) Pro",
+    "back": "a) Pro\n\n### Explanation\nOfficial ITPEC Subject A answer for Q55 (2024A) is Option (a)."
+  },
+  {
+    "id": "2024A_FE_AM_56",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2024A_FE_AM_56\n\nQ56. Which of the following is a technique that can be used to discover useful information and \nrelationships from large amounts of customer and market data retained by a company?\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q56 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_57",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2024A_FE_AM_57\n\nQ57. The relationship between the value \u201cx\u201d of a certain factor in the manufacture of a \nproduct and the value \u201cy\u201d of a quality characteristic of the product is plotted in the figure \nbelow.  Which of the following is an a ppropriate interpretation of this figure? \n \n0 x\ny\n\na) In or\nb) The\nc) The\nd) The regression expression for estim",
+    "back": "b) The\n\n### Explanation\nOfficial ITPEC Subject A answer for Q57 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_58",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2024A_FE_AM_58\n\nQ58. Two (2) types of raw materials A and B are required to manufacture products X and Y. \nThe quantity of each raw material required per unit and the procurable quantity are listed in \nthe table below. When the profit per unit is $1 for product X and $1.5 for product Y , which \nof the following is the maximum profit in dollar? \n \nRaw \nmaterial \nRequired quantity \nper unit of product X \nRequired quantity \nper unit of product Y \nProcurable \nquantity \nA 2 1 100 \nB 1 2  80\n\na) 50\nb) 60\nc) 70\nd) 80",
+    "back": "c) 70\n\n### Explanation\nOfficial ITPEC Subject A answer for Q58 (2024A) is Option (c)."
+  },
+  {
+    "id": "2024A_FE_AM_59",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2024A_FE_AM_59\n\nQ59. When the selling price of a product is $50 and the fixed costs for production and sales \nare $100,000, which of the following is the number of units to be sold to achieve the desired \nprofit of $50,000? Here, the variable cost ratio is 60%.\n\na) 5,000\nb) 7,500\nc) 10,000\nd) 12,500",
+    "back": "b) 7,500\n\n### Explanation\nOfficial ITPEC Subject A answer for Q59 (2024A) is Option (b)."
+  },
+  {
+    "id": "2024A_FE_AM_60",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2024A_FE_AM_60\n\nQ60. Which of the following is an explan ation of a volume license agreement?\n\na)\nb)\nc)\nd)",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q60 (2024A) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_2",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_2\n\nQ2.  When the hexadecimal value ABCD in a 32-bit register is logically shifted right by two bits, \nwhich of the following is the resulting value in hexadecimal?\n\na) 2\nb) 6\nc)\nd) E",
+    "back": "a) 2\n\n### Explanation\nOfficial ITPEC Subject A answer for Q2 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_3",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_3\n\nQ3. \n What is the probability that at least three coins land heads up when four unbiased coins are \ntossed simultaneously?\n\na) 1/4\nb) 5/16\nc) 3/8\nd) 5/8",
+    "back": "b) 5/16\n\n### Explanation\nOfficial ITPEC Subject A answer for Q3 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_4",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_4\n\nQ4.  Random(n) is a function that returns an integer of 0 or more and less than n with a uniform \nprobability. When the series of procedures below is run on the integer type variables A, B, and \nC, what is the probability that the value of C will be 0? \n \nA = Random(10) \nB = Random(10) \nC = A\u2212B\n\na) 1\n100\nb) 1\n20\nc) 1\n10\nd)  1 \n 5",
+    "back": "c) 1\n10\n\n### Explanation\nOfficial ITPEC Subject A answer for Q4 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_5",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_5\n\nQ5.  Which of the following matches the <variable-name> defined below in BNF? \n \n<number> :: = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 \n<letter> :: = A | B | C | D | E | F \n<letter-and-number> :: = <letter> | <number> | _ \n<variable-name> :: = <letter> | <variable-name><letter-and-number>\n\na) _\nb) 246\nc) 3E5\nd) F5_1",
+    "back": "d) F5_1\n\n### Explanation\nOfficial ITPEC Subject A answer for Q5 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_6",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_6\n\nQ6.  Which of the following is an error detection method where, on the sender side, the data sent \naccompanies a remainder of the data bit sequence divided by a specific generator polynomial, \nwhile on the receiver side, error detection is performed by checking if the received bit sequence \nis divisible by the same polynomial?\n\na)\nb) H\nc) Horizont\nd) Verti",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q6 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_7",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_7\n\nQ7.  Which of the following is the pr e-order traversal of the tree below? \n \n9\n3 10\n1 6 14\n4 7 13\n\na) 1, 3, 4, 6, 7, 9, 10, 13, 14\nb) 1, 4, 7, 6, 3, 13, 14, 10, 9\nc) 9, 3, 1, 6, 4, 7, 10, 14, 13\nd) 9, 3, 10, 1, 6, 14, 4, 7, 13",
+    "back": "c) 9, 3, 1, 6, 4, 7, 10, 14, 13\n\n### Explanation\nOfficial ITPEC Subject A answer for Q7 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_8",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_8\n\nQ8.\n  The operations for a queue are defined as below. \n \nENQ n: This operation appends data n to the queue. \nDEQ: This operation remove s data from the queue. \nOn an empty queue, the operations ENQ 1, ENQ 2, ENQ 3, DEQ, ENQ 4, ENQ 5, DEQ, \nENQ 6, DEQ, DEQ are performed. After that, when DEQ is performed, what is the value that \nis removed?\n\na) 1\nb) 2\nc) 5\nd) 6",
+    "back": "c) 5\n\n### Explanation\nOfficial ITPEC Subject A answer for Q8 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_9",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_9\n\nQ9.  A five-digit number a1 a2 a3 a4 a5 needs to be stored in an array by means of hashing. When \nthe hash function is mod (a1+a2+a3+a4+a5, 13) and the number is stored in the array element \nat the position corresponding to the calculated hash value, which of the following is the \nposition where 54321 is stored in the array? Here, the value of mod (x, 13) is the remainder \nafter dividing x by 13. \n \nPosition Array \n0  \n1  \n2  ... \n... \n11  \n12\n\na) 1\nb) 2\nc) 7\nd) 11",
+    "back": "b) 2\n\n### Explanation\nOfficial ITPEC Subject A answer for Q9 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_10",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_10\n\nQ10. Which of the following is a program th at achieves dynamic processing in a web \nenvironment and operates only on a web server?\n\na) J\nb) J\nc) J\nd) V",
+    "back": "c) J\n\n### Explanation\nOfficial ITPEC Subject A answer for Q10 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_11",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_11\n\nQ11. When a CPU has a special register used in  push and pop instructions, which of the \nfollowing is an appropriate term for this register?\n\na) Instru\nb) Progr\nc) St\nd)  St",
+    "back": "c) St\n\n### Explanation\nOfficial ITPEC Subject A answer for Q11 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_12",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_12\n\nQ12. Which of the following is classified as an internal interrupt?\n\na) Interrupt\nb) Interrupt\nc) Interrupt\nd) Interrupt",
+    "back": "b) Interrupt\n\n### Explanation\nOfficial ITPEC Subject A answer for Q12 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_13",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_13\n\nQ13. Which of the following is the technique that minimizes the number of write operations \nto the main memory by updating the data only in the cache memory and updating into the main \nmemory later?\n\na) Overl\nb) Write\nc) Write prote\nd) Write through",
+    "back": "b) Write\n\n### Explanation\nOfficial ITPEC Subject A answer for Q13 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_14",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_14\n\nQ14. Which of the following is an appropriate description of a 3D printer\u2019s function?\n\na) It\nb) It fun\nc) It m\nd) It proje",
+    "back": "c) It m\n\n### Explanation\nOfficial ITPEC Subject A answer for Q14 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_15",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_15\n\nQ15. Which of the following is the RAID configur ation for achieving the highest speed disk \naccess at the cost of reliability?\n\na) R\nb) R\nc) R\nd) R",
+    "back": "a) R\n\n### Explanation\nOfficial ITPEC Subject A answer for Q15 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_16",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_16\n\nQ16. When system availabilities of a cold sta ndby system, a simplex system, and a dual system \nare compared, which of the following shows the order arranged from highest to lowest? Here \na computer or computers that compose each system are all the same.\n\na)\nb)\nc)\nd) Simplex system,",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q16 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_17",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_17\n\nQ17. A printer prints 400 characters per second. The printer uses interrupt-driven I/O and each \ncharacter printed requires an interrupt that takes 50 microseconds. What percentage of the \nprinter's CPU is available to do other work during printing? Here, other overhead time for the \nCPU can be ignored.\n\na) 98\nb) 96\nc) 4\nd) 2",
+    "back": "a) 98\n\n### Explanation\nOfficial ITPEC Subject A answer for Q17 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_18",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_18\n\nQ18. In preemptive Shortest Remaining Time First (SRTF) scheduling, on arrival or \ncompletion of any process, the scheduler sche dules processes from th e list of available \nprocesses and running processes that have th e least remaining CPU-burst time. The four \nprocesses, namely, P1, P2, P3, and P4, their corresponding CPU-burst time and arrival time \nare shown in the table below. Which of th e following is the average waiting time in \nmilliseconds for the processes to be executed in preemptive SRTF scheduling?  \n \nProcess Arrival time in \nmillisecond \nCPU-burst time in \nmillisecond \nP1 0 8 \nP2 2 3 \nP3 3 7 \nP4 5 4\n\na) 3.0\nb) 4.75\nc) 5.5\nd) 10.25",
+    "back": "b) 4.75\n\n### Explanation\nOfficial ITPEC Subject A answer for Q18 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_19",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_19\n\nQ19. Among the different types of backup met hods, which of the follo wing is incremental \nbackup? Here, in the first backup, all files are backed up and the inform ation that indicates a \nfile update managed by the operating system is reset.\n\na)\nb)\nc) Only files with inform\nd) Only files with inform",
+    "back": "d) Only files with inform\n\n### Explanation\nOfficial ITPEC Subject A answer for Q19 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_20",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_20\n\nQ20. Which of the following is the logic circuit that is equivalent to the logical expression \n\ud835\udc34\u0305\ud835\udc35\ud835\udc36 + \ud835\udc34\ud835\udc36?\n\na) Option A\nb) Option B\nc) Option C\nd) Option D",
+    "back": "c) Option C\n\n### Explanation\nOfficial ITPEC Subject A answer for Q20 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_21",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_21\n\nQ21. Which of the following is the logic gate that  is equivalent to the logic circuit shown \nbelow?\n\na) Option A\nb) Option B\nc) Option C\nd) Option D",
+    "back": "c) Option C\n\n### Explanation\nOfficial ITPEC Subject A answer for Q21 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_22",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_22\n\nQ22. At the rising edge of the clock signal, the co ntent of an 8-bit serial -in parallel-out shift \nregister is shifted upward, while positive logic data is simultaneously read into the least \nsignificant bit. The value is fixe d at the rising edge  of a strobe. When the results of an \nobservation of each signal\u2019s waveform are as shown in the diagram below, which of the \nfollowing is the value of the shift register after it is fixed? Here, numeric values are represented \nin hexadecimal. \n \nData\nStrobe\nClock\nTime\n\na) 63\nb) 8\nc)\nd)",
+    "back": "b) 8\n\n### Explanation\nOfficial ITPEC Subject A answer for Q22 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_23",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_23\n\nQ23. Which of the following is a case where outline fonts rather than bitmap fonts are suitable \nfor use?\n\na) To\nb) To\nc) To\nd) To enl",
+    "back": "d) To enl\n\n### Explanation\nOfficial ITPEC Subject A answer for Q23 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_24",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_24\n\nQ24. What is the approximate minimum required bandwidth for delivering a 30-frames/second \nvideo in 800 x 600 pixel and 24-bit full color? Here, the data is not compressed during \ncommunication.\n\na) 350 k\nb) 3.5 M\nc) 35 M\nd) 350 M",
+    "back": "d) 350 M\n\n### Explanation\nOfficial ITPEC Subject A answer for Q24 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_25",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_25\n\nQ25. Which of the following is an appropriate explanation of a relational database?\n\na) It\nb) It represents\nc) It represents the stru\nd) It ret",
+    "back": "b) It represents\n\n### Explanation\nOfficial ITPEC Subject A answer for Q25 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_26",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_26\n\nQ26. Which of the following is the key of a relation schema R = (M, N, O, P, S, T), when R \nhas the functional dependencies shown below? \n \nO \u2192 T \nS \u2192 M \nOS \u2192 P \nM \u2192 N\n\na) MO\nb) MS\nc) OP\nd) OS",
+    "back": "d) OS\n\n### Explanation\nOfficial ITPEC Subject A answer for Q26 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_27",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_27\n\nQ27.\n Which of the following is an appropriate description of keys in a relational database?\n\na)\nb) The v\nc) The v\nd) The v",
+    "back": "c) The v\n\n### Explanation\nOfficial ITPEC Subject A answer for Q27 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_28",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_28\n\nQ28. Which of the following is the appropriate interpretation of the conceptual data model \nshown in the diagram in UML? \n \nBelongs to\n1..*Department 0..* Employee\n\na)\nb)\nc)\nd) The tot",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q28 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_29",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_29\n\nQ29. An employees table contains fields in the order shown below. \n \n\u2022 emp_id is an integer value and is used as the primary key of the table. \n\u2022 emp_name can store up to 10 characters. \n\u2022 salary is a decimal value up to 4 digits. \n \nWhich of the following is an appropriate INSERT statement to insert the data to the table? Here, \nNOT NULL constraint does not exist and the table does not have any records before the insert.\n\na) INSERT INTO employees (emp_i\nb) INSERT INTO employees (emp_i\nc) INSERT INTO employees (emp_i\nd) INSERT INTO employees V",
+    "back": "a) INSERT INTO employees (emp_i\n\n### Explanation\nOfficial ITPEC Subject A answer for Q29 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_30",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_30\n\nQ30. Which of the following is the pur pose of setting an index in the columns of the table of \na relational database by a user?\n\na) To en\nb) To en\nc) To ensure th\nd) To m",
+    "back": "b) To en\n\n### Explanation\nOfficial ITPEC Subject A answer for Q30 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_31",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_31\n\nQ31. Which of the following is a role of DNS in a TCP/IP network?\n\na)\nb)\nc)\nd) In response to",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q31 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_32",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_32\n\nQ32. In the same subnet, which of the following is the devices that will receive the data when \nthe destination address is set to 255.255.255.255?\n\na)\nb)\nc) Only the\nd) Only the",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q32 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_33",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_33\n\nQ33. How many host addresses are there in the network 192.168.10.0/26?\n\na) 30\nb) 62\nc) 126\nd) 254",
+    "back": "b) 62\n\n### Explanation\nOfficial ITPEC Subject A answer for Q33 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_34",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_34\n\nQ34. In a TCP/IP network, which of the following is  a protocol used to match the clocks of \nthe server and the client?\n\na)\nb) I\nc) NTP\nd) RIP",
+    "back": "c) NTP\n\n### Explanation\nOfficial ITPEC Subject A answer for Q34 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_35",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_35\n\nQ35. As for the use of e-mails over the Internet, which of the following is a standard that \nextends the header field and can handle not only text but also audio and images?\n\na) HTML\nb) MHS\nc) MIME\nd) SMTP",
+    "back": "c) MIME\n\n### Explanation\nOfficial ITPEC Subject A answer for Q35 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_36",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_36\n\nQ36. Which of the following is malware that is activated by attackers to launch attacks on \nother computers?\n\na)\nb) Rootkit\nc) Troj\nd) Worm",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q36 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_37",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_37\n\nQ37. Which of the following is considered a violation of confidentiality?\n\na)\nb)\nc)\nd) Tri",
+    "back": "d) Tri\n\n### Explanation\nOfficial ITPEC Subject A answer for Q37 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_38",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_38\n\nQ38. Which of the following is an  appropriate description of \u201casymmetric encryption,\u201d used \nfor encrypting and decrypting messages for secure communication?\n\na)\nb)\nc)\nd)",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q38 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_39",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_39\n\nQ39. Which of the following is a method of social engineering used in a targeted e-mail attack?\n\na) \u201cUnsoli\nb)\nc) In or\nd) In or",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q39 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_40",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_40\n\nQ40. In information security, which of the following is a back door?\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q40 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_41",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_41\n\nQ41. An asset valued at $200,000 has an exposur e factor of 20% and an annual rate of \noccurrence of 0.5 for the risk of ma lware infection. How much (in dollars) is the annual loss \nexpectancy of the asset due to malware infection?\n\na) 20,000\nb) 40,000\nc) 80,000\nd) 100,000",
+    "back": "a) 20,000\n\n### Explanation\nOfficial ITPEC Subject A answer for Q41 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_42",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_42\n\nQ42. Which of the following is residual risk?\n\na)\nb) Risk th\nc) Risk th\nd) Risk th",
+    "back": "d) Risk th\n\n### Explanation\nOfficial ITPEC Subject A answer for Q42 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_43",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_43\n\nQ43. Which of the following is a security measure that allows users to run potentially \nmalicious programs on a system with the purpose of observing their behavior, while restricting \nthe programs from accessing outside of the system?\n\na) Firew\nb) Honeypot\nc) IPS\nd) S",
+    "back": "d) S\n\n### Explanation\nOfficial ITPEC Subject A answer for Q43 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_44",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_44\n\nQ44. A packet filtering firewall is installed at th e connection point of an internal network and \nthe Internet. Which of the following is the appropriate combination of filtering rules that \nenables PCs on the internal network to access a web server on the Internet (port number 80)?\n\na) Sour\nb) Sour\nc) Sour\nd) Sour",
+    "back": "c) Sour\n\n### Explanation\nOfficial ITPEC Subject A answer for Q44 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_45",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_45\n\nQ45. When a sender from domain A sends an e-mail to a recipient in domain B, which of the \nfollowing is used by the mail server in domain A for authenticating the sender?\n\na)\nb) POP3S\nc) S/MIME\nd) SMTP-",
+    "back": "d) SMTP-\n\n### Explanation\nOfficial ITPEC Subject A answer for Q45 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_46",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_46\n\nQ46. The diagram below is an example of a DFD that is used in the structured analysis method. \nWhich of the following is represented by a \u201c\uf081\u201d in the diagram below?\n\na)\nb)\nc)\nd) Pro",
+    "back": "d) Pro\n\n### Explanation\nOfficial ITPEC Subject A answer for Q46 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_47",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_47\n\nQ47. Among the definitions of software quality characteristics, which of the following \ncharacteristics refers to the ease of modifying a program for a certain computer so that it can \nrun on a different architecture?\n\na)\nb) Interoper\nc) Port\nd) Us",
+    "back": "c) Port\n\n### Explanation\nOfficial ITPEC Subject A answer for Q47 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_48",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_48\n\nQ48. In the error embedding method, when th e number of embedded errors is S, the number \nof discovered errors from the embedded errors is m, the number of latent errors before the \nstart of testing not including embedded errors is T, and the total number of discovered errors \nis n, which of the following expresses the relationship of S, T, m, and n?\n\na) \n\u0be0\n\u0bcc =\n\u0be1\u0b3f\u0be0\n\u0bcd\nb) \n\u0be0\n\u0bcc =\n\u0bcd\n\u0be1\u0b3f\u0be0\nc) \n\u0be0\n\u0bcc =\n\u0be1\n\u0bcd\nd) \n\u0be0\n\u0bcc =\n\u0bcd\n\u0be1",
+    "back": "a) \n\u0be0\n\u0bcc =\n\u0be1\u0b3f\u0be0\n\u0bcd\n\n### Explanation\nOfficial ITPEC Subject A answer for Q48 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_49",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_49\n\nQ49. Which of the following is an appropriate test case when a test is to be performed with \ndecision condition coverage (branch coverage) on the section of a program shown in the figure \nbelow? \n \nA   OR   B\nOperation\nFALSE\nTRUE\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q49 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_50",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2023S_FE_AM_50\n\nQ50. Which of the following is the appropriate term for referring to activities such as creating \na class diagram in UML from a program?\n\na)\nb) Forw\nc) Reengineering\nd) Reverse engineering",
+    "back": "d) Reverse engineering\n\n### Explanation\nOfficial ITPEC Subject A answer for Q50 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_51",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_51\n\nQ51. As for software development activities, which of the following is refactoring?\n\na) In or\nb) In or\nc) In or\nd) In or",
+    "back": "a) In or\n\n### Explanation\nOfficial ITPEC Subject A answer for Q51 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_52",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_52\n\nQ52. Which of the following is an appropriate desc ription of the stake holders involved in a \nproject?\n\na) Some st\nb) The st\nc) The st\nd) The st",
+    "back": "a) Some st\n\n### Explanation\nOfficial ITPEC Subject A answer for Q52 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_53",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_53\n\nQ53. In project management, which of the following is the subject group that includes \nprocesses having Purpose 1 and those having Purpose 2? \n \n[Purposes] \nPurpose 1: To clarify the objectives, deliver ables, requirements, and boundaries of the \nproject \nPurpose 2: To maximize the positive impacts  to the project and minimize the negative \nimpacts, both of which occur as a resu lt of changes in the objectives and \ndeliverables of the project\n\na)\nb) Pro\nc) Risk\nd) S",
+    "back": "d) S\n\n### Explanation\nOfficial ITPEC Subject A answer for Q53 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_54",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_54\n\nQ54. A project was planned to be completed in si x months. After six mo nths, the project is \nbehind schedule. The actual cost of Activity A is $100,000. The planned value of Activity A \nis $80,000. Activity A is only 75% complete. What is the schedule performance index and \ncost performance index of the project? \n \n \n Schedule performance index Cost performance index\n\na) 0.6  0.75\nb) 0.75  0.6\nc) 0.75  1.25\nd) 1.25  0.75",
+    "back": "b) 0.75  0.6\n\n### Explanation\nOfficial ITPEC Subject A answer for Q54 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_55",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_55\n\nQ55. Which of the following is an appropriate explanation of the F unction Point method for \ncreating an estimate for software development?\n\na) It is\nb) It is\nc) It is\nd) It is",
+    "back": "d) It is\n\n### Explanation\nOfficial ITPEC Subject A answer for Q55 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_56",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_56\n\nQ56. When an IT service is discontinued, it is important to comprehensively identify the assets \nthat were used and appropriately remove or free surplus assets. Which of the following is an \nevent that may occur due to mistaken removal of assets that should remain, but does not \noccur because of the removal of assets that should be removed?\n\na) O\nb) Overp\nc) W\nd) W",
+    "back": "a) O\n\n### Explanation\nOfficial ITPEC Subject A answer for Q56 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_57",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_57\n\nQ57. As for activities in capacity management to estimate a service\u2019s capacity, capability, and \nperformance, which of the following is trend analysis?\n\na)\nb) Gener\nc) Un\nd) Using m",
+    "back": "c) Un\n\n### Explanation\nOfficial ITPEC Subject A answer for Q57 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_58",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_58\n\nQ58. Which of the following is an appropriate  description concerning system operation?\n\na)\nb) Re-exe\nc) Re\nd) Regul",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q58 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_59",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_59\n\nQ59. In the system design phase, when an audit is performed on the control to reduce the risk \nof user requirements not being met, which of the following is a point to be checked?\n\na) Whether progr\nb) Whether the progr\nc) Whether the test pl\nd) Whether the user",
+    "back": "d) Whether the user\n\n### Explanation\nOfficial ITPEC Subject A answer for Q59 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_60",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_60\n\nQ60. When an information system department enters data sheets i ssued by a business \noperations department, which of the followi ng is an appropriate task executed by the \ninformation system department?\n\na) The\nb) To en\nc) To prevent un\nd) When the",
+    "back": "b) To en\n\n### Explanation\nOfficial ITPEC Subject A answer for Q60 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_61",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_61\n\nQ61. Which of the following is an example of RPA that is used to proceed with business \ninnovation with the aim of resolving management issues, such as a shortage of staff members?\n\na)\nb) Pro\nc) Repl\nd) Repl",
+    "back": "b) Pro\n\n### Explanation\nOfficial ITPEC Subject A answer for Q61 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_62",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_62\n\nQ62. Which of the following is a system where the use of a state transition diagram is \nappropriate when the system is designed?\n\na) Ele\nb) Greenhouse\nc) Inventory\nd) System th",
+    "back": "b) Greenhouse\n\n### Explanation\nOfficial ITPEC Subject A answer for Q62 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_63",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_63\n\nQ63. Which of the following is an explanation of the digital divide?\n\na) It refers to\nb) It refers to\nc) It refers to the\nd) It refers to the provision of",
+    "back": "a) It refers to\n\n### Explanation\nOfficial ITPEC Subject A answer for Q63 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_64",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_64\n\nQ64. Procurement is performed by using the comprehensive evaluation bidding method under \nthe conditions shown below. When the bidding prices and technology points of Companies A \nto D are as shown in the table below, which of the following is the successful bidder? \n \n[Conditions] \n(1) The bidder with the highest comprehens ive evaluation points obtained by summing \nup the price points and the technology points is the successful bidder. \n(2) The target price is 100,000 dollars. Any bi ds that exceed the target price are not \nevaluated. \n(3) The price points are calculat ed by the formula shown below. \n[1 \u2212 (Bidding price / Target price)] \u00d7 100 \n \n[Bidding price and technology points of Companies A to D] \n Bidding price (1,000 do llars) Technology points \nCompany A 70 50 \nCompany B 80 65 \nCompany C 90 80 \nCompany D 110 100\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q64 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_65",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_65\n\nQ65. Which of the following is an explanatio n of green procurement (sustainable \nprocurement)?\n\na) It refers to\nb) It refers to\nc) It refers to\nd) It refers to intern",
+    "back": "c) It refers to\n\n### Explanation\nOfficial ITPEC Subject A answer for Q65 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_66",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_66\n\nQ66. Among the mechanisms that are utilized on th e Internet, which of the following is an \nexplanation of crowdfunding?\n\na) It refers to\nb) It refers to\nc) It refers to p\nd) It refers to r",
+    "back": "d) It refers to r\n\n### Explanation\nOfficial ITPEC Subject A answer for Q66 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_67",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_67\n\nQ67. Which of the following is a characteristic of the maturity stage in the product life cycle?\n\na)\nb)\nc)\nd) The m",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q67 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_68",
+    "topic": "Management - Project & Service Management",
+    "front": "# 2023S_FE_AM_68\n\nQ68. Which of the following is mostly tacit knowledge?\n\na)\nb)\nc)\nd) How to ri",
+    "back": "d) How to ri\n\n### Explanation\nOfficial ITPEC Subject A answer for Q68 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_69",
+    "topic": "Strategy - Enterprise Strategy",
+    "front": "# 2023S_FE_AM_69\n\nQ69. Which of the following is an  appropriate example of a co re technology for the creation \nof competitive advantage?\n\na) It is\nb) It is\nc) It is\nd) It is",
+    "back": "c) It is\n\n### Explanation\nOfficial ITPEC Subject A answer for Q69 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_70",
+    "topic": "Strategy - Enterprise Strategy",
+    "front": "# 2023S_FE_AM_70\n\nQ70. A product that is produced through four (4) processes of A, B, C, and D must be produced \nin a quantity of 1,000 units per month. The table below lists the manufacturing time per unit, \nnumber of machines owned, and monthly production capacity in hours per machine for each \nprocess. Which of the following is a process that is lacking in capability? \n \nProcess Manufacturing time \nper unit (hours) \nNumber of machines \nowned (units) \nMonthly \nproduction capacity \n(hours/machine)  \nA 0.4 3 150 \nB 0.3 2 160 \nC 0.7 4 170 \nD 1.2 7 180\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q70 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_71",
+    "topic": "Strategy - Enterprise Strategy",
+    "front": "# 2023S_FE_AM_71\n\nQ71. Which of the following is an e xplanation of cryptocurrency mining that is enabled by  \nblock chain?\n\na) M\nb) O\nc) O\nd) Tr",
+    "back": "c) O\n\n### Explanation\nOfficial ITPEC Subject A answer for Q71 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_72",
+    "topic": "Strategy - Enterprise Strategy",
+    "front": "# 2023S_FE_AM_72\n\nQ72. Which of the following is an explanation of a sharing economy?\n\na) It is\nb) It is\nc) It is\nd) It is",
+    "back": "d) It is\n\n### Explanation\nOfficial ITPEC Subject A answer for Q72 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_73",
+    "topic": "Strategy - Enterprise Strategy",
+    "front": "# 2023S_FE_AM_73\n\nQ73. Which of the following is an appropriate explanation of digital signage?\n\na)\nb)\nc)\nd)",
+    "back": "c)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q73 (2023S) is Option (c)."
+  },
+  {
+    "id": "2023S_FE_AM_74",
+    "topic": "Strategy - Enterprise Strategy",
+    "front": "# 2023S_FE_AM_74\n\nQ74. Which of the following is an appropriate description of the constituent elements of IoT?\n\na) They\nb) They\nc) They\nd) They",
+    "back": "a) They\n\n### Explanation\nOfficial ITPEC Subject A answer for Q74 (2023S) is Option (a)."
+  },
+  {
+    "id": "2023S_FE_AM_75",
+    "topic": "Strategy - Enterprise Strategy",
+    "front": "# 2023S_FE_AM_75\n\nQ75. Which of the following is a characteristic of OJT?\n\na)\nb)\nc) E\nd) Reg",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q75 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_76",
+    "topic": "Strategy - Enterprise Strategy",
+    "front": "# 2023S_FE_AM_76\n\nQ76. To secure transparency in business administration, which of the following is a concept \nthat supervises and monitors a company\n\u2019s activities from the perspective of questions such as \nfor whom the company runs its business, how top management is structured, and whether the \norganization has self-improvement capabilities?\n\na)\nb)\nc)\nd) St",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q76 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_77",
+    "topic": "Strategy - Enterprise Strategy",
+    "front": "# 2023S_FE_AM_77\n\nQ77. Which of the following is a description of the ABC analysis?\n\na) It\nb) It\nc) It\nd) It repe",
+    "back": "b) It\n\n### Explanation\nOfficial ITPEC Subject A answer for Q77 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_78",
+    "topic": "Strategy - Enterprise Strategy",
+    "front": "# 2023S_FE_AM_78\n\nQ78. There are several quality control tools that  are used primarily for manufacturing and \ninspection departments.  Which of the follo wing is a graph where appropriate units or \nattributes for the data are set on the vertical and horizontal axes correspondingly and measured \nvalues are plotted accordingly?\n\na)\nb) Histogr\nc) P\nd) S",
+    "back": "d) S\n\n### Explanation\nOfficial ITPEC Subject A answer for Q78 (2023S) is Option (d)."
+  },
+  {
+    "id": "2023S_FE_AM_79",
+    "topic": "Strategy - Enterprise Strategy",
+    "front": "# 2023S_FE_AM_79\n\nQ79. A company plans to provide a product with a fixed cost of $128,000, a variable cost per \nunit of $48, and a selling price per unit of $80. Which of the following is the point of sales (in \ndollars) to become break-even?\n\na) 240 ,000\nb) 320 ,000\nc) 480 ,000\nd) 560 ,000",
+    "back": "b) 320 ,000\n\n### Explanation\nOfficial ITPEC Subject A answer for Q79 (2023S) is Option (b)."
+  },
+  {
+    "id": "2023S_FE_AM_80",
+    "topic": "Strategy - Enterprise Strategy",
+    "front": "# 2023S_FE_AM_80\n\nQ80. In developing new products th at are expected to  be employed by government agencies \nof WTO member countries, which of the following are the appropriate standards to be applied?\n\na)\nb) F\nc) IEEE st\nd) ISO st",
+    "back": "d) ISO st\n\n### Explanation\nOfficial ITPEC Subject A answer for Q80 (2023S) is Option (d)."
+  },
+  {
+    "id": "2022S_FE_AM_4",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_4\n\nQ4.  Which of the following is an expression in reverse Polish notation that has the same value \nas the expression below when evaluated? Here, numbers are given as decimals, and the \nsymbols \u2212 and \u00d7 are subtraction and multiplication operators, respectively. \n \n3  4  \u2212  5   \u00d7\n\na) 3  4  5  \u00d7  \u2212\nb) 4  5  \u2212  3   \u00d7\nc) 5  3  4  \u2212  \u00d7\nd) 5  4  3  \u2212  \u00d7",
+    "back": "c) 5  3  4  \u2212  \u00d7\n\n### Explanation\nOfficial ITPEC Subject A answer for Q4 (2022S) is Option (c)."
+  },
+  {
+    "id": "2022S_FE_AM_5",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_5\n\nQ5.  The table below shows state transition for character string inspection. During the inspection, \nif the state changes to E, the string under inspection is rejected. Which of the following is \nrejected in this inspection? Here, state A is the initial state, strings are inspected from left to \nright, and symbol \u25b3 indicates a blank character.  \n \n  Character  \n  Blank Number Sign Radix point Other  \nCurrent state A A B C D E \nB A B E D E \nC E B E D E \nD A E E E E\n\na) +0010\nb) \u22121\nc) 12.2\nd) 9. \u25b3",
+    "back": "c) 12.2\n\n### Explanation\nOfficial ITPEC Subject A answer for Q5 (2022S) is Option (c)."
+  },
+  {
+    "id": "2022S_FE_AM_6",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_6\n\nQ6. Which of the following is an appropriate explanation of feedback control?\n\na) It\nb) It is vulner\nc) It pre\nd) It t",
+    "back": "a) It\n\n### Explanation\nOfficial ITPEC Subject A answer for Q6 (2022S) is Option (a)."
+  },
+  {
+    "id": "2022S_FE_AM_7",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_7\n\nQ7.  For two-dimensional integer array A, whose (i, j)-th element A[i, j] is 2 \u00d7 i + j, what is the \nvalue of element A[A[1, 1] \u00d7 2, A[2, 2] + 1]?\n\na) 12\nb) 13\nc) 18\nd) 19",
+    "back": "d) 19\n\n### Explanation\nOfficial ITPEC Subject A answer for Q7 (2022S) is Option (d)."
+  },
+  {
+    "id": "2022S_FE_AM_8",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_8\n\nQ8. For two non-negative integers x and y, which of the following is the result of the procedure \nshown in the flowchart below? \n \n \n \nValue of q Value of r\n\na) Quotient of x \u00f7 y  Rem\nb) Quotient of y \u00f7 x  Rem\nc) Rem\nd) Rem",
+    "back": "a) Quotient of x \u00f7 y  Rem\n\n### Explanation\nOfficial ITPEC Subject A answer for Q8 (2022S) is Option (a)."
+  },
+  {
+    "id": "2022S_FE_AM_9",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_9\n\nQ9. Which of the following is an appropr iate description of a binary search?\n\na)\nb) In\nc) The\nd) The num",
+    "back": "c) The\n\n### Explanation\nOfficial ITPEC Subject A answer for Q9 (2022S) is Option (c)."
+  },
+  {
+    "id": "2022S_FE_AM_10",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_10\n\nQ10. When the Bubble sort algorithm is used, how many exchange operations are required to \nsort the numbers in ascending order? \n \n9, 2, 13, 21, 3, 0\n\na) 7\nb) 8\nc) 9\nd) 10",
+    "back": "c) 9\n\n### Explanation\nOfficial ITPEC Subject A answer for Q10 (2022S) is Option (c)."
+  },
+  {
+    "id": "2022S_FE_AM_11",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_11\n\nQ11. Which of the following is the average cycles per instruction (CPI) of a computer that \ncan execute 1 billion instructions per second at a clock rate of 2.4 GHz?\n\na) 0.04\nb) 0.12\nc) 2.4\nd) 25",
+    "back": "c) 2.4\n\n### Explanation\nOfficial ITPEC Subject A answer for Q11 (2022S) is Option (c)."
+  },
+  {
+    "id": "2022S_FE_AM_12",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_12\n\nQ12. What is the approximate average access time in milliseconds (ms) of a magnetic disk \nwith the specifications shown in the table below? Approximate average access time is the \nsum of average seek time, track-to-track seek time, and average rotational delay. Here, the \ncontroller overhead can be ignored. \n \nAverage seek time 7.5 ms \nTrack to track seek time  1.2 ms \nRotational speed 7,200 rpm\n\na) 11.67\nb) 12.87\nc) 15.83\nd) 25.",
+    "back": "b) 12.87\n\n### Explanation\nOfficial ITPEC Subject A answer for Q12 (2022S) is Option (b)."
+  },
+  {
+    "id": "2022S_FE_AM_13",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_13\n\nQ13. Which of the following is the list that contains A through D sorted starting with the \nshortest effective access time of the main memory? \n \n Cache memory Main memory \n \nDoes the system \nhave cache \nmemory? (yes/no) \nAccess time \n(nanoseconds) \nHit rate \n(%) \nAccess time \n(nanoseconds) \nA No - - 15 \nB No - - 30 \nC Yes 20 60 70 \nD Yes 10 90 80\n\na)\nb)\nc)\nd)",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q13 (2022S) is Option (b)."
+  },
+  {
+    "id": "2022S_FE_AM_14",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_14\n\nQ14. A 12-point character is to be displayed on a 96-dpi display in bitmap. How many dots \nis the height of a square font? Here, 1 point is 1/72 inch.\n\na) 8\nb) 9\nc) 12\nd) 16",
+    "back": "d) 16\n\n### Explanation\nOfficial ITPEC Subject A answer for Q14 (2022S) is Option (d)."
+  },
+  {
+    "id": "2022S_FE_AM_15",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_15\n\nQ15. Which of the following is a characteristi c of an HA (High Availability) cluster \nconfiguration based on a hot standby method when it is compared to a load distribution \ncluster configuration that uses a load balancer?\n\na)\nb) Given th\nc) Given th\nd) Given th",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q15 (2022S) is Option (a)."
+  },
+  {
+    "id": "2022S_FE_AM_16",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_16\n\nQ16. Which of the following is the system configur ation that has the highest availability? Here, \nwhen systems are connected in parallel, the systems are considered to be operational if at least \none (1) of them is operating.\n\na)\nb) Four (4\nc) Three (3\nd) Two (2",
+    "back": "c) Three (3\n\n### Explanation\nOfficial ITPEC Subject A answer for Q16 (2022S) is Option (c)."
+  },
+  {
+    "id": "2022S_FE_AM_17",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_17\n\nQ17. An OS chooses a process for CPU execu tion based on the First-Come-First-Serve \n(FCFS) scheduling algorithm. There are four processes, P1, P2, P3, and P4, and their arrival \ntimes and burst times are shown in the table below. Which of the following is the \nappropriate combination of waiting times for the processes to be executed? Here, the arrival \ntime is the time at which a process enters the ready queue and is ready for execution, the \nburst time is the time a process requires for CPU execution, and the waiting time is the \nperiod of time a process spends in the ready queue waiting for the CPU to start execution. \n \n  Unit: milliseconds \nProcess Arrival time Burst time \nP1 0 3 \nP2 2 5 \nP3 4 7 \nP4 5 2 \n \n P1 P2 P3 P4\n\na) 0 1 4 10\nb) 0 2 4 5\nc) 0 3 5 7\nd) 0 3 8 15",
+    "back": "a) 0 1 4 10\n\n### Explanation\nOfficial ITPEC Subject A answer for Q17 (2022S) is Option (a)."
+  },
+  {
+    "id": "2022S_FE_AM_18",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_18\n\nQ18. Which of the following is an appropriate reason for using a real-time OS in an \nembedded system?\n\na)\nb)\nc) No\nd) With",
+    "back": "d) With\n\n### Explanation\nOfficial ITPEC Subject A answer for Q18 (2022S) is Option (d)."
+  },
+  {
+    "id": "2022S_FE_AM_19",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_19\n\nQ19. Which of the following is software that can be used without charge but has restrictions \non modification and redistribution?\n\na) Freew\nb) P\nc) Pu\nd) Sh",
+    "back": "a) Freew\n\n### Explanation\nOfficial ITPEC Subject A answer for Q19 (2022S) is Option (a)."
+  },
+  {
+    "id": "2022S_FE_AM_20",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_20\n\nQ20. Which of the following is an appropriate explanation of the function of an actuator?\n\na) It\nb) It\nc) It i\nd) It is use",
+    "back": "b) It\n\n### Explanation\nOfficial ITPEC Subject A answer for Q20 (2022S) is Option (b)."
+  },
+  {
+    "id": "2022S_FE_AM_21",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_21\n\nQ21. Which of the following is the Exclusive-NOR logic function that is implemented with \ntwo-input NOR gates?\n\na) Option A\nb) Option B\nc) Option C\nd) Option D",
+    "back": "d) Option D\n\n### Explanation\nOfficial ITPEC Subject A answer for Q21 (2022S) is Option (d)."
+  },
+  {
+    "id": "2022S_FE_AM_22",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_22\n\nQ22. A paper tape reader used as a computer input device reads a tape with five rows of \nholes as shown below. A hole punched in the tape indicates logic 1, and no hole indicates \nlogic 0. As each hole pattern passes under the photocells, the pattern is translated into logic \nsignals as a variable: A, B, C, D, or E. A valid pattern on the tape has at least one hole, and \nan invalid pattern has no hole or all five holes punched. Which of the following is a logical \nexpression that has logic 1 when a valid pattern is being read and logic 0 when an invalid \npattern is being read? Here, + represents logical OR, \u2219 represents logical AND, and \u0723 \nrepresents the negation of A in the logic expression. In the figure, \u2022 represents a punched \nhole on the tape.\n\na) (\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\u0d24\nb) (\u0723+ \u0724+ \u0725+ \u0726+ \u0727\nc) (\u0d24\nd) (\u0727(+",
+    "back": "d) (\u0727(+\n\n### Explanation\nOfficial ITPEC Subject A answer for Q22 (2022S) is Option (d)."
+  },
+  {
+    "id": "2022S_FE_AM_23",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_23\n\nQ23. When ordering data is entered in the format shown below, which of the following is \nappropriate to check whether the order date is on a business day that is the same as or prior \nto the entering date? \n \nOrdering data \nForm number \n(Characters) \nOrder date \n(Characters)\n \nProduct code \n(Characters)\n \nQuantity \n(Number)\n \nCustomer code \n(Characters)\n\na)\nb) Form\nc) Logi\nd) Sequen",
+    "back": "c) Logi\n\n### Explanation\nOfficial ITPEC Subject A answer for Q23 (2022S) is Option (c)."
+  },
+  {
+    "id": "2022S_FE_AM_24",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_24\n\nQ24. Which of the following is the appropriate explanation of attributes in the relational \nmodel?\n\na) It is possi\nb) The\nc) The s\nd) There is no me",
+    "back": "d) There is no me\n\n### Explanation\nOfficial ITPEC Subject A answer for Q24 (2022S) is Option (d)."
+  },
+  {
+    "id": "2022S_FE_AM_25",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_25\n\nQ25. When an ER diagram is translated into a set of tables in a relational database, which of \nthe following is an appropriate method to translate a many-to-many relationship between \ntwo entities?\n\na)\nb)\nc)\nd)",
+    "back": "d)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q25 (2022S) is Option (d)."
+  },
+  {
+    "id": "2022S_FE_AM_26",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_26\n\nQ26. Which of the following is a clause that is inserted into blank A of the SQL statement that \ncalculates the average scores for each class and each subject from the \u201cMidtermTest\u201d table, \nand displays them in ascending order of class and subject? \n \nMidtermTest (Class, Subject, StudentNumber, Name, Score) \n [SQL statement] \nSELECT Class, Subject, AVG(Score) AS AverageScore \nFROM MidtermTest \nA\n\na) GROUP\nb) GROUP\nc) GROUP\nd) GROUP",
+    "back": "b) GROUP\n\n### Explanation\nOfficial ITPEC Subject A answer for Q26 (2022S) is Option (b)."
+  },
+  {
+    "id": "2022S_FE_AM_27",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_27\n\nQ27. The tables \u201cFlight\u201d and \u201cCity\u201d are created as  shown below. Which of the following is \nthe SQL to output the flight code, its origin city name, and its destination city name from \nthose tables? \n \nFlight: (FlightCode, OriginCityID, DestinationCityI\n\nD)\na) SELE\nb) SELE\nc) SELE",
+    "back": "b) SELE\n\n### Explanation\nOfficial ITPEC Subject A answer for Q27 (2022S) is Option (c)."
+  },
+  {
+    "id": "2022S_FE_AM_28",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_28\n\nQ28. For the description of the lo ck granularity of an RDBMS below, which of the following \nis an appropriate combination of A and B? \n \nEach pair of transactions that are processed in parallel updates multiple rows in a single table. \nWhen a row-level lock and a table-level lock are compared, lock contention is more likely to \noccur when an  -level lock is used. More RDBMS memory area is required when \na  -level lock is used in order to manage the lock while transactions are being \nprocessed. \n \n A B\n\na) row row\nb) row t\nc) t\nd) t",
+    "back": "c) t\n\n### Explanation\nOfficial ITPEC Subject A answer for Q28 (2022S) is Option (c)."
+  },
+  {
+    "id": "2022S_FE_AM_29",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_29\n\nQ29. When a storage location is calculated from a key value, which of the following is the \nmethod that can produce the same calculation results from different key values?\n\na)\nb)\nc) H\nd) Inverte",
+    "back": "c) H\n\n### Explanation\nOfficial ITPEC Subject A answer for Q29 (2022S) is Option (c)."
+  },
+  {
+    "id": "2022S_FE_AM_30",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_30\n\nQ30. Multiple PCs are connected to the Internet with FTTH. The WAN interface of device A \nhas a single global IP address allocated to it. Which of the following is the function of \ndevice A that enables these PCs to connect to the Internet by sharing the global IP address? \n \nDevice A Optical fiber cable (FTTH)Hub ONU\nUser\u2019s facilities\nPC\nPC \u2026\n\na)\nb) N\nc) P\nd) PPPoE",
+    "back": "b) N\n\n### Explanation\nOfficial ITPEC Subject A answer for Q30 (2022S) is Option (b)."
+  },
+  {
+    "id": "2022S_FE_AM_31",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_31\n\nQ31. Audio data of 2.4 Mbytes encoded at 192 kbit/s is to be downloaded and played back \nwithout interruptions over a network with a communication speed of 128 kbit/s. What is the \nminimum number of seconds required as the data buffering time before the start of \nplayback?\n\na) 50\nb) 100\nc) 150\nd) 250",
+    "back": "a) 50\n\n### Explanation\nOfficial ITPEC Subject A answer for Q31 (2022S) is Option (a)."
+  },
+  {
+    "id": "2022S_FE_AM_32",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_32\n\nQ32. There exists a system that connects a head office to a factory via a leased line and sends \nform data. The size of each form is 2,000 bytes, and header data totaling 400 bytes is \nattached to every two (2) forms to be sent through this system. On average, 100,000 forms \nper hour are generated. When the line speed is 1 Mbit/s, what is the line\u2019s utilization rate in \npercentage?\n\na) 6.1\nb) 44\nc) 49\nd) 53",
+    "back": "c) 49\n\n### Explanation\nOfficial ITPEC Subject A answer for Q32 (2022S) is Option (c)."
+  },
+  {
+    "id": "2022S_FE_AM_33",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_33\n\nQ33. In IPv4, what is the maximum number of IP ad dresses that can be assigned to hosts in \nthe network of 172.16.64.0/23? Here, the decimal number after the slash (/) is the number of \nbits used for the network prefix.\n\na) 254\nb) 256\nc) 510\nd) 512",
+    "back": "c) 510\n\n### Explanation\nOfficial ITPEC Subject A answer for Q33 (2022S) is Option (c)."
+  },
+  {
+    "id": "2022S_FE_AM_34",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_34\n\nQ34. Which of the following is the broadcast address of the network with the address \n192.168.128.0/26? Here, the decimal number after the slash (/) is the number of bits used for \nthe network prefix.\n\na) 192.168.128.63\nb) 192.168.128.127\nc) 192.168.128.252\nd) 192.168.128.255",
+    "back": "a) 192.168.128.63\n\n### Explanation\nOfficial ITPEC Subject A answer for Q34 (2022S) is Option (a)."
+  },
+  {
+    "id": "2022S_FE_AM_35",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_35\n\nQ35. Which of the following is an Internet standard that is used to convert IP addresses to the \ncorresponding MAC addresses?\n\na)\nb) I\nc) R\nd) RIP",
+    "back": "a)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q35 (2022S) is Option (a)."
+  },
+  {
+    "id": "2022S_FE_AM_36",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_36\n\nQ36. Which of the following is a direct result of SQL injection to a company\u2019s web server?\n\na)\nb)\nc) Every key stroke\nd) The IP he",
+    "back": "b)\n\n### Explanation\nOfficial ITPEC Subject A answer for Q36 (2022S) is Option (b)."
+  },
+  {
+    "id": "2022S_FE_AM_37",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_37\n\nQ37. Which of the following is a program that is designed to block access to a computer or \nencrypt most of the data on that computer until a sum of money is paid?\n\na)\nb) R\nc) Rootkit\nd) Spyw",
+    "back": "b) R\n\n### Explanation\nOfficial ITPEC Subject A answer for Q37 (2022S) is Option (b)."
+  },
+  {
+    "id": "2022S_FE_AM_38",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_38\n\nQ38. In a PKI system, which of the following is an algorithm that creates a key pair?\n\na) H\nb) Key gener\nc) Sign\nd) Signing",
+    "back": "b) Key gener\n\n### Explanation\nOfficial ITPEC Subject A answer for Q38 (2022S) is Option (b)."
+  },
+  {
+    "id": "2022S_FE_AM_39",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_39\n\nQ39. Which of the following is an appropriate description of a command and control (C&\n\nC) \nserver?\na)\nb)\nc)",
+    "back": "C) \nserver?\n\n### Explanation\nOfficial ITPEC Subject A answer for Q39 (2022S) is Option (a)."
+  },
+  {
+    "id": "2022S_FE_AM_40",
+    "topic": "Technology - Computer Systems & Theory",
+    "front": "# 2022S_FE_AM_40\n\nQ40. Which of the following is an appropriate description of an advanced persistent threat \n(APT)?\n\na) It is\nb) It is\nc) It is\nd) It is",
+    "back": "b) It is\n\n### Explanation\nOfficial ITPEC Subject A answer for Q40 (2022S) is Option (b)."
   }
+
 ];

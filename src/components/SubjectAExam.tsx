@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SubjectAQuestion, DomainCategory, MasteryState } from '../types/exam';
 import { CheckCircle2, XCircle, HelpCircle, Bookmark, ArrowRight, ArrowLeft, RotateCcw, Sparkles, Trophy, Trash2 } from 'lucide-react';
 import { PhilnitsApiService } from '../services/api';
-import { parseMarkdownToHtml } from '../utils/markdown';
+import { MarkdownContent } from './MarkdownContent';
+import { PdfQuestionPanel } from './PdfQuestionPanel';
 import { isMastered, saveMasteryStates, saveQuestionIndex, getQuestionIndex } from '../utils/masteryEngine';
 import { registerKeyboardHandlers, clearKeyboardHandlers } from '../utils/globalKeyboardShortcuts';
 import { ConfirmationModal } from './ConfirmationModal';
@@ -26,6 +27,7 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(() => getQuestionIndex('subject_a'));
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedYearFilter, setSelectedYearFilter] = useState<string>('All');
   const [selectedOptions, setSelectedOptions] = useState<Record<string, number>>({});
 
   // Filter out mastered questions
@@ -85,25 +87,31 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
     }
   };
 
-  // Filter questions by category OR subdomain (only non-mastered)
+  // Filter questions by category, year OR subdomain (only non-mastered)
   const filteredQuestions = activeQuestions.filter((q) => {
     if (filterSubdomain) {
       return q.subdomain.toLowerCase().includes(filterSubdomain.toLowerCase()) || 
              q.category.toLowerCase().includes(filterSubdomain.toLowerCase());
     }
-    if (selectedCategory === 'All') return true;
-    return q.category === selectedCategory;
+    const matchCategory = selectedCategory === 'All' || q.category === selectedCategory;
+    const matchYear = selectedYearFilter === 'All' || q.examYear === Number(selectedYearFilter);
+    return matchCategory && matchYear;
   });
 
-  // Get unique categories that have at least one active question
+  // Get unique categories and years that have at least one active question
   const availableCategories = Array.from(
     new Set(activeQuestions.map(q => q.category))
   ).sort();
+
+  const availableYears = Array.from(
+    new Set(questions.map(q => q.examYear).filter(Boolean))
+  ).sort((a, b) => b - a);
 
   const currentQ = filteredQuestions[currentIndex] || filteredQuestions[0];
   const selectedIdx = currentQ ? selectedOptions[currentQ.id] : undefined;
   const isAnswered = selectedIdx !== undefined;
   const isCorrect = isAnswered && selectedIdx === currentQ?.correctIndex;
+  const pdfQuestionNumber = currentQ?.id.match(/_(\d+)$/)?.[1];
 
   const handleSelectOption = (idx: number) => {
     if (!currentQ || isAnswered) return; // Prevent changing after selection
@@ -181,7 +189,7 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-6xl mx-auto space-y-6">
       {genError && (
         <div className="p-3.5 rounded-lg border border-rose-600 bg-rose-500 text-white text-xs font-semibold flex items-center justify-between shadow-sm animate-pulse">
           <span>{genError}</span>
@@ -205,25 +213,64 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
             </div>
           ) : (
             <>
-              <span className="text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wider">
-                Category Filter:
-              </span>
-              {['All', ...availableCategories].map((cat) => (
+              {/* Year Filter Pills */}
+              <div className="flex items-center gap-1.5 overflow-x-auto">
+                <span className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider whitespace-nowrap">
+                  Year:
+                </span>
                 <button
-                  key={cat}
                   onClick={() => {
-                    setSelectedCategory(cat);
+                    setSelectedYearFilter('All');
                     setCurrentIndex(0);
                   }}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
-                    selectedCategory === cat
-                      ? 'bg-[var(--accent-emerald)] text-white'
-                      : 'bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:text-[var(--text-primary)]'
+                  className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer ${
+                    selectedYearFilter === 'All'
+                      ? 'bg-[var(--accent-cyan)] text-white'
+                      : 'bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]'
                   }`}
                 >
-                  {cat}
+                  All
                 </button>
-              ))}
+                {availableYears.map(year => (
+                  <button
+                    key={year}
+                    onClick={() => {
+                      setSelectedYearFilter(String(year));
+                      setCurrentIndex(0);
+                    }}
+                    className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer ${
+                      selectedYearFilter === String(year)
+                        ? 'bg-[var(--accent-cyan)] text-white'
+                        : 'bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]'
+                    }`}
+                  >
+                    {year}
+                  </button>
+                ))}
+              </div>
+
+              {/* Category Filter Pills */}
+              <div className="flex items-center gap-1.5 overflow-x-auto">
+                <span className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider whitespace-nowrap">
+                  Category:
+                </span>
+                {['All', ...availableCategories].map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => {
+                      setSelectedCategory(cat);
+                      setCurrentIndex(0);
+                    }}
+                    className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer ${
+                      selectedCategory === cat
+                        ? 'bg-[var(--accent-emerald)] text-white'
+                        : 'bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
             </>
           )}
 
@@ -254,84 +301,165 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
         </div>
       </div>
 
-      {/* Main Question Card */}
-      <div className="glass-panel p-6 space-y-6">
-        
-        {/* Meta badges */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="badge badge-emerald">{currentQ.category}</span>
-            <span className="badge badge-cyan">{currentQ.subdomain}</span>
-            <span className="text-xs text-[var(--text-primary)] font-medium">Exam Year: {currentQ.examYear}</span>
-          </div>
-          {isAnswered && (
-            <span className={`badge ${isCorrect ? 'badge-emerald' : 'badge-rose'}`}>
-              {isCorrect ? 'Correct (+1 streak)' : 'Incorrect (streak reset)'}
-            </span>
-          )}
-        </div>
-
-        {/* Question Text */}
-        <div 
-          className="text-base sm:text-lg font-medium text-[var(--text-primary)] text-left w-full space-y-3 font-sans"
-          dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(currentQ.questionText) }}
-        />
-
-        {/* Options Grid */}
-        <div className="space-y-3 pt-2">
-          {currentQ.options.map((opt, idx) => {
-            const letter = String.fromCharCode(65 + idx); // A, B, C, D
-            const isSelected = selectedIdx === idx;
-            const isTargetCorrect = currentQ.correctIndex === idx;
-
-            let optionStyle = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
-            if (isAnswered) {
-              if (isTargetCorrect) {
-                optionStyle = 'border-emerald-600 bg-emerald-600 text-white font-semibold';
-              } else if (isSelected) {
-                optionStyle = 'border-rose-600 bg-rose-600 text-white';
-              } else {
-                optionStyle = 'border-[var(--border-color)] opacity-50';
-              }
-            }
-
-            return (
-              <button
-                key={idx}
-                disabled={isAnswered}
-                onClick={() => handleSelectOption(idx)}
-                className={`w-full text-left p-4 rounded-xl border flex items-center justify-between transition-all ${optionStyle}`}
-              >
-                <div className="flex items-center gap-3">
-                  <span className={`w-7 h-7 rounded-lg border flex items-center justify-center text-xs font-bold font-mono ${
-                    isAnswered && isTargetCorrect ? 'bg-white text-emerald-600 border-white' :
-                    isAnswered && isSelected ? 'bg-white text-rose-600 border-white' :
-                    'bg-[var(--bg-main)] border-[var(--border-color)] text-[var(--text-primary)]'
-                  }`}>
-                    {letter}
-                  </span>
-                  <span className="text-sm">{opt}</span>
-                </div>
-                {isAnswered && isTargetCorrect && <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />}
-                {isAnswered && isSelected && !isTargetCorrect && <XCircle className="w-5 h-5 text-rose-500 shrink-0" />}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Rationale Explanation Box */}
-        {showExplanations[currentQ.id] && (
-          <div className="p-4 rounded-xl bg-emerald-500 border border-emerald-600 space-y-2 shadow-sm">
-            <div className="flex items-center gap-2 text-xs font-bold text-white uppercase tracking-wider">
-              <HelpCircle className="w-4 h-4" /> Explanation & Solution Rationale
-            </div>
-            <div 
-              className="text-sm text-white leading-relaxed prose prose-sm max-w-none"
-              dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(currentQ.explanation) }}
+      {currentQ.pdfUrl ? (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div className="lg:col-span-7">
+            <PdfQuestionPanel
+              title={`${currentQ.id.replace(/_/g, ' ')}: Subject A`}
+              examYear={currentQ.examYear}
+              pdfUrl={currentQ.pdfUrl}
+              initialPage={currentQ.pdfPage}
+              focusLabel={pdfQuestionNumber ? `Look for Q${pdfQuestionNumber} on this PDF page` : undefined}
             />
           </div>
-        )}
-      </div>
+
+          <div className="lg:col-span-5">
+            {/* Main Question Card */}
+            <div className="glass-panel p-6 space-y-6">
+              {/* Meta badges */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="badge badge-emerald">{currentQ.category}</span>
+                  <span className="badge badge-cyan">{currentQ.subdomain}</span>
+                  <span className="text-xs text-[var(--text-primary)] font-medium">Exam Year: {currentQ.examYear}</span>
+                </div>
+                {isAnswered && (
+                  <span className={`badge ${isCorrect ? 'badge-emerald' : 'badge-rose'}`}>
+                    {isCorrect ? 'Correct (+1 streak)' : 'Incorrect (streak reset)'}
+                  </span>
+                )}
+              </div>
+
+              {/* Options Grid */}
+              <div className="space-y-3 pt-2">
+                {currentQ.options.map((opt, idx) => {
+                  const letter = String.fromCharCode(65 + idx);
+                  const isSelected = selectedIdx === idx;
+                  const isTargetCorrect = currentQ.correctIndex === idx;
+
+                  let optionStyle = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
+                  if (isAnswered) {
+                    if (isTargetCorrect) {
+                      optionStyle = 'border-emerald-600 bg-emerald-600 text-white font-semibold';
+                    } else if (isSelected) {
+                      optionStyle = 'border-rose-600 bg-rose-600 text-white';
+                    } else {
+                      optionStyle = 'border-[var(--border-color)] opacity-50';
+                    }
+                  }
+
+                  return (
+                    <button
+                      key={idx}
+                      disabled={isAnswered}
+                      onClick={() => handleSelectOption(idx)}
+                      className={`w-full text-left p-4 rounded-xl border flex items-center justify-between transition-all ${optionStyle}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`w-7 h-7 rounded-lg border flex items-center justify-center text-xs font-bold font-mono ${
+                          isAnswered && isTargetCorrect ? 'bg-white text-emerald-600 border-white' :
+                          isAnswered && isSelected ? 'bg-white text-rose-600 border-white' :
+                          'bg-[var(--bg-main)] border-[var(--border-color)] text-[var(--text-primary)]'
+                        }`}> 
+                          {letter}
+                        </span>
+                        <span className="text-sm">{opt}</span>
+                      </div>
+                      {isAnswered && isTargetCorrect && <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />}
+                      {isAnswered && isSelected && !isTargetCorrect && <XCircle className="w-5 h-5 text-rose-500 shrink-0" />}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {showExplanations[currentQ.id] && (
+                <div className="p-4 rounded-xl bg-emerald-500 border border-emerald-600 space-y-2 shadow-sm">
+                  <div className="flex items-center gap-2 text-xs font-bold text-white uppercase tracking-wider">
+                    <HelpCircle className="w-4 h-4" /> Explanation & Solution Rationale
+                  </div>
+                  <div className="text-sm text-white leading-relaxed prose prose-sm max-w-none">
+                    <MarkdownContent content={currentQ.explanation} className="prose-invert" />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="glass-panel p-6 space-y-6">
+          {/* Meta badges */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="badge badge-emerald">{currentQ.category}</span>
+              <span className="badge badge-cyan">{currentQ.subdomain}</span>
+              <span className="text-xs text-[var(--text-primary)] font-medium">Exam Year: {currentQ.examYear}</span>
+            </div>
+            {isAnswered && (
+              <span className={`badge ${isCorrect ? 'badge-emerald' : 'badge-rose'}`}>
+                {isCorrect ? 'Correct (+1 streak)' : 'Incorrect (streak reset)'}
+              </span>
+            )}
+          </div>
+
+          <MarkdownContent
+            content={currentQ.questionText}
+            className="text-base sm:text-lg"
+          />
+
+          {/* Options Grid */}
+          <div className="space-y-3 pt-2">
+            {currentQ.options.map((opt, idx) => {
+              const letter = String.fromCharCode(65 + idx);
+              const isSelected = selectedIdx === idx;
+              const isTargetCorrect = currentQ.correctIndex === idx;
+
+              let optionStyle = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
+              if (isAnswered) {
+                if (isTargetCorrect) {
+                  optionStyle = 'border-emerald-600 bg-emerald-600 text-white font-semibold';
+                } else if (isSelected) {
+                  optionStyle = 'border-rose-600 bg-rose-600 text-white';
+                } else {
+                  optionStyle = 'border-[var(--border-color)] opacity-50';
+                }
+              }
+
+              return (
+                <button
+                  key={idx}
+                  disabled={isAnswered}
+                  onClick={() => handleSelectOption(idx)}
+                  className={`w-full text-left p-4 rounded-xl border flex items-center justify-between transition-all ${optionStyle}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className={`w-7 h-7 rounded-lg border flex items-center justify-center text-xs font-bold font-mono ${
+                      isAnswered && isTargetCorrect ? 'bg-white text-emerald-600 border-white' :
+                      isAnswered && isSelected ? 'bg-white text-rose-600 border-white' :
+                      'bg-[var(--bg-main)] border-[var(--border-color)] text-[var(--text-primary)]'
+                    }`}> 
+                      {letter}
+                    </span>
+                    <span className="text-sm">{opt}</span>
+                  </div>
+                  {isAnswered && isTargetCorrect && <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />}
+                  {isAnswered && isSelected && !isTargetCorrect && <XCircle className="w-5 h-5 text-rose-500 shrink-0" />}
+                </button>
+              );
+            })}
+          </div>
+
+          {showExplanations[currentQ.id] && (
+            <div className="p-4 rounded-xl bg-emerald-500 border border-emerald-600 space-y-2 shadow-sm">
+              <div className="flex items-center gap-2 text-xs font-bold text-white uppercase tracking-wider">
+                <HelpCircle className="w-4 h-4" /> Explanation & Solution Rationale
+              </div>
+              <div className="text-sm text-white leading-relaxed prose prose-sm max-w-none">
+                <MarkdownContent content={currentQ.explanation} className="prose-invert" />
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Pagination Controls */}
       <div className="flex items-center justify-between">

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AnkiFlashcard, MasteryState } from '../types/exam';
 import { Layers, RotateCcw, ArrowRight, ArrowLeft, Check, Sparkles, Trophy, Trash2 } from 'lucide-react';
-import { parseMarkdownToHtml } from '../utils/markdown';
+import { MarkdownContent } from './MarkdownContent';
 import { isMastered, saveMasteryStates } from '../utils/masteryEngine';
 import { ConfirmationModal } from './ConfirmationModal';
 
@@ -149,9 +149,10 @@ export const FlashcardDeck: React.FC<FlashcardDeckProps> = ({
             {isFlipped ? 'Answer / Explanation (Back)' : 'Question / Concept (Front)'}
           </span>
 
-          <div 
-            className="text-base sm:text-lg font-medium text-[var(--text-primary)] text-left w-full space-y-3"
-            dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(isFlipped ? currentCard.back : currentCard.front) }}
+          <MarkdownContent 
+            content={isFlipped ? currentCard.back : currentCard.front}
+            className="text-base sm:text-lg font-medium text-left w-full space-y-3"
+            cleanObsidian
           />
 
           {currentCard.codeSnippet && isFlipped && (

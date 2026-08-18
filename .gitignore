@@ -12,19 +12,26 @@ dist/
 build/
 .vite/
 
-# Kiro Agent & Workspace Files
+# Agent files and directories
 .agents/
 .agent/
 _agents/
 _agent/
 .kiro/
-.kiro/specs/
-.kiro/skills/
-.kiro/steering/
-.kiro/settings/
+.ai/
+.cursor/
+.windsurf/
+agents/
+agent/
+*.agent.md
+*.agent.json
+agent-logs/
+agent-outputs/
 project_onboarding.md
 walkthrough.md
+implementation_plan.md
 best_practices_audit.md
+scratch/
 task.md
 qa_walkthrough.md
 LEITNER_FEATURES.md
@@ -35,8 +42,6 @@ PERSISTENCE_AND_KEYBOARD_FIX.md
 WHAT_NOW_WORKS.txt
 IMPLEMENTATION_SUMMARY_FINAL.md
 FINAL_FIXES_README.md
-*.spec.ts
-*.test.ts
 
 # IDE & OS
 .DS_Store

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, X, Send, Bot, User, Sparkles, RefreshCw, Maximize2, Minimize2 } from 'lucide-react';
 import { PhilnitsApiService } from '../services/api';
-import { parseMarkdownToHtml } from '../utils/markdown';
+import { MarkdownContent } from './MarkdownContent';
 
 interface Message {
   role: 'user' | 'model';
@@ -228,11 +228,9 @@ export const AiChatAssistant: React.FC<AiChatAssistantProps> = ({ activeContext,
                       ? 'bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-primary)] rounded-tl-none' 
                       : 'bg-[var(--bg-card-hover)] border border-[var(--border-color)] text-[var(--text-primary)] rounded-tr-none'
                   }`}>
-                    <div 
-                      className="space-y-2 prose prose-xs dark:prose-invert max-w-none text-xs text-[var(--text-secondary)] font-sans"
-                      dangerouslySetInnerHTML={{ 
-                        __html: parseMarkdownToHtml(msg.parts.join('\n')) 
-                      }} 
+                    <MarkdownContent
+                      content={msg.parts.join('\n')}
+                      className="text-xs text-[var(--text-secondary)]"
                     />
                   </div>
                 </div>

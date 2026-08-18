@@ -12,10 +12,10 @@ export function formatMathToUnicode(math: string): string {
   // Replace fractions: \frac{numerator}{denominator}
   while (output.includes('\\frac{')) {
     output = output.replace(/\\frac\{((?:[^{}]+|\{[^{}]*\})*)\}\{((?:[^{}]+|\{[^{}]*\})*)\}/g, (_: string, num: string, den: string): string => {
-      return `<span class="inline-flex flex-col align-middle text-center mx-1 font-sans text-[10px] leading-none text-slate-200">
-        <span class="block border-b border-slate-600 pb-0.5 px-0.5">${num}</span>
-        <span class="block pt-0.5 px-0.5">${den}</span>
-      </span>`;
+      return `<span class="inline-flex flex-col align-middle text-center mx-1 font-sans text-[10px] leading-none" style="color:inherit">` +
+        `<span class="block border-b border-current pb-0.5 px-1">${num}</span>` +
+        `<span class="block pt-0.5 px-1">${den}</span>` +
+        `</span>`;
     });
   }
 
@@ -126,17 +126,64 @@ export function parseLineDecorations(text: string): string {
 // Custom Markdown parser helper to return beautifully styled HTML structures (including LaTeX math blocks and code blocks)
 export function parseMarkdownToHtml(markdown: string): string {
   if (!markdown) return '';
+
+  // Pre-pass: merge OCR-broken mid-sentence lines into complete paragraphs.
+  // Lines that are clearly continuation prose (no heading marker, no list marker,
+  // no table pipe, no code fence, no blank) get joined to the previous line
+  // with a space instead of being treated as separate <p> elements.
+  const rawLines = markdown.split('\n');
+  const mergedLines: string[] = [];
+  for (let i = 0; i < rawLines.length; i++) {
+    const line = rawLines[i];
+    const trimmed = line.trim();
+    const prev = mergedLines[mergedLines.length - 1];
+
+    const isSpecial = (s: string) =>
+      s === '' ||
+      s.startsWith('#') ||
+      s.startsWith('|') ||
+      s.startsWith('```') ||
+      s.startsWith('$$') ||
+      s.startsWith(':::') ||
+      s.startsWith('---') ||
+      s.startsWith('***') ||
+      s.startsWith('- ') ||
+      s.startsWith('* ') ||
+      /^\d+\.\s/.test(s) ||
+      /^[ivx]+\)\s/i.test(s) ||
+      /^[a-j]\)\s/i.test(s) ||
+      /^\[/.test(s);
+
+    if (
+      prev !== undefined &&
+      !isSpecial(trimmed) &&
+      !isSpecial(prev.trim()) &&
+      trimmed !== ''
+    ) {
+      mergedLines[mergedLines.length - 1] = prev.trimEnd() + ' ' + trimmed;
+    } else {
+      mergedLines.push(line);
+    }
+  }
   
-  const lines = markdown.split('\n');
+  const lines = mergedLines;
   let inList = false;
   let inOrderedList = false;
   let inDeepDive = false;
   let inCodeBlock = false;
   let inMathBlock = false;
+  let inTable = false;
   let mathBlockContent = '';
   
   const processedLines = lines.map((line) => {
     const cleanLine = line.trim();
+
+    // Close table if current line is not a table row
+    let tableClosePrefix = '';
+    if (inTable && (!cleanLine.startsWith('|') || !cleanLine.endsWith('|'))) {
+      inTable = false;
+      tableClosePrefix = '</tbody></table></div>';
+    }
 
     // Handle multiline math blocks ($$...$$)
     if (inMathBlock) {
@@ -148,7 +195,7 @@ export function parseMarkdownToHtml(markdown: string): string {
           .replace(/^\$\$/, '')
           .replace(/\$\$$/, '')
           .trim();
-        return `<div class="font-mono text-base text-left text-[var(--accent-cyan)] my-4 bg-[var(--bg-sidebar)] p-4 border border-[var(--border-color)] rounded-lg overflow-x-auto whitespace-pre-wrap tracking-wider">${formatMathToUnicode(mathContent)}</div>`;
+        return `${tableClosePrefix}<div class="font-mono text-base text-left text-[var(--accent-cyan)] my-4 bg-[var(--bg-sidebar)] p-4 border border-[var(--border-color)] rounded-lg overflow-x-auto whitespace-pre-wrap tracking-wider">${formatMathToUnicode(mathContent)}</div>`;
       } else {
         mathBlockContent += '\n' + line;
         return '';
@@ -159,16 +206,39 @@ export function parseMarkdownToHtml(markdown: string): string {
     if (cleanLine.startsWith('$$') && !cleanLine.endsWith('$$')) {
       inMathBlock = true;
       mathBlockContent = line;
-      return '';
+      return tableClosePrefix;
+    }
+
+    // Handle Markdown Tables (| cell | cell |)
+    if (cleanLine.startsWith('|') && cleanLine.endsWith('|')) {
+      let prefix = tableClosePrefix;
+      if (inList) { inList = false; prefix += '</ul>'; }
+      if (inOrderedList) { inOrderedList = false; prefix += '</ol>'; }
+
+      const cells = cleanLine.split('|').slice(1, -1).map(c => c.trim());
+      const isSeparator = cells.every(c => /^:?-+:?$/.test(c));
+
+      if (isSeparator) {
+        return '';
+      }
+
+      if (!inTable) {
+        inTable = true;
+        const ths = cells.map(c => `<th class="px-3 py-2 text-left font-bold text-xs uppercase tracking-wider text-[var(--accent-cyan)] border-b border-[var(--border-color)] bg-[var(--bg-sidebar)]">${parseLineDecorations(c)}</th>`).join('');
+        return `${prefix}<div class="overflow-x-auto my-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)]"><table class="w-full text-xs text-[var(--text-primary)] border-collapse font-sans font-normal"><thead><tr>${ths}</tr></thead><tbody class="divide-y divide-[var(--border-color)]">`;
+      } else {
+        const tds = cells.map(c => `<td class="px-3 py-2 text-xs leading-relaxed text-[var(--text-secondary)] font-normal">${parseLineDecorations(c)}</td>`).join('');
+        return `<tr>${tds}</tr>`;
+      }
     }
 
     // Handle code blocks (```text or ```)
     if (cleanLine.startsWith('```')) {
       if (inCodeBlock) {
         inCodeBlock = false;
-        return '</code></pre>';
+        return `${tableClosePrefix}</code></pre>`;
       } else {
-        let prefix = '';
+        let prefix = tableClosePrefix;
         if (inList) { inList = false; prefix += '</ul>'; }
         if (inOrderedList) { inOrderedList = false; prefix += '</ol>'; }
         inCodeBlock = true;
@@ -185,10 +255,18 @@ export function parseMarkdownToHtml(markdown: string): string {
       return escapedLine;
     }
 
+    // Horizontal Rule (---)
+    if (cleanLine === '---' || cleanLine === '***') {
+      let prefix = tableClosePrefix;
+      if (inList) { inList = false; prefix += '</ul>'; }
+      if (inOrderedList) { inOrderedList = false; prefix += '</ol>'; }
+      return `${prefix}<hr class="my-5 border-t-2 border-[var(--border-color)] opacity-60" />`;
+    }
+
     // Close collapsible deep dive
     if (cleanLine === ':::' && inDeepDive) {
       inDeepDive = false;
-      return '</div></details>';
+      return `${tableClosePrefix}</div></details>`;
     }
 
     // Open collapsible deep dive
@@ -306,6 +384,7 @@ export function parseMarkdownToHtml(markdown: string): string {
   let result = processedLines.filter(line => line !== '').join('\n');
   if (inList) result += '</ul>';
   if (inOrderedList) result += '</ol>';
+  if (inTable) result += '</tbody></table></div>';
   if (inDeepDive) result += '</div></details>';
   if (inCodeBlock) result += '</code></pre>';
   if (inMathBlock) result += '</div>';  // Close unclosed math block

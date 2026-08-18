@@ -5,7 +5,6 @@ import { StudyHub } from './components/StudyHub';
 import { SubjectAExam } from './components/SubjectAExam';
 import { SubjectBWorkbench } from './components/SubjectBWorkbench';
 import { LeitnerDeck } from './components/LeitnerDeck';
-import { FlashcardDeck } from './components/FlashcardDeck';
 import { PhilnitsApiService } from './services/api';
 import {
   LocalUser,
@@ -17,7 +16,7 @@ import {
 } from './services/supabase';
 import {
   ExamTab, ThemeMode, SubjectAQuestion, SubjectBScenario,
-  AnkiFlashcard, LeitnerState, MasteryState, UserAnswerLog
+  LeitnerState, MasteryState, UserAnswerLog
 } from './types/exam';
 import { isQuestionDueToday } from './utils/leitnerEngine';
 import { getStoredMasteryStates } from './utils/masteryEngine';
@@ -32,7 +31,6 @@ export const App: React.FC = () => {
 
   const [subjectAQuestions, setSubjectAQuestions] = useState<SubjectAQuestion[]>([]);
   const [subjectBScenarios, setSubjectBScenarios] = useState<SubjectBScenario[]>([]);
-  const [flashcards, setFlashcards] = useState<AnkiFlashcard[]>([]);
   const [leitnerStates, setLeitnerStates] = useState<Record<string, LeitnerState>>({});
   const [masteryStates, setMasteryStates] = useState<Record<string, MasteryState>>({});
   const [answerLogs, setAnswerLogs] = useState<UserAnswerLog[]>([]);
@@ -53,8 +51,9 @@ export const App: React.FC = () => {
     // Sync theme to database if user logged in
     if (currentUser && isSupabaseConfigured()) {
       try {
-        const { saveUserPreferences } = require('./services/supabase');
-        saveUserPreferences(currentUser.username, { theme }).catch(() => {});
+        import('./services/supabase').then(({ saveUserPreferences }) => {
+          saveUserPreferences(currentUser.username, { theme }).catch(() => {});
+        }).catch(() => {});
       } catch (e) {
         // silent
       }
@@ -85,22 +84,21 @@ export const App: React.FC = () => {
     }, SYNC_DEBOUNCE_MS);
   }, []);
 
-  // Initial data load
-  useEffect(() => {
-    async function loadData() {
-      const [qA, sB, fc] = await Promise.all([
-        PhilnitsApiService.getSubjectAQuestions(),
-        PhilnitsApiService.getSubjectBScenarios(),
-        PhilnitsApiService.getFlashcards()
-      ]);
-      setSubjectAQuestions(qA);
-      setSubjectBScenarios(sB);
-      setFlashcards(fc);
-      setLeitnerStates(PhilnitsApiService.getStoredLeitnerStates());
-      setMasteryStates(getStoredMasteryStates());
-    }
-    loadData();
+  // Initial data load — also called after a successful Windmill extraction
+  const loadData = useCallback(async () => {
+    const [qA, sB] = await Promise.all([
+      PhilnitsApiService.getSubjectAQuestions(),
+      PhilnitsApiService.getSubjectBScenarios()
+    ]);
+    setSubjectAQuestions(qA);
+    setSubjectBScenarios(sB);
+    setLeitnerStates(PhilnitsApiService.getStoredLeitnerStates());
+    setMasteryStates(getStoredMasteryStates());
   }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   // Restore session on mount
   useEffect(() => {
@@ -114,7 +112,7 @@ export const App: React.FC = () => {
   }, [syncFromCloud]);
 
   // Answer handler
-  const handleAnswerLogged = async (questionId: string, isCorrect: boolean, timeSeconds: number, examType: 'subject_a' | 'subject_b' | 'flashcard' | 'leitner' = 'subject_a') => {
+  const handleAnswerLogged = async (questionId: string, isCorrect: boolean, timeSeconds: number, examType: 'subject_a' | 'subject_b' | 'leitner' = 'subject_a') => {
     const updated = await PhilnitsApiService.logTelemetry(
       questionId, isCorrect, timeSeconds, leitnerStates, masteryStates, currentUser?.username, examType
     );
@@ -196,13 +194,6 @@ export const App: React.FC = () => {
           <LeitnerDeck
             questions={subjectAQuestions}
             leitnerStates={leitnerStates}
-            onAnswerLogged={handleAnswerLogged}
-          />
-        )}
-        {activeTab === 'flashcards' && (
-          <FlashcardDeck 
-            flashcards={flashcards}
-            masteryStates={masteryStates}
             onAnswerLogged={handleAnswerLogged}
           />
         )}

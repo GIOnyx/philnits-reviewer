@@ -4,7 +4,7 @@ import { getDaysToExam, isQuestionDueToday } from '../utils/leitnerEngine';
 import { Repeat, Calendar, CheckCircle2, XCircle, Award, Clock, Grid3x3, Play, Star, TrendingDown } from 'lucide-react';
 import { registerKeyboardHandlers, clearKeyboardHandlers } from '../utils/globalKeyboardShortcuts';
 import { saveQuestionIndex, getQuestionIndex, getStoredMasteryStates } from '../utils/masteryEngine';
-import { parseMarkdownToHtml } from '../utils/markdown';
+import { MarkdownContent } from './MarkdownContent';
 
 type StudyMode = 'study' | 'browse';
 
@@ -313,9 +313,9 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
             </button>
           </div>
 
-          <div 
-            className="text-base font-semibold text-[var(--text-primary)] text-left w-full space-y-3 font-sans"
-            dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(currentQ.questionText) }}
+          <MarkdownContent
+            content={currentQ.questionText}
+            className="text-base font-semibold text-[var(--text-primary)]"
           />
 
           {/* Options */}
@@ -427,9 +427,9 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
             </button>
           </div>
 
-          <div 
-            className="text-base font-semibold text-[var(--text-primary)] text-left w-full space-y-3 font-sans"
-            dangerouslySetInnerHTML={{ __html: parseMarkdownToHtml(selectedCard.questionText) }}
+          <MarkdownContent
+            content={selectedCard.questionText}
+            className="text-base font-semibold text-[var(--text-primary)]"
           />
 
           {/* Options */}
