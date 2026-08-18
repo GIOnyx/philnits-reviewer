@@ -324,9 +324,19 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
                   <span className="text-xs text-[var(--text-primary)] font-medium">Exam Year: {currentQ.examYear}</span>
                 </div>
                 {isAnswered && (
-                  <span className={`badge ${isCorrect ? 'badge-emerald' : 'badge-rose'}`}>
-                    {isCorrect ? 'Correct (+1 streak)' : 'Incorrect (streak reset)'}
-                  </span>
+                  <div className={`px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-sm ${isCorrect ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-500 border border-rose-500/20'}`}>
+                    {isCorrect ? (
+                      <>
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                        <span>Correct (+1 Streak)</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                        <span>Incorrect (Streak Reset)</span>
+                      </>
+                    )}
+                  </div>
                 )}
               </div>
 
@@ -395,9 +405,19 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
               <span className="text-xs text-[var(--text-primary)] font-medium">Exam Year: {currentQ.examYear}</span>
             </div>
             {isAnswered && (
-              <span className={`badge ${isCorrect ? 'badge-emerald' : 'badge-rose'}`}>
-                {isCorrect ? 'Correct (+1 streak)' : 'Incorrect (streak reset)'}
-              </span>
+              <div className={`px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-sm ${isCorrect ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-500 border border-rose-500/20'}`}>
+                {isCorrect ? (
+                  <>
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                    <span>Correct (+1 Streak)</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                    <span>Incorrect (Streak Reset)</span>
+                  </>
+                )}
+              </div>
             )}
           </div>
 
