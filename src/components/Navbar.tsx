@@ -59,42 +59,43 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--border-color)] bg-[var(--bg-nav)] backdrop-blur-md">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-50 w-full bg-[var(--bg-main)] pt-4 pb-4">
+      <div className="mx-auto w-full max-w-7xl px-4">
+        <div className="border border-[var(--border-color)] bg-[var(--bg-card)] shadow-[var(--shadow-subtle)] rounded-2xl h-14 flex items-center justify-between px-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] gap-6">
         
         {/* Brand / Title */}
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-[var(--accent-emerald)] to-[var(--accent-cyan)] flex items-center justify-center text-white font-bold text-lg shadow-sm">
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-[var(--accent-emerald)] to-[var(--accent-cyan)] flex items-center justify-center text-white font-bold text-lg shadow-sm shrink-0">
             FE
           </div>
-          <div>
-            <h1 className="text-base font-bold tracking-tight text-[var(--text-primary)]">
+          <div className="shrink-0">
+            <h1 className="text-base font-bold tracking-tight text-[var(--text-primary)] whitespace-nowrap">
               PhilNITS Reviewer
             </h1>
-            <p className="text-[11px] text-[var(--text-secondary)] flex items-center gap-1 font-mono">
-              <Server className="w-3 h-3 text-[var(--accent-emerald)]" /> Windmill Telemetry
+            <p className="text-[11px] text-[var(--text-secondary)] flex items-center gap-1 font-mono whitespace-nowrap">
+              <Server className="w-3 h-3 text-[var(--accent-emerald)] shrink-0" /> Windmill Telemetry
             </p>
           </div>
         </div>
 
         {/* Navigation Tabs */}
-        <nav className="hidden md:flex items-center gap-1 h-full">
+        <nav className="hidden md:flex items-center gap-1.5 p-1 bg-[var(--bg-main)]/50 rounded-xl border border-[var(--border-color)] shrink-0">
           {navItems.map((item) => {
             const isActive = activeTab === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`relative flex items-center gap-1.5 px-3.5 h-full text-sm font-semibold transition-all border-b-2 -mb-[1px] ${
+                className={`relative flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all shrink-0 whitespace-nowrap ${
                   isActive
-                    ? 'border-[var(--accent-cyan)] text-[var(--text-primary)] bg-[var(--bg-card-hover)]/30'
-                    : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]/10'
+                    ? 'bg-[var(--bg-card)] text-[var(--text-primary)] shadow-sm border border-[var(--border-color)]'
+                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-transparent'
                 }`}
               >
                 {item.icon}
                 <span>{item.label}</span>
                 {item.badge !== undefined && item.badge > 0 && (
-                  <span className="badge badge-amber text-[11px] px-2 py-0.5 rounded-full">
+                  <span className="bg-[var(--accent-amber)] text-black text-[9px] px-1.5 py-0.5 rounded-full shrink-0 font-bold ml-1">
                     {item.badge}
                   </span>
                 )}
@@ -104,10 +105,10 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* Right Section: Countdown + Sync Status + Auth + Theme Switcher */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4 shrink-0 pr-1">
           {/* Days Remaining Pill */}
-          <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-700 border border-amber-800 text-white text-sm font-semibold">
-            <Calendar className="w-3.5 h-3.5" />
+          <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--accent-amber)] text-[var(--bg-main)] text-sm font-bold shrink-0 whitespace-nowrap">
+            <Calendar className="w-3.5 h-3.5 shrink-0" />
             <span>Oct 25 Exam: {daysRemaining} days</span>
           </div>
 
@@ -121,19 +122,19 @@ export const Navbar: React.FC<NavbarProps> = ({
                 syncStatus === 'offline' ? 'Offline – changes saved locally' :
                 'Cloud sync ready'
               }
-              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-sm font-semibold transition-colors ${
-                syncStatus === 'syncing' ? 'bg-cyan-700 border-cyan-800 text-white' :
-                syncStatus === 'synced'  ? 'bg-emerald-700 border-emerald-800 text-white' :
-                syncStatus === 'error'   ? 'bg-rose-700 border-rose-800 text-white' :
-                syncStatus === 'offline' ? 'bg-slate-600 border-slate-700 text-white' :
-                'bg-[var(--bg-card-hover)] border-[var(--border-color)] text-[var(--text-primary)]'
+              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-sm font-bold transition-colors shrink-0 whitespace-nowrap ${
+                syncStatus === 'syncing' ? 'bg-[var(--accent-cyan)] text-[var(--bg-main)]' :
+                syncStatus === 'synced'  ? 'bg-[var(--accent-emerald)] text-[var(--bg-main)]' :
+                syncStatus === 'error'   ? 'bg-[var(--accent-rose)] text-[var(--bg-main)]' :
+                syncStatus === 'offline' ? 'bg-[var(--text-muted)] text-[var(--bg-main)]' :
+                'bg-[var(--bg-card-hover)] text-[var(--text-primary)] border border-[var(--border-color)]'
               }`}
             >
               {syncStatus === 'syncing'
-                ? <Loader2 className="w-3 h-3 animate-spin" />
+                ? <Loader2 className="w-3 h-3 animate-spin shrink-0" />
                 : syncStatus === 'offline'
-                ? <CloudOff className="w-3 h-3" />
-                : <Cloud className="w-3 h-3" />
+                ? <CloudOff className="w-3 h-3 shrink-0" />
+                : <Cloud className="w-3 h-3 shrink-0" />
               }
               <span className="hidden md:inline">
                 {syncStatus === 'syncing' ? 'Syncing' :
@@ -150,17 +151,17 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={onLogoutClick}
               title={`Logged in as ${currentUser.username}`}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:bg-rose-700 hover:text-white border border-[var(--border-color)] text-sm font-semibold transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:bg-[var(--accent-rose)] hover:text-[var(--bg-main)] border border-[var(--border-color)] text-sm font-bold transition-colors shrink-0 whitespace-nowrap"
             >
-              <LogOut className="w-3.5 h-3.5" />
+              <LogOut className="w-3.5 h-3.5 shrink-0" />
               <span className="hidden sm:inline">Log Out</span>
             </button>
           ) : (
             <button
               onClick={onLoginClick}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-700 text-white border border-emerald-800 text-sm font-semibold transition-colors hover:opacity-90"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-emerald)] text-[var(--bg-main)] text-sm font-bold transition-colors hover:opacity-90 shrink-0 whitespace-nowrap"
             >
-              <LogIn className="w-3.5 h-3.5" />
+              <LogIn className="w-3.5 h-3.5 shrink-0" />
               <span className="hidden sm:inline">Log In</span>
             </button>
           )}
@@ -168,30 +169,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Theme Switcher Toggle */}
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-lg bg-amber-600 text-white border border-amber-700 hover:bg-amber-700 transition-colors"
+            className="p-2 rounded-lg bg-[var(--accent-amber)] text-[var(--bg-main)] hover:opacity-90 transition-opacity shrink-0"
             title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
           >
-            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            {theme === 'dark' ? <Sun className="w-4 h-4 shrink-0" /> : <Moon className="w-4 h-4 shrink-0" />}
           </button>
         </div>
       </div>
-
-      {/* Mobile Nav Drawer Bar */}
-      <div className="flex md:hidden overflow-x-auto px-4 py-2 border-t border-[var(--border-color)] gap-2 bg-[var(--bg-sidebar)]">
-        {navItems.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setActiveTab(item.id)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap ${
-              activeTab === item.id
-                ? 'bg-[var(--accent-emerald)] text-white'
-                : 'bg-[var(--bg-card-hover)] text-[var(--text-secondary)]'
-            }`}
-          >
-            {item.icon}
-            {item.label}
-          </button>
-        ))}
       </div>
     </header>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SubjectAQuestion, LeitnerState, MasteryState } from '../types/exam';
 import { getDaysToExam, isQuestionDueToday } from '../utils/leitnerEngine';
-import { Repeat, Calendar, CheckCircle2, XCircle, Award, Clock, Grid3x3, Play, Star, TrendingDown } from 'lucide-react';
+import { Repeat, Calendar, CheckCircle2, XCircle, Award, Clock, Grid3x3, Play, Star, TrendingDown, Target, X } from 'lucide-react';
 import { registerKeyboardHandlers, clearKeyboardHandlers } from '../utils/globalKeyboardShortcuts';
 import { saveQuestionIndex, getQuestionIndex, getStoredMasteryStates } from '../utils/masteryEngine';
 import { MarkdownContent } from './MarkdownContent';
@@ -547,12 +547,12 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500 border border-amber-600 text-white text-xs font-semibold">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--accent-amber)] text-[var(--bg-main)] text-xs font-bold shadow-sm">
               <Clock className="w-4 h-4" />
               <span>Time to Exam: {daysToExam} Days</span>
             </div>
 
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-pink-500 border border-pink-600 text-white text-xs font-semibold cursor-pointer hover:opacity-90 transition-all" title={`${bookmarkedIds.size} bookmarks`}>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--accent-rose)] text-[var(--bg-main)] text-xs font-bold cursor-pointer hover:opacity-90 transition-all shadow-sm" title={`${bookmarkedIds.size} bookmarks`}>
               <Star className="w-4 h-4" />
               <span>{bookmarkedIds.size}</span>
             </div>
@@ -561,9 +561,9 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
             <div className="flex gap-1 p-1 rounded-lg bg-[var(--bg-card-hover)] border border-[var(--border-color)]">
               <button
                 onClick={() => setMode('study')}
-                className={`px-3 py-1.5 rounded text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 rounded text-xs font-bold transition-all flex items-center gap-1.5 ${
                   mode === 'study'
-                    ? 'bg-[var(--accent-emerald)] text-white'
+                    ? 'bg-[var(--accent-emerald)] text-[var(--bg-main)] shadow-sm'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
                 }`}
               >
@@ -572,9 +572,9 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
               </button>
               <button
                 onClick={() => setMode('browse')}
-                className={`px-3 py-1.5 rounded text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 rounded text-xs font-bold transition-all flex items-center gap-1.5 ${
                   mode === 'browse'
-                    ? 'bg-[var(--accent-emerald)] text-white'
+                    ? 'bg-[var(--accent-cyan)] text-[var(--bg-main)] shadow-sm'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
                 }`}
               >
@@ -659,33 +659,31 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
 
       {/* Weak Area Spotlight */}
       {showWeakAreaSpotlight && weakAreas.length > 0 && weakAreas[0].accuracy < 60 && (
-        <div className="glass-panel p-4 border-l-4 border-amber-500 space-y-3 bg-amber-500/5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <TrendingDown className="w-5 h-5 text-amber-500" />
-              <h3 className="text-sm font-bold text-amber-600 dark:text-amber-400">
-                🎯 Weak Area: {weakAreas[0].domain}
-              </h3>
-            </div>
+        <div className="bg-[var(--bg-card-hover)] border border-[var(--border-color)] rounded-xl p-4 flex items-start gap-3 relative animate-fadeIn shadow-[var(--shadow-subtle)]">
+          <TrendingDown className="w-5 h-5 text-[var(--accent-amber)] shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <h3 className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+              <Target className="w-4 h-4 text-[var(--accent-rose)]" />
+              Weak Area: {weakAreas[0].domain}
+            </h3>
+            <p className="text-sm text-[var(--text-secondary)] mt-1">
+              You're only <span className="font-bold text-[var(--text-primary)]">{weakAreas[0].accuracy.toFixed(0)}%</span> accurate in <strong>{weakAreas[0].domain}</strong>. 
+              Practice {weakAreas[0].total} more questions to improve.
+            </p>
             <button
-              onClick={() => setShowWeakAreaSpotlight(false)}
-              className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+              onClick={() => {
+                setMode('browse');
+              }}
+              className="mt-3 text-xs font-bold text-[var(--accent-amber)] hover:text-[var(--accent-rose)] flex items-center gap-1 transition-colors"
             >
-              ✕
+              Practice Now &rarr;
             </button>
           </div>
-          <p className="text-xs text-[var(--text-secondary)]">
-            You're only {weakAreas[0].accuracy.toFixed(0)}% accurate in <strong>{weakAreas[0].domain}</strong>. 
-            Practice {weakAreas[0].total} more questions to improve.
-          </p>
           <button
-            onClick={() => {
-              setMode('browse');
-              // Could add subdomain filter here in the future
-            }}
-            className="text-xs px-3 py-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 transition-all"
+            onClick={() => setShowWeakAreaSpotlight(false)}
+            className="absolute top-3 right-3 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
           >
-            Practice Now →
+            <X className="w-4 h-4" />
           </button>
         </div>
       )}

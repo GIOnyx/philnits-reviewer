@@ -168,7 +168,7 @@ export const App: React.FC = () => {
         onLogoutClick={handleLogout}
       />
 
-      <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-8 lg:px-12 py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 lg:px-12 py-12">
         {activeTab === 'study' && (
           <StudyHub />
         )}

@@ -1,70 +1,69 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 :root {
-  /* Dark Theme */
-  --bg-main: #0f0f0f;
-  --bg-card: rgba(25, 25, 25, 0.8);
-  --bg-card-hover: rgba(40, 40, 40, 0.9);
-  --bg-nav: rgba(20, 20, 20, 0.95);
-  --bg-sidebar: rgba(20, 20, 20, 0.95);
+  /* Midnight Pastel (Mocha) - Aesthetic & Easy on the eyes */
+  --bg-main: #11111b;      /* Deepest dark */
+  --bg-card: #1e1e2e;      /* Soft dark base */
+  --bg-card-hover: #313244;
+  --bg-nav: #181825;       /* Slightly elevated */
+  --bg-sidebar: #181825;
   
-  --border-color: rgba(80, 80, 80, 0.5);
-  --border-hover: rgba(120, 120, 120, 0.7);
+  --border-color: #45475a;
+  --border-hover: #585b70;
   
-  /* Text colors - white for dark mode */
-  --text-primary: #ffffff;
-  --text-secondary: #ffffff;
-  --text-muted: #ffffff;
+  /* Soft pastel text - incredibly readable */
+  --text-primary: #cdd6f4;
+  --text-secondary: #bac2de;
+  --text-muted: #a6adc8;
   
-  /* Muted accent colors - balanced, not too bright */
-  --accent-emerald: #4a9d6f;
-  --accent-cyan: #3a9fb5;
-  --accent-amber: #d4a74d;
-  --accent-rose: #c85a76;
+  /* Toned-down Accents - Still colorful but less blindingly bright */
+  --accent-emerald: #8fce9b; /* Softened Green */
+  --accent-cyan: #7ca8ea;    /* Softened Blue */
+  --accent-amber: #e8a276;   /* Softened Peach */
+  --accent-rose: #e57c96;    /* Softened Red */
   
-  --code-bg: rgba(15, 15, 15, 0.95);
-  --code-text: #ffffff;
+  --code-bg: #181825;
+  --code-text: #cdd6f4;
 
-  --shadow-subtle: 0 4px 30px rgba(0, 0, 0, 0.2);
-  --shadow-glow: 0 0 20px rgba(126, 206, 232, 0.1);
+  --shadow-subtle: 0 10px 30px rgba(17, 17, 27, 0.5);
+  --shadow-glow: 0 0 20px rgba(124, 168, 234, 0.1);
   
-  --bg-input: rgba(15, 25, 40, 0.6);
-  --bg-input-focus: rgba(15, 25, 40, 0.85);
-  --input-placeholder: #7a95b3;
+  --bg-input: #181825;
+  --bg-input-focus: #313244;
+  --input-placeholder: #a6adc8;
 }
 
 [data-theme="light"] {
-  /* Light Theme */
-  --bg-main: #ffffff;
-  --bg-card: rgba(240, 240, 240, 0.95);
-  --bg-card-hover: rgba(220, 220, 220, 0.95);
-  --bg-nav: rgba(245, 245, 245, 0.98);
-  --bg-sidebar: rgba(240, 240, 240, 0.95);
+  /* Daybreak Pastel (Latte) */
+  --bg-main: #eff1f5;
+  --bg-card: #e6e9ef;
+  --bg-card-hover: #ccd0da;
+  --bg-nav: #dce0e8;
+  --bg-sidebar: #dce0e8;
   
-  --border-color: rgba(150, 150, 150, 0.5);
-  --border-hover: rgba(100, 100, 100, 0.7);
+  --border-color: #bcc0cc;
+  --border-hover: #acb0be;
   
-  /* Light theme text - pure black */
-  --text-primary: #000000;
-  --text-secondary: #000000;
-  --text-muted: #000000;
+  --text-primary: #4c4f69;
+  --text-secondary: #5c5f77;
+  --text-muted: #6c6f85;
   
-  /* Muted accent colors */
-  --accent-emerald: #4a9d6f;
-  --accent-cyan: #3a9fb5;
-  --accent-amber: #d4a74d;
-  --accent-rose: #c85a76;
+  /* Aesthetic Pastel Accents for Light Mode (Catppuccin Latte inspired) */
+  --accent-emerald: #40a02b; /* Kept vivid but deep for contrast */
+  --accent-cyan: #1e66f5;    /* Deep Blue */
+  --accent-amber: #df8e1d;   /* Soft Caramel instead of neon orange */
+  --accent-rose: #d20f39;    /* Soft Red/Rose */
   
-  --code-bg: rgba(245, 245, 245, 0.98);
-  --code-text: #000000;
+  --code-bg: #e6e9ef;
+  --code-text: #4c4f69;
 
-  --shadow-subtle: 0 4px 30px rgba(80, 100, 130, 0.05);
-  --shadow-glow: 0 0 20px rgba(94, 201, 169, 0.08);
+  --shadow-subtle: 0 10px 30px rgba(76, 79, 105, 0.08);
+  --shadow-glow: 0 0 20px rgba(30, 102, 245, 0.15);
   
-  --bg-input: #ffffff;
-  --bg-input-focus: #ffffff;
-  --input-placeholder: #a5b4c5;
+  --bg-input: #eff1f5;
+  --bg-input-focus: #e6e9ef;
+  --input-placeholder: #8c8fa1;
 }
 
 * {
@@ -72,30 +71,36 @@
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-main);
   color: var(--text-primary);
-  line-height: 1.75;
-  letter-spacing: 0.015em;
-  font-size: 18px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  font-size: 15px;
   min-height: 100vh;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code, pre, .font-mono {
   font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9em;
 }
 
-/* Repeating decimal overline style */
+::selection {
+  background: var(--accent-cyan);
+  color: #fff;
+}
+
 .overline {
   text-decoration: overline;
 }
 
-/* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -103,16 +108,17 @@ code, pre, .font-mono {
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 9999px;
+  border: 2px solid var(--bg-main);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--border-hover);
+  background: var(--text-muted);
 }
 
 /* Utilities & Animations */
 .glass-panel {
   background-color: var(--bg-card);
-  backdrop-filter: blur(16px) saturate(120%);
-  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   box-shadow: var(--shadow-subtle);
@@ -124,11 +130,16 @@ code, pre, .font-mono {
   background-color: var(--bg-card-hover);
 }
 
+button:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+}
+
 .btn-primary {
-  background: var(--accent-emerald);
-  color: #ffffff;
-  font-weight: 600;
-  padding: 0.6rem 1.25rem;
+  background: var(--accent-cyan);
+  color: var(--bg-main);
+  font-weight: 700;
+  padding: 0.75rem 1.25rem;
   border-radius: 8px;
   border: none;
   cursor: pointer;
@@ -136,6 +147,9 @@ code, pre, .font-mono {
   align-items: center;
   gap: 0.5rem;
   transition: opacity 0.2s ease, transform 0.2s ease;
+  min-height: 48px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-primary:hover {
@@ -152,19 +166,22 @@ code, pre, .font-mono {
   backdrop-filter: blur(8px);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
-  font-weight: 500;
-  padding: 0.6rem 1.25rem;
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
   border-radius: 8px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   transition: background-color 0.2s ease, border-color 0.2s ease;
+  min-height: 48px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-secondary:hover {
   border-color: var(--border-hover);
-  background-color: var(--border-color);
+  background-color: var(--bg-nav);
 }
 
 .btn-secondary:active {
@@ -172,17 +189,20 @@ code, pre, .font-mono {
 }
 
 .btn-danger {
-  background: #dc2626;
-  color: #ffffff;
-  border: 1px solid #991b1b;
-  font-weight: 500;
-  padding: 0.6rem 1.25rem;
+  background: var(--accent-rose);
+  color: var(--bg-main);
+  border: none;
+  font-weight: 700;
+  padding: 0.75rem 1.25rem;
   border-radius: 8px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   transition: opacity 0.2s ease, transform 0.2s ease;
+  min-height: 48px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-danger:hover {
@@ -207,6 +227,8 @@ code, pre, .font-mono {
   letter-spacing: 0.06em;
   transition: background-color 0.2s ease, transform 0.2s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .badge:hover {

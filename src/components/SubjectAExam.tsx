@@ -279,18 +279,19 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
             </>
           )}
 
+          {/* AI Generator Button */}
           <button
             onClick={handleGenerateAiQuestion}
             disabled={isGenerating}
-            className="btn-primary text-xs py-1.5 px-3 flex items-center gap-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 shadow-sm border-none ml-3 shrink-0 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            title="Generate a brand new practice question for this topic using Gemini"
+            className="btn-primary text-xs py-1.5 px-3 flex items-center gap-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 shadow-sm border-none ml-3 shrink-0 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+            title="Generate a brand new Subject A question using Gemini"
           >
-            <Sparkles className={`w-3.5 h-3.5 ${isGenerating ? 'animate-spin' : ''}`} />
+            <Sparkles className={`w-3.5 h-3.5 ${isGenerating ? 'animate-spin' : ''} shrink-0`} />
             {isGenerating ? 'Generating...' : 'Gen AI Question'}
           </button>
         </div>
 
-        <div className="flex items-center gap-3 text-xs font-medium text-[var(--text-primary)]">
+        <div className="flex items-center gap-3 text-xs font-medium text-[var(--text-primary)] shrink-0">
           <span>Question {currentIndex + 1} of {filteredQuestions.length}</span>
           <button
             onClick={() => toggleBookmark(currentQ.id)}
@@ -310,13 +311,13 @@ export const SubjectAExam: React.FC<SubjectAExamProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           <div className="lg:col-span-7 space-y-4">
             {(currentQ as any).isAiGenerated || currentQ.id.startsWith('ai_') || String(currentQ.examYear).includes('2026') ? (
-              <div className="glass-panel p-4 flex items-center justify-between bg-purple-500/10 border-purple-500/30">
-                <div className="flex items-center gap-2">
-                  <span className="badge bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center gap-1 font-semibold">
-                    <Sparkles className="w-3 h-3 text-purple-400 animate-pulse" />
+              <div className="glass-panel p-4 flex items-center justify-between bg-purple-500/10 border-purple-500/30 overflow-x-auto">
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="badge bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center gap-1 font-semibold shrink-0 whitespace-nowrap">
+                    <Sparkles className="w-3 h-3 text-purple-400 animate-pulse shrink-0" />
                     AI Generated Question
                   </span>
-                  <span className="text-xs text-[var(--text-muted)]">Dynamically generated via Gemini AI</span>
+                  <span className="text-xs text-[var(--text-muted)] whitespace-nowrap">Dynamically generated via Gemini AI</span>
                 </div>
               </div>
             ) : null}

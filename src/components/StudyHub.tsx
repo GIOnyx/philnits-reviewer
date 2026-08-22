@@ -111,8 +111,8 @@ export const StudyHub: React.FC = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start animate-fadeIn pb-12">
       {/* Left Sidebar: 6 Theoretical Domains Taxonomy */}
-      <div className="lg:col-span-4 space-y-4 lg:sticky lg:top-6">
-        <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-5 shadow-xl space-y-4">
+      <div className="lg:col-span-4 space-y-4 lg:sticky lg:top-24">
+        <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-5 shadow-[var(--shadow-subtle)] space-y-4">
           <div className="flex items-center gap-2 border-b border-[var(--border-color)] pb-3">
             <span className="p-2 bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] rounded-lg">
               <BookOpen className="w-5 h-5" />
@@ -132,12 +132,12 @@ export const StudyHub: React.FC = () => {
                   onClick={() => setActiveDomainId(domain.id)}
                   className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
                     isActive
-                      ? 'bg-[var(--accent-cyan)]/15 border-[var(--accent-cyan)] text-[var(--text-primary)] shadow-lg font-bold'
-                      : 'bg-[var(--bg-secondary)] border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-cyan)]/50'
+                      ? 'bg-[var(--accent-cyan)]/10 border-[var(--accent-cyan)]/30 text-[var(--text-primary)] shadow-[var(--shadow-glow)] font-bold'
+                      : 'bg-transparent border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-lg ${isActive ? 'bg-[var(--accent-cyan)]/20' : 'bg-[var(--bg-card)]'}`}>
+                    <div className={`p-2 rounded-lg ${isActive ? 'bg-[var(--accent-cyan)]/20 text-[var(--accent-cyan)]' : 'bg-[var(--bg-main)] text-[var(--text-muted)]'}`}>
                       {getDomainIcon(domain.iconName)}
                     </div>
                     <div>
@@ -145,7 +145,7 @@ export const StudyHub: React.FC = () => {
                       <div className="text-[10px] text-[var(--text-muted)] mt-0.5">{domain.subtopics.length} Subtopics & Interactive Widget</div>
                     </div>
                   </div>
-                  <ChevronRight className={`w-4 h-4 transition-transform ${isActive ? 'text-[var(--accent-cyan)] translate-x-0.5' : 'text-[var(--text-muted)]'}`} />
+                  <ChevronRight className={`w-4 h-4 transition-transform ${isActive ? 'text-[var(--accent-cyan)] translate-x-0.5' : 'text-[var(--text-muted)] opacity-0'}`} />
                 </button>
               );
             })}
@@ -156,7 +156,7 @@ export const StudyHub: React.FC = () => {
       {/* Right Content Area: Detailed Theory, Interactive Widget, and Categorized Embedded Resources */}
       <div className="lg:col-span-8 space-y-6">
         {/* Domain Overview Banner */}
-        <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6 shadow-xl space-y-4">
+        <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6 shadow-[var(--shadow-subtle)] space-y-4">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] rounded-xl">
               {getDomainIcon(activeDomain.iconName)}
