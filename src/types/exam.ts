@@ -138,3 +138,38 @@ export interface StudyDomainSection {
   widgetType?: 'hamming' | 'subnet' | 'normalization' | 'evm';
   subtopics: string[];
 }
+
+export interface UserAnswerHistoryRecord {
+  id?: string;
+  username: string;
+  question_id: string;
+  is_correct: boolean;
+  time_taken_seconds: number;
+  exam_type: string;
+  created_at?: string;
+}
+
+export interface UserAnswerStats {
+  totalAnswers: number;
+  correctAnswers: number;
+  accuracy: string;
+  avgTimeSeconds: string;
+  data: UserAnswerHistoryRecord[];
+}
+
+export interface UserPreferences {
+  theme?: string;
+  leitner_mode?: string;
+  leitner_browse_box?: number;
+  weak_area_spotlight?: boolean;
+}
+
+export interface AiGeneratedQuestionRecord {
+  id?: string;
+  username: string;
+  question_type: 'subject_a' | 'subject_b';
+  topic: string;
+  question_data: Record<string, unknown>;
+  created_at?: string;
+}
+

@@ -8,10 +8,28 @@
  */
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { LeitnerState } from '../types/exam';
+import {
+  LeitnerState,
+  UserAnswerStats,
+  UserPreferences,
+  AiGeneratedQuestionRecord
+} from '../types/exam';
 
-const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL as string) || '';
-const SUPABASE_ANON_KEY = (import.meta.env.VITE_SUPABASE_ANON_KEY as string) || '';
+const SUPABASE_URL: string = (
+  (import.meta.env.VITE_SUPABASE_URL as string) ||
+  (import.meta.env.NEXT_PUBLIC_SUPABASE_URL as string) ||
+  (typeof process !== 'undefined' && process.env?.SUPABASE_URL ? process.env.SUPABASE_URL : '') ||
+  ''
+).trim();
+
+const SUPABASE_ANON_KEY: string = (
+  (import.meta.env.VITE_SUPABASE_ANON_KEY as string) ||
+  (import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string) ||
+  (import.meta.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY as string) ||
+  (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string) ||
+  (typeof process !== 'undefined' && process.env?.SUPABASE_ANON_KEY ? process.env.SUPABASE_ANON_KEY : '') ||
+  ''
+).trim();
 
 export const isSupabaseConfigured = (): boolean =>
   Boolean(SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL.startsWith('https://'));
@@ -24,7 +42,8 @@ function tryGetClient(): SupabaseClient | null {
   try {
     _client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     return _client;
-  } catch {
+  } catch (err) {
+    console.error('[Supabase] Failed to initialize client:', err);
     return null;
   }
 }
@@ -211,7 +230,7 @@ export async function logUserAnswer(
 export async function getUserAnswerStats(
   username: string,
   examType?: string
-): Promise<any> {
+): Promise<UserAnswerStats | null> {
   const client = tryGetClient();
   if (!client) return null;
 
@@ -334,7 +353,7 @@ export async function saveUserPreferences(
   return true;
 }
 
-export async function getUserPreferences(username: string): Promise<any> {
+export async function getUserPreferences(username: string): Promise<UserPreferences | null> {
   const client = tryGetClient();
   if (!client) return null;
 
@@ -349,7 +368,7 @@ export async function getUserPreferences(username: string): Promise<any> {
     return null;
   }
 
-  return data;
+  return data as UserPreferences | null;
 }
 
 export async function trackQuestionAttempt(
@@ -410,7 +429,7 @@ export async function saveAiGeneratedQuestion(
   username: string,
   questionType: 'subject_a' | 'subject_b',
   topic: string,
-  questionData: any
+  questionData: Record<string, unknown>
 ): Promise<boolean> {
   const client = tryGetClient();
   if (!client) return false;
@@ -435,7 +454,7 @@ export async function saveAiGeneratedQuestion(
 export async function getUserAiQuestions(
   username: string,
   questionType?: string
-): Promise<any[]> {
+): Promise<AiGeneratedQuestionRecord[]> {
   const client = tryGetClient();
   if (!client) return [];
 
@@ -456,5 +475,5 @@ export async function getUserAiQuestions(
     return [];
   }
 
-  return data || [];
+  return (data as AiGeneratedQuestionRecord[]) || [];
 }

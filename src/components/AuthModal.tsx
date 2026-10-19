@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, User, Lock, LogIn, UserPlus, Loader2, AlertCircle } from 'lucide-react';
-import { signIn, signUp } from '../services/supabase';
+import { signIn, signUp, isSupabaseConfigured } from '../services/supabase';
 
 interface AuthModalProps {
   onClose: () => void;
@@ -16,9 +16,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess }) 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const isConfigured = isSupabaseConfigured();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    if (!isConfigured) {
+      setError('Cloud sync unavailable — Supabase is not configured.');
+      return;
+    }
 
     if (!username.trim() || !password.trim()) {
       setError('Please fill in both fields.');
@@ -86,7 +93,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onAuthSuccess }) 
             <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
             <input
               type="text"
-              placeholder="Username"
+              placeholder="Username or Email"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
