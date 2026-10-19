@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { SubjectAQuestion, LeitnerState, MasteryState } from '../types/exam';
 import { getDaysToExam, isQuestionDueToday } from '../utils/leitnerEngine';
-import { Repeat, Calendar, CheckCircle2, XCircle, Award, Clock, Grid3x3, Play, Star, TrendingDown, Target, X } from 'lucide-react';
+import { Repeat, Calendar, CheckCircle2, XCircle, Award, Clock, Grid3x3, Play, Star, TrendingDown, Target, X, ExternalLink, FileText, HelpCircle } from 'lucide-react';
 import { registerKeyboardHandlers, clearKeyboardHandlers } from '../utils/globalKeyboardShortcuts';
 import { saveQuestionIndex, getQuestionIndex, getStoredMasteryStates } from '../utils/masteryEngine';
 import { MarkdownContent } from './MarkdownContent';
+import { PdfQuestionPanel } from './PdfQuestionPanel';
 
 type StudyMode = 'study' | 'browse';
 
@@ -213,7 +214,7 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
   const calculateWeakAreas = () => {
     const domainStats: Record<string, { correct: number; total: number }> = {};
     
-    questions.forEach(q => {
+    for (const q of questions) {
       if (!domainStats[q.subdomain]) {
         domainStats[q.subdomain] = { correct: 0, total: 0 };
       }
@@ -225,7 +226,7 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
       if (masteryState?.consecutiveCorrect > 0) {
         domainStats[q.subdomain].correct++;
       }
-    });
+    }
 
     // Sort by accuracy (lowest first)
     return Object.entries(domainStats)
@@ -291,84 +292,9 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
   };
 
   // Render study mode
-  const renderStudyMode = () => (
-    <>
-      {/* Daily Review Flash Card */}
-      {dueQuestions.length > 0 && currentQ ? (
-        <div className="glass-panel p-6 space-y-6">
-          <div className="flex items-center justify-between text-xs flex-wrap gap-2">
-            <span className="badge badge-emerald">Due Card {currentIdx + 1} / {dueQuestions.length}</span>
-            <span className="badge badge-cyan">{currentQ.subdomain}</span>
-            <span className="text-[10px] text-[var(--text-muted)]">{currentQ.examYear}</span>
-            <button
-              onClick={() => toggleBookmark(currentQ.id)}
-              className={`ml-auto p-1.5 rounded-lg border transition-all ${
-                bookmarkedIds.has(currentQ.id)
-                  ? 'border-pink-600 bg-pink-500 text-white'
-                  : 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:text-pink-500'
-              }`}
-              title="Bookmark (B)"
-            >
-              <Star className="w-4 h-4" fill={bookmarkedIds.has(currentQ.id) ? 'currentColor' : 'none'} />
-            </button>
-          </div>
-
-          <MarkdownContent
-            content={currentQ.questionText}
-            className="text-base font-semibold text-[var(--text-primary)]"
-          />
-
-          {/* Options */}
-          <div className="space-y-3">
-            {currentQ.options.map((opt, idx) => {
-              const isSelected = selectedOpt === idx;
-              const isTargetCorrect = currentQ.correctIndex === idx;
-
-              let style = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
-              if (selectedOpt !== null) {
-                if (isTargetCorrect) {
-                  style = 'border-emerald-600 bg-emerald-600 text-white font-semibold';
-                } else if (isSelected) {
-                  style = 'border-rose-600 bg-rose-600 text-white';
-                } else {
-                  style = 'opacity-40 border-[var(--border-color)]';
-                }
-              }
-
-              return (
-                <button
-                  key={idx}
-                  disabled={selectedOpt !== null}
-                  onClick={() => handleSelectOption(idx)}
-                  className={`w-full text-left p-3.5 rounded-xl border flex items-center justify-between text-xs transition-all ${style}`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className={`w-6 h-6 rounded flex items-center justify-center font-mono font-bold ${
-                      selectedOpt !== null && isTargetCorrect ? 'bg-white text-emerald-600' :
-                      selectedOpt !== null && isSelected ? 'bg-white text-rose-600' :
-                      'bg-[var(--bg-main)] border border-[var(--border-color)] text-[var(--text-primary)]'
-                    }`}>
-                      {String.fromCharCode(65 + idx)}
-                    </span>
-                    <span>{opt}</span>
-                  </div>
-                  {selectedOpt !== null && isTargetCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
-                  {selectedOpt !== null && isSelected && !isTargetCorrect && <XCircle className="w-4 h-4 text-rose-500" />}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Next Button */}
-          {selectedOpt !== null && (
-            <div className="pt-3 flex justify-end">
-              <button onClick={handleNext} className="btn-primary">
-                Next Review Card
-              </button>
-            </div>
-          )}
-        </div>
-      ) : (
+  const renderStudyMode = () => {
+    if (dueQuestions.length === 0 || !currentQ) {
+      return (
         <div className="glass-panel p-8 text-center space-y-3">
           <Award className="w-12 h-12 text-emerald-500 mx-auto" />
           <h3 className="text-base font-bold text-[var(--text-primary)]">All Daily Cards Reviewed!</h3>
@@ -376,9 +302,174 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
             Great job! You have completed all scheduled active recall reviews for today.
           </p>
         </div>
-      )}
-    </>
-  );
+      );
+    }
+
+    const isPdf = Boolean(currentQ.pdfUrl);
+    const pdfQNumber = currentQ.id.match(/_(\d+)$/)?.[1];
+
+    const optionsList = (
+      <div className="space-y-3">
+        {currentQ.options.map((opt, idx) => {
+          const isSelected = selectedOpt === idx;
+          const isTargetCorrect = currentQ.correctIndex === idx;
+
+          let style = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
+          if (selectedOpt !== null) {
+            if (isTargetCorrect) {
+              style = 'border-emerald-600 bg-emerald-600 text-white font-semibold';
+            } else if (isSelected) {
+              style = 'border-rose-600 bg-rose-600 text-white';
+            } else {
+              style = 'opacity-40 border-[var(--border-color)]';
+            }
+          }
+
+          return (
+            <button
+              key={idx}
+              disabled={selectedOpt !== null}
+              onClick={() => handleSelectOption(idx)}
+              className={`w-full text-left p-3.5 rounded-xl border flex items-center justify-between text-xs transition-all ${style}`}
+            >
+              <div className="flex items-center gap-3">
+                <span className={`w-6 h-6 rounded flex items-center justify-center font-mono font-bold ${
+                  selectedOpt !== null && isTargetCorrect ? 'bg-white text-emerald-600' :
+                  selectedOpt !== null && isSelected ? 'bg-white text-rose-600' :
+                  'bg-[var(--bg-main)] border border-[var(--border-color)] text-[var(--text-primary)]'
+                }`}>
+                  {String.fromCharCode(65 + idx)}
+                </span>
+                <span>{opt}</span>
+              </div>
+              {selectedOpt !== null && isTargetCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
+              {selectedOpt !== null && isSelected && !isTargetCorrect && <XCircle className="w-4 h-4 text-rose-500" />}
+            </button>
+          );
+        })}
+      </div>
+    );
+
+    const resultIndicator = selectedOpt !== null ? (
+      <div className={`px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2 ${
+        selectedOpt === currentQ.correctIndex
+          ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+          : 'bg-rose-500/10 text-rose-500 border border-rose-500/20'
+      }`}>
+        {selectedOpt === currentQ.correctIndex ? (
+          <>
+            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+            <span>Correct! Card advanced to next box.</span>
+          </>
+        ) : (
+          <>
+            <XCircle className="w-4 h-4 text-rose-500 shrink-0" />
+            <span>Incorrect. Card demoted to Box 1 for review.</span>
+          </>
+        )}
+      </div>
+    ) : null;
+
+    const explanationBlock = selectedOpt !== null && currentQ.explanation ? (
+      <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 space-y-1.5 text-xs shadow-sm">
+        <div className="flex items-center gap-1.5 font-bold text-emerald-500 uppercase tracking-wider text-[11px]">
+          <HelpCircle className="w-3.5 h-3.5" /> Explanation & Answer
+        </div>
+        <div className="text-[var(--text-primary)] leading-relaxed">
+          <MarkdownContent content={currentQ.explanation} />
+        </div>
+      </div>
+    ) : null;
+
+    const nextButton = selectedOpt !== null ? (
+      <div className="pt-2 flex justify-end">
+        <button onClick={handleNext} className="btn-primary w-full sm:w-auto">
+          Next Review Card
+        </button>
+      </div>
+    ) : null;
+
+    const headerBadges = (
+      <div className="flex items-center justify-between text-xs flex-wrap gap-2">
+        <span className="badge badge-emerald">Due Card {currentIdx + 1} / {dueQuestions.length}</span>
+        <span className="badge badge-cyan">{currentQ.subdomain}</span>
+        <span className="text-[10px] text-[var(--text-muted)] font-mono">{currentQ.examYear}</span>
+        <button
+          onClick={() => toggleBookmark(currentQ.id)}
+          className={`ml-auto p-1.5 rounded-lg border transition-all ${
+            bookmarkedIds.has(currentQ.id)
+              ? 'border-pink-600 bg-pink-500 text-white'
+              : 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:text-pink-500'
+          }`}
+          title="Bookmark (B)"
+        >
+          <Star className="w-4 h-4" fill={bookmarkedIds.has(currentQ.id) ? 'currentColor' : 'none'} />
+        </button>
+      </div>
+    );
+
+    if (isPdf) {
+      return (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div className="lg:col-span-7 space-y-4">
+            <PdfQuestionPanel
+              title={`${currentQ.id.replace(/_/g, ' ')}: Subject A`}
+              examYear={currentQ.examYear}
+              pdfUrl={currentQ.pdfUrl}
+              initialPage={currentQ.pdfPage}
+              focusLabel={pdfQNumber ? `Look for Q${pdfQNumber} on this PDF page` : undefined}
+            />
+          </div>
+
+          <div className="lg:col-span-5">
+            <div className="glass-panel p-6 space-y-5">
+              {headerBadges}
+
+              <div className="flex items-center justify-between gap-2 p-3 rounded-xl bg-[var(--accent-cyan)]/10 border border-[var(--accent-cyan)]/30 text-xs">
+                <div className="flex items-center gap-2 min-w-0 text-[var(--text-primary)]">
+                  <FileText className="w-4 h-4 text-[var(--accent-cyan)] shrink-0" />
+                  <span className="truncate">
+                    Page <strong>{currentQ.pdfPage || 1}</strong>
+                    {pdfQNumber ? ` • Question ${pdfQNumber}` : ''}
+                  </span>
+                </div>
+                <a
+                  href={`${currentQ.pdfUrl}#page=${currentQ.pdfPage || 1}&view=FitH`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-[var(--accent-cyan)] hover:underline font-semibold shrink-0"
+                >
+                  <span>Open PDF</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+              {optionsList}
+              {resultIndicator}
+              {explanationBlock}
+              {nextButton}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="glass-panel p-6 space-y-6">
+        {headerBadges}
+
+        <MarkdownContent
+          content={currentQ.questionText}
+          className="text-base font-semibold text-[var(--text-primary)]"
+        />
+
+        {optionsList}
+        {resultIndicator}
+        {explanationBlock}
+        {nextButton}
+      </div>
+    );
+  };
 
   // Render browse mode
   const renderBrowseMode = () => (
@@ -413,66 +504,181 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
 
       {/* Browse Grid or Selected Card */}
       {selectedCard ? (
-        <div className="glass-panel p-6 space-y-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="badge badge-emerald">{selectedCard.subdomain}</span>
-              <span className="text-xs text-[var(--text-muted)]">{selectedCard.examYear}</span>
+        selectedCard.pdfUrl ? (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <div className="lg:col-span-7 space-y-4">
+              <PdfQuestionPanel
+                title={`${selectedCard.id.replace(/_/g, ' ')}: Subject A`}
+                examYear={selectedCard.examYear}
+                pdfUrl={selectedCard.pdfUrl}
+                initialPage={selectedCard.pdfPage}
+                focusLabel={selectedCard.id.match(/_(\d+)$/)?.[1] ? `Look for Q${selectedCard.id.match(/_(\d+)$/)?.[1]} on this PDF page` : undefined}
+              />
             </div>
-            <button
-              onClick={handleCloseBrowseCard}
-              className="text-xs px-3 py-1.5 rounded-lg border border-[var(--border-color)] hover:bg-[var(--bg-card-hover)] transition-all"
-            >
-              Back to Grid
-            </button>
-          </div>
 
-          <MarkdownContent
-            content={selectedCard.questionText}
-            className="text-base font-semibold text-[var(--text-primary)]"
-          />
-
-          {/* Options */}
-          <div className="space-y-3">
-            {selectedCard.options.map((opt, idx) => {
-              const isSelected = browseSelectedOpt === idx;
-              const isTargetCorrect = selectedCard.correctIndex === idx;
-
-              let style = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
-              if (browseSelectedOpt !== null) {
-                if (isTargetCorrect) {
-                  style = 'border-emerald-600 bg-emerald-600 text-white font-semibold';
-                } else if (isSelected) {
-                  style = 'border-rose-600 bg-rose-600 text-white';
-                } else {
-                  style = 'opacity-40 border-[var(--border-color)]';
-                }
-              }
-
-              return (
-                <button
-                  key={idx}
-                  disabled={browseSelectedOpt !== null}
-                  onClick={() => handleBrowseSelectOption(idx)}
-                  className={`w-full text-left p-3.5 rounded-xl border flex items-center justify-between text-xs transition-all ${style}`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className={`w-6 h-6 rounded flex items-center justify-center font-mono font-bold ${
-                      browseSelectedOpt !== null && isTargetCorrect ? 'bg-white text-emerald-600' :
-                      browseSelectedOpt !== null && isSelected ? 'bg-white text-rose-600' :
-                      'bg-[var(--bg-main)] border border-[var(--border-color)] text-[var(--text-primary)]'
-                    }`}>
-                      {String.fromCharCode(65 + idx)}
-                    </span>
-                    <span>{opt}</span>
+            <div className="lg:col-span-5">
+              <div className="glass-panel p-6 space-y-5">
+                <div className="flex items-center justify-between text-xs flex-wrap gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="badge badge-emerald">{selectedCard.subdomain}</span>
+                    <span className="text-[10px] text-[var(--text-muted)] font-mono">{selectedCard.examYear}</span>
                   </div>
-                  {browseSelectedOpt !== null && isTargetCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
-                  {browseSelectedOpt !== null && isSelected && !isTargetCorrect && <XCircle className="w-4 h-4 text-rose-500" />}
-                </button>
-              );
-            })}
+                  <button
+                    onClick={handleCloseBrowseCard}
+                    className="text-xs px-3 py-1.5 rounded-lg border border-[var(--border-color)] hover:bg-[var(--bg-card-hover)] transition-all font-semibold"
+                  >
+                    Back to Grid
+                  </button>
+                </div>
+
+                <div className="flex items-center justify-between gap-2 p-3 rounded-xl bg-[var(--accent-cyan)]/10 border border-[var(--accent-cyan)]/30 text-xs">
+                  <div className="flex items-center gap-2 min-w-0 text-[var(--text-primary)]">
+                    <FileText className="w-4 h-4 text-[var(--accent-cyan)] shrink-0" />
+                    <span className="truncate">
+                      Page <strong>{selectedCard.pdfPage || 1}</strong>
+                      {selectedCard.id.match(/_(\d+)$/)?.[1] ? ` • Question ${selectedCard.id.match(/_(\d+)$/)?.[1]}` : ''}
+                    </span>
+                  </div>
+                  <a
+                    href={`${selectedCard.pdfUrl}#page=${selectedCard.pdfPage || 1}&view=FitH`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-[var(--accent-cyan)] hover:underline font-semibold shrink-0"
+                  >
+                    <span>Open PDF</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+
+                {/* Options */}
+                <div className="space-y-3">
+                  {selectedCard.options.map((opt, idx) => {
+                    const isSelected = browseSelectedOpt === idx;
+                    const isTargetCorrect = selectedCard.correctIndex === idx;
+
+                    let style = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
+                    if (browseSelectedOpt !== null) {
+                      if (isTargetCorrect) {
+                        style = 'border-emerald-600 bg-emerald-600 text-white font-semibold';
+                      } else if (isSelected) {
+                        style = 'border-rose-600 bg-rose-600 text-white';
+                      } else {
+                        style = 'opacity-40 border-[var(--border-color)]';
+                      }
+                    }
+
+                    return (
+                      <button
+                        key={idx}
+                        disabled={browseSelectedOpt !== null}
+                        onClick={() => handleBrowseSelectOption(idx)}
+                        className={`w-full text-left p-3.5 rounded-xl border flex items-center justify-between text-xs transition-all ${style}`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className={`w-6 h-6 rounded flex items-center justify-center font-mono font-bold ${
+                            browseSelectedOpt !== null && isTargetCorrect ? 'bg-white text-emerald-600' :
+                            browseSelectedOpt !== null && isSelected ? 'bg-white text-rose-600' :
+                            'bg-[var(--bg-main)] border border-[var(--border-color)] text-[var(--text-primary)]'
+                          }`}>
+                            {String.fromCharCode(65 + idx)}
+                          </span>
+                          <span>{opt}</span>
+                        </div>
+                        {browseSelectedOpt !== null && isTargetCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
+                        {browseSelectedOpt !== null && isSelected && !isTargetCorrect && <XCircle className="w-4 h-4 text-rose-500" />}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Browse Explanation */}
+                {browseSelectedOpt !== null && selectedCard.explanation && (
+                  <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 space-y-1.5 text-xs shadow-sm">
+                    <div className="flex items-center gap-1.5 font-bold text-emerald-500 uppercase tracking-wider text-[11px]">
+                      <HelpCircle className="w-3.5 h-3.5" /> Explanation & Answer
+                    </div>
+                    <div className="text-[var(--text-primary)] leading-relaxed">
+                      <MarkdownContent content={selectedCard.explanation} />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="glass-panel p-6 space-y-6">
+            <div className="flex items-center justify-between text-xs flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <span className="badge badge-emerald">{selectedCard.subdomain}</span>
+                <span className="text-[10px] text-[var(--text-muted)] font-mono">{selectedCard.examYear}</span>
+              </div>
+              <button
+                onClick={handleCloseBrowseCard}
+                className="text-xs px-3 py-1.5 rounded-lg border border-[var(--border-color)] hover:bg-[var(--bg-card-hover)] transition-all font-semibold"
+              >
+                Back to Grid
+              </button>
+            </div>
+
+            <MarkdownContent
+              content={selectedCard.questionText}
+              className="text-base font-semibold text-[var(--text-primary)]"
+            />
+
+            {/* Options */}
+            <div className="space-y-3">
+              {selectedCard.options.map((opt, idx) => {
+                const isSelected = browseSelectedOpt === idx;
+                const isTargetCorrect = selectedCard.correctIndex === idx;
+
+                let style = 'border-[var(--border-color)] bg-[var(--bg-card-hover)] text-[var(--text-primary)] hover:border-[var(--border-hover)]';
+                if (browseSelectedOpt !== null) {
+                  if (isTargetCorrect) {
+                    style = 'border-emerald-600 bg-emerald-600 text-white font-semibold';
+                  } else if (isSelected) {
+                    style = 'border-rose-600 bg-rose-600 text-white';
+                  } else {
+                    style = 'opacity-40 border-[var(--border-color)]';
+                  }
+                }
+
+                return (
+                  <button
+                    key={idx}
+                    disabled={browseSelectedOpt !== null}
+                    onClick={() => handleBrowseSelectOption(idx)}
+                    className={`w-full text-left p-3.5 rounded-xl border flex items-center justify-between text-xs transition-all ${style}`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className={`w-6 h-6 rounded flex items-center justify-center font-mono font-bold ${
+                        browseSelectedOpt !== null && isTargetCorrect ? 'bg-white text-emerald-600' :
+                        browseSelectedOpt !== null && isSelected ? 'bg-white text-rose-600' :
+                        'bg-[var(--bg-main)] border border-[var(--border-color)] text-[var(--text-primary)]'
+                      }`}>
+                        {String.fromCharCode(65 + idx)}
+                      </span>
+                      <span>{opt}</span>
+                    </div>
+                    {browseSelectedOpt !== null && isTargetCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
+                    {browseSelectedOpt !== null && isSelected && !isTargetCorrect && <XCircle className="w-4 h-4 text-rose-500" />}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Browse Explanation */}
+            {browseSelectedOpt !== null && selectedCard.explanation && (
+              <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 space-y-1.5 text-xs shadow-sm">
+                <div className="flex items-center gap-1.5 font-bold text-emerald-500 uppercase tracking-wider text-[11px]">
+                  <HelpCircle className="w-3.5 h-3.5" /> Explanation & Answer
+                </div>
+                <div className="text-[var(--text-primary)] leading-relaxed">
+                  <MarkdownContent content={selectedCard.explanation} />
+                </div>
+              </div>
+            )}
+          </div>
+        )
       ) : (
         <>
           {browseQuestions.length > 0 ? (
@@ -501,9 +707,17 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
                     onClick={() => handleBrowseCardClick(q)}
                     className="w-full text-left"
                   >
-                    <div className="flex items-start justify-between mb-2 pr-6">
+                    <div className="flex items-start justify-between mb-2 pr-6 flex-wrap gap-1">
                       <span className="badge badge-sm badge-cyan text-xs">{q.subdomain}</span>
-                      <span className="text-[10px] text-[var(--text-muted)]">{q.examYear}</span>
+                      <div className="flex items-center gap-1.5">
+                        {q.pdfUrl && (
+                          <span className="badge badge-sm bg-[var(--accent-cyan)]/15 text-[var(--accent-cyan)] border border-[var(--accent-cyan)]/30 text-[10px] flex items-center gap-1">
+                            <FileText className="w-2.5 h-2.5" />
+                            p.{q.pdfPage || 1}
+                          </span>
+                        )}
+                        <span className="text-[10px] text-[var(--text-muted)] font-mono">{q.examYear}</span>
+                      </div>
                     </div>
                     <p className="text-sm text-[var(--text-primary)] font-medium line-clamp-3 group-hover:text-[var(--accent-emerald)] transition-colors">
                       {q.questionText.replace(/[#*_`[\]()]/g, '').substring(0, 80)}...
@@ -530,8 +744,10 @@ export const LeitnerDeck: React.FC<LeitnerDeckProps> = ({
     </>
   );
 
+  const isPdfActive = Boolean(mode === 'study' ? currentQ?.pdfUrl : selectedCard?.pdfUrl);
+
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className={`mx-auto space-y-6 transition-all duration-300 ${isPdfActive ? 'max-w-7xl' : 'max-w-4xl'}`}>
       
       {/* Header Banner & Mode Toggle */}
       <div className="glass-panel p-6 space-y-6">
